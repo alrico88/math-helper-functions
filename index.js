@@ -1,7 +1,7 @@
 const {max, min, mean, median, histogram} = require('d3-array');
 const sum = require('lodash/sum');
 const sumBy = require('lodash/sumBy');
-const NumberHelper = require('weplan-number-helper');
+const NumberHelper = require('number-helper-functions');
 
 /**
  * MathFunctions class
