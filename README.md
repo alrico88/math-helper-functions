@@ -13,7 +13,7 @@
   - [.calcMedian(array, [property])](#MathFunctions.calcMedian) ⇒ <code>number</code>
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>Number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>Number</code>
-  - [.calcDistribution(array)](#MathFunctions.calcDistribution) ⇒ <code>object</code>
+  - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
 
 <a name="new_MathFunctions_new"></a>
 
@@ -122,13 +122,14 @@ Calculate percentage using rule of three
 
 <a name="MathFunctions.calcDistribution"></a>
 
-### MathFunctions.calcDistribution(array) ⇒ <code>object</code>
+### MathFunctions.calcDistribution(array, [numOfBins]) ⇒ <code>object</code>
 
 Gets array distribution
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
 **Returns**: <code>object</code> - Distribution of the array's values
 
-| Param | Type                                                                   | Description                   |
-| ----- | ---------------------------------------------------------------------- | ----------------------------- |
-| array | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | Array to find distribution of |
+| Param       | Type                                                                   | Description                      |
+| ----------- | ---------------------------------------------------------------------- | -------------------------------- |
+| array       | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | Array to find distribution of    |
+| [numOfBins] | <code>number</code>                                                    | Number of bins to use (optional) |

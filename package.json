@@ -1,37 +1,37 @@
 {
-  "name": "math-helper-functions",
-  "version": "1.0.2",
-  "description": "Helper with misc. math functions such as sums, averages, max, min, etc",
-  "main": "index.js",
-  "author": "Alberto Rico",
-  "license": "MIT",
-  "repository": {
-    "url": "https://github.com/alrico88/math-helper-functions"
-  },
-  "keywords": [
-    "math",
-    "node",
-    "helper",
-    "sum",
-    "average",
-    "min",
-    "max",
-    "percent",
-    "domain"
-  ],
-  "devDependencies": {
-    "eslint": "^5.16.0"
-  },
-  "dependencies": {
-    "d3-array": "^2.0.3",
-    "lodash": "^4.17.15",
-    "number-helper-functions": "^1.0.0"
-  },
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "eslintIntegration": true
-  }
+	"name": "math-helper-functions",
+	"version": "1.0.3",
+	"description": "Helper with misc. math functions such as sums, averages, max, min, etc",
+	"main": "index.js",
+	"author": "Alberto Rico",
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/alrico88/math-helper-functions"
+	},
+	"keywords": [
+		"math",
+		"node",
+		"helper",
+		"sum",
+		"average",
+		"min",
+		"max",
+		"percent",
+		"domain"
+	],
+	"devDependencies": {
+		"eslint": "^5.16.0"
+	},
+	"dependencies": {
+		"d3-array": "^2.0.3",
+		"lodash": "^4.17.15",
+		"number-helper-functions": "^1.0.0"
+	},
+	"prettier": {
+		"trailingComma": "es5",
+		"tabWidth": 2,
+		"semi": false,
+		"singleQuote": true,
+		"eslintIntegration": true
+	}
 }

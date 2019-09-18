@@ -116,14 +116,16 @@ class MathFunctions {
    *
    * @static
    * @param {number[]|string[]} array Array to find distribution of
+   * @param {number} [numOfBins] Number of bins to use (optional)
    * @returns {object} Distribution of the array's values
    * @memberof MathFunctions
    */
-  static calcDistribution(array) {
-    let numHelper = new NumberHelper();
-    let numArray = array.map((d) => numHelper.processNumber(d));
-    let dist = histogram()(numArray);
-    let graphData = {
+  static calcDistribution(array, numOfBins) {
+    const numHelper = new NumberHelper();
+    const numArray = array.map((d) => numHelper.processNumber(d));
+    const hist = numOfBins ? histogram().thresholds(numOfBins) : histogram();
+    const dist = hist(numArray);
+    const graphData = {
       labels: [],
       data: [],
     };
