@@ -14,6 +14,7 @@
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>Number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>Number</code>
   - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
+  - [.ruleOfThree(ifThis, isThis, thenThat)](#MathFunctions.ruleOfThree) ⇒ <code>number</code>
 
 <a name="new_MathFunctions_new"></a>
 
@@ -28,7 +29,7 @@ Compendium of math-related functions
 
 Returns array max value
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Max array value
 
 | Param      | Type                | Default           | Description                |
@@ -42,7 +43,7 @@ Returns array max value
 
 Returns the sum of an array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Sum of array values
 
 | Param      | Type                | Default           | Description              |
@@ -56,7 +57,7 @@ Returns the sum of an array
 
 Returns min value in array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Min array value
 
 | Param      | Type                | Default           | Description                |
@@ -70,7 +71,7 @@ Returns min value in array
 
 Returns min and max values in array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Array.&lt;number&gt;</code> - Min and max values in array
 
 | Param      | Type                                                                   | Default           | Description              |
@@ -84,7 +85,7 @@ Returns min and max values in array
 
 Returns median value of array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Median of an array
 
 | Param      | Type                | Default           | Description              |
@@ -98,7 +99,7 @@ Returns median value of array
 
 Returns mean value in array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Mean of an array
 
 | Param      | Type                | Default           | Description              |
@@ -112,7 +113,7 @@ Returns mean value in array
 
 Calculate percentage using rule of three
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Percentage
 
 | Param  | Type                | Description               |
@@ -126,10 +127,25 @@ Calculate percentage using rule of three
 
 Gets array distribution
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>object</code> - Distribution of the array's values
 
 | Param       | Type                                                                   | Description                      |
 | ----------- | ---------------------------------------------------------------------- | -------------------------------- |
 | array       | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | Array to find distribution of    |
 | [numOfBins] | <code>number</code>                                                    | Number of bins to use (optional) |
+
+<a name="MathFunctions.ruleOfThree"></a>
+
+### MathFunctions.ruleOfThree(ifThis, isThis, thenThat) ⇒ <code>number</code>
+
+Performs a rule of three calculation
+
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
+**Returns**: <code>number</code> - The result of the rule of three
+
+| Param    | Type                | Description    |
+| -------- | ------------------- | -------------- |
+| ifThis   | <code>number</code> | First premise  |
+| isThis   | <code>number</code> | First result   |
+| thenThat | <code>number</code> | Second premise |

@@ -135,6 +135,20 @@ class MathFunctions {
     }
     return graphData;
   }
+
+  /**
+   * Performs a rule of three calculation
+   *
+   * @static
+   * @param {number} ifThis First premise
+   * @param {number} isThis First result
+   * @param {number} thenThat Second premise
+   * @returns {number} The result of the rule of three
+   * @memberof MathFunctions
+   */
+  static ruleOfThree(ifThis, isThis, thenThat) {
+    return (isThis * thenThat) / ifThis;
+  }
 }
 
 module.exports = MathFunctions;
