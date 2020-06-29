@@ -1,6 +1,6 @@
 {
 	"name": "math-helper-functions",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Helper with misc. math functions such as sums, averages, max, min, etc",
 	"main": "index.js",
 	"author": "Alberto Rico",
@@ -17,13 +17,16 @@
 		"min",
 		"max",
 		"percent",
-		"domain"
+		"domain",
+		"quartile",
+		"histogram"
 	],
 	"devDependencies": {
 		"eslint": "^5.16.0"
 	},
 	"dependencies": {
 		"d3-array": "^2.0.3",
+		"jstat": "^1.9.3",
 		"lodash": "^4.17.15",
 		"number-helper-functions": "^1.0.0"
 	},

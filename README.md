@@ -14,6 +14,8 @@
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>Number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>Number</code>
   - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
+  - [.calcQuartiles(array, [property])](#MathFunctions.calcQuartiles) ⇒ <code>Array.&lt;number&gt;</code>
+  - [.calcHistogram(array, [numberOfBins], [property])](#MathFunctions.calcHistogram) ⇒ <code>Array.&lt;number&gt;</code>
   - [.ruleOfThree(ifThis, isThis, thenThat)](#MathFunctions.ruleOfThree) ⇒ <code>number</code>
 
 <a name="new_MathFunctions_new"></a>
@@ -134,6 +136,35 @@ Gets array distribution
 | ----------- | ---------------------------------------------------------------------- | -------------------------------- |
 | array       | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | Array to find distribution of    |
 | [numOfBins] | <code>number</code>                                                    | Number of bins to use (optional) |
+
+<a name="MathFunctions.calcQuartiles"></a>
+
+### MathFunctions.calcQuartiles(array, [property]) ⇒ <code>Array.&lt;number&gt;</code>
+
+Calcs quartiles of data array
+
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
+**Returns**: <code>Array.&lt;number&gt;</code> - [min, mean, max] quartiles
+
+| Param      | Type                           | Description                                                                         |
+| ---------- | ------------------------------ | ----------------------------------------------------------------------------------- |
+| array      | <code>Array.&lt;any&gt;</code> | Array to find quartiles of                                                          |
+| [property] | <code>string</code>            | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+
+<a name="MathFunctions.calcHistogram"></a>
+
+### MathFunctions.calcHistogram(array, [numberOfBins], [property]) ⇒ <code>Array.&lt;number&gt;</code>
+
+Calcs histogram from data array
+
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
+**Returns**: <code>Array.&lt;number&gt;</code> - Distribution data array
+
+| Param          | Type                           | Default        | Description                                                                         |
+| -------------- | ------------------------------ | -------------- | ----------------------------------------------------------------------------------- |
+| array          | <code>Array.&lt;any&gt;</code> |                | Array to get histogram from                                                         |
+| [numberOfBins] | <code>number</code>            | <code>4</code> | Number of bins to distribute data                                                   |
+| [property]     | <code>string</code>            |                | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.ruleOfThree"></a>
 

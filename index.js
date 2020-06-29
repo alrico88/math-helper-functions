@@ -1,7 +1,9 @@
 const {max, min, mean, median, histogram} = require('d3-array');
 const sum = require('lodash/sum');
 const sumBy = require('lodash/sumBy');
+const get = require('lodash/get');
 const NumberHelper = require('number-helper-functions');
+const {quartiles, histogram: jStatHistogram} = require('jstat');
 
 /**
  * MathFunctions class
@@ -134,6 +136,35 @@ class MathFunctions {
       graphData.data.push(bin.length);
     }
     return graphData;
+  }
+
+  /**
+   * Calcs quartiles of data array
+   *
+   * @static
+   * @param {any[]} array Array to find quartiles of
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
+   * @returns {number[]} [min, mean, max] quartiles
+   * @memberof MathFunctions
+   */
+  static calcQuartiles(array, property) {
+    const dataArray = property ? array.map((d) => get(d, property)) : array;
+    return quartiles(dataArray);
+  }
+
+  /**
+   * Calcs histogram from data array
+   *
+   * @static
+   * @param {any[]} array Array to get histogram from
+   * @param {number} [numberOfBins=4] Number of bins to distribute data
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
+   * @returns {number[]} Distribution data array
+   * @memberof MathFunctions
+   */
+  static calcHistogram(array, numberOfBins = 4, property) {
+    const dataArray = property ? array.map((d) => get(d, property)) : array;
+    return jStatHistogram(dataArray, numberOfBins);
   }
 
   /**
