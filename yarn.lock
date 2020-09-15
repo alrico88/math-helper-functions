@@ -519,10 +519,10 @@ nice-try@^1.0.4:
   resolved "https://registry.npmjs.org/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-number-helper-functions@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/number-helper-functions/-/number-helper-functions-1.0.0.tgz#4072f71fe19c7f1979d625af905e8c07b0d39dad"
-  integrity sha512-s0Cmjc5WNJcH4QrpbHgceizI17ts1Zyt30fAM6P6ctYZChtIPoJLKGdtkF4UaU51WmF3uS2gL9TPWeONvpmh/g==
+number-helper-functions@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/number-helper-functions/-/number-helper-functions-2.1.0.tgz#4388b2e162bd9a361d3c76764f952f4ef98f7d8a"
+  integrity sha512-uDLx+PTevKTJZET3aO0rYXOZ7O0H6vEmp1L/Fm3h1SIPkg5D+HTXN+fqUx6cJ7eoq62cTn/RzkDHOCvYaUInSg==
 
 once@^1.3.0:
   version "1.4.0"

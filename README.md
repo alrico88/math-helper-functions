@@ -12,6 +12,7 @@
   - [.calcDomain(array, [property])](#MathFunctions.calcDomain) ⇒ <code>Array.&lt;number&gt;</code>
   - [.calcMedian(array, [property])](#MathFunctions.calcMedian) ⇒ <code>number</code>
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>Number</code>
+  - [.calcWeightedMean(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMean) ⇒ <code>number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>Number</code>
   - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
   - [.calcQuartiles(array, [property])](#MathFunctions.calcQuartiles) ⇒ <code>Array.&lt;number&gt;</code>
@@ -99,7 +100,7 @@ Returns median value of array
 
 ### MathFunctions.calcMean(array, [property]) ⇒ <code>Number</code>
 
-Returns mean value in array
+Returns mean value of array
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Number</code> - Mean of an array
@@ -108,6 +109,21 @@ Returns mean value in array
 | ---------- | ------------------- | ----------------- | ------------------------ |
 | array      | <code>Array</code>  |                   | Array to find mean of    |
 | [property] | <code>string</code> | <code>null</code> | Property name to iterate |
+
+<a name="MathFunctions.calcWeightedMean"></a>
+
+### MathFunctions.calcWeightedMean(array, valueProperty, weightProperty) ⇒ <code>number</code>
+
+Returns weighted mean of array
+
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
+**Returns**: <code>number</code> - Weighted mean
+
+| Param          | Type                              | Description                           |
+| -------------- | --------------------------------- | ------------------------------------- |
+| array          | <code>Array.&lt;object&gt;</code> | Array to find weighted mean of        |
+| valueProperty  | <code>string</code>               | Property to use for array item value  |
+| weightProperty | <code>string</code>               | Property to use for array item weight |
 
 <a name="MathFunctions.calcPercent"></a>
 

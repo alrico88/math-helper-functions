@@ -2,7 +2,7 @@ const {max, min, mean, median, histogram} = require('d3-array');
 const sum = require('lodash/sum');
 const sumBy = require('lodash/sumBy');
 const get = require('lodash/get');
-const NumberHelper = require('number-helper-functions');
+const {processNumber} = require('number-helper-functions');
 const {quartiles, histogram: jStatHistogram} = require('jstat');
 
 /**
@@ -86,7 +86,7 @@ class MathFunctions {
   }
 
   /**
-   * Returns mean value in array
+   * Returns mean value of array
    *
    * @static
    * @param {Array} array Array to find mean of
@@ -98,6 +98,25 @@ class MathFunctions {
     return mean(array, function(d) {
       return property ? d[property] : d;
     });
+  }
+
+  /**
+   * Returns weighted mean of array
+   *
+   * @static
+   * @param {object[]} array Array to find weighted mean of
+   * @param {string} valueProperty Property to use for array item value
+   * @param {string} weightProperty Property to use for array item weight
+   * @returns {number} Weighted mean
+   * @memberof MathFunctions
+   */
+  static calcWeightedMean(array, valueProperty, weightProperty) {
+    if (!valueProperty || !weightProperty) {
+      throw new Error('Both valueProperty and weightProperty params are required');
+    }
+    const totalWeight = MathFunctions.calcSum(array, weightProperty);
+    const weightedValues = array.map((d) => d[valueProperty] * d[weightProperty]);
+    return MathFunctions.calcSum(weightedValues) / totalWeight;
   }
 
   /**
@@ -123,8 +142,7 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcDistribution(array, numOfBins) {
-    const numHelper = new NumberHelper();
-    const numArray = array.map((d) => numHelper.processNumber(d));
+    const numArray = array.map((d) => processNumber(d));
     const hist = numOfBins ? histogram().thresholds(numOfBins) : histogram();
     const dist = hist(numArray);
     const graphData = {

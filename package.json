@@ -16,6 +16,8 @@
 		"average",
 		"min",
 		"max",
+		"mean",
+		"weighted",
 		"percent",
 		"domain",
 		"quartile",
@@ -28,7 +30,7 @@
 		"d3-array": "^2.0.3",
 		"jstat": "^1.9.3",
 		"lodash": "^4.17.15",
-		"number-helper-functions": "^1.0.0"
+		"number-helper-functions": "^2.1.0"
 	},
 	"prettier": {
 		"trailingComma": "es5",
