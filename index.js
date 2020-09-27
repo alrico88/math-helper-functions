@@ -3,7 +3,6 @@ const sum = require('lodash/sum');
 const sumBy = require('lodash/sumBy');
 const get = require('lodash/get');
 const {processNumber} = require('number-helper-functions');
-const {quartiles, histogram: jStatHistogram} = require('jstat');
 
 /**
  * MathFunctions class
@@ -19,7 +18,7 @@ class MathFunctions {
    * @static
    * @param {Array} array Array to find max value of
    * @param {string} [property=null] Property name to iterate
-   * @returns {Number} Max array value
+   * @returns {number} Max array value
    */
   static calcMax(array, property = null) {
     return max(array, function(d) {
@@ -33,7 +32,7 @@ class MathFunctions {
    * @static
    * @param {Array} array Array to find sum of
    * @param {string} [property=null] Property name to iterate
-   * @returns {Number} Sum of array values
+   * @returns {number} Sum of array values
    */
   static calcSum(array, property = null) {
     return property ? sumBy(array, (d) => d[property]) : sum(array);
@@ -44,7 +43,7 @@ class MathFunctions {
    *
    * @param {Array} array Array to find min value of
    * @param {string} [property=null] Property name to iterate
-   * @returns {Number} Min array value
+   * @returns {number} Min array value
    */
   static calcMin(array, property = null) {
     return min(array, function(d) {
@@ -91,7 +90,7 @@ class MathFunctions {
    * @static
    * @param {Array} array Array to find mean of
    * @param {string} [property=null] Property name to iterate
-   * @returns {Number} Mean of an array
+   * @returns {number} Mean of an array
    * @memberof MathFunctions
    */
   static calcMean(array, property = null) {
@@ -123,13 +122,13 @@ class MathFunctions {
    * Calculate percentage using rule of three
    *
    * @static
-   * @param {Number} toCalc Number to find percent of
-   * @param {Number} total Total
-   * @returns {Number} Percentage
+   * @param {number} toCalc Number to find percent of
+   * @param {number} total Total
+   * @returns {number} Percentage
    * @memberof MathFunctions
    */
   static calcPercent(toCalc, total) {
-    return (100 * toCalc) / total;
+    return MathFunctions.ruleOfThree(total, 100, toCalc);
   }
 
   /**
@@ -166,8 +165,17 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcQuartiles(array, property) {
-    const dataArray = property ? array.map((d) => get(d, property)) : array;
-    return quartiles(dataArray);
+    const len = array.length;
+    const copy = array
+      .map(function(d) {
+        return property ? d[property] : d;
+      })
+      .sort((a, b) => a - b);
+    return [
+      copy[Math.round(len / 4) - 1],
+      copy[Math.round(len / 2) - 1],
+      copy[Math.round((len * 3) / 4) - 1],
+    ];
   }
 
   /**
@@ -182,7 +190,20 @@ class MathFunctions {
    */
   static calcHistogram(array, numberOfBins = 4, property) {
     const dataArray = property ? array.map((d) => get(d, property)) : array;
-    return jStatHistogram(dataArray, numberOfBins);
+    const [arrayMin, arrayMax] = MathFunctions.calcDomain(dataArray);
+    const first = arrayMin;
+    const binWidth = (arrayMax - first) / numberOfBins;
+    const len = dataArray.length;
+    const bins = new Array(numberOfBins).fill(0);
+    for (let i = 0; i < len; i++) {
+      bins[
+        Math.min(
+          Math.floor((dataArray[i] - first) / binWidth),
+          numberOfBins - 1
+        )
+      ] += 1;
+    }
+    return bins;
   }
 
   /**

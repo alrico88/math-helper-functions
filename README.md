@@ -6,14 +6,14 @@
 
 - [MathFunctions](#MathFunctions)
   - [new MathFunctions()](#new_MathFunctions_new)
-  - [.calcMax(array, [property])](#MathFunctions.calcMax) ⇒ <code>Number</code>
-  - [.calcSum(array, [property])](#MathFunctions.calcSum) ⇒ <code>Number</code>
-  - [.calcMin(array, [property])](#MathFunctions.calcMin) ⇒ <code>Number</code>
+  - [.calcMax(array, [property])](#MathFunctions.calcMax) ⇒ <code>number</code>
+  - [.calcSum(array, [property])](#MathFunctions.calcSum) ⇒ <code>number</code>
+  - [.calcMin(array, [property])](#MathFunctions.calcMin) ⇒ <code>number</code>
   - [.calcDomain(array, [property])](#MathFunctions.calcDomain) ⇒ <code>Array.&lt;number&gt;</code>
   - [.calcMedian(array, [property])](#MathFunctions.calcMedian) ⇒ <code>number</code>
-  - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>Number</code>
+  - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>number</code>
   - [.calcWeightedMean(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMean) ⇒ <code>number</code>
-  - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>Number</code>
+  - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>number</code>
   - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
   - [.calcQuartiles(array, [property])](#MathFunctions.calcQuartiles) ⇒ <code>Array.&lt;number&gt;</code>
   - [.calcHistogram(array, [numberOfBins], [property])](#MathFunctions.calcHistogram) ⇒ <code>Array.&lt;number&gt;</code>
@@ -28,12 +28,12 @@ Compendium of math-related functions
 
 <a name="MathFunctions.calcMax"></a>
 
-### MathFunctions.calcMax(array, [property]) ⇒ <code>Number</code>
+### MathFunctions.calcMax(array, [property]) ⇒ <code>number</code>
 
 Returns array max value
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Number</code> - Max array value
+**Returns**: <code>number</code> - Max array value
 
 | Param      | Type                | Default           | Description                |
 | ---------- | ------------------- | ----------------- | -------------------------- |
@@ -42,12 +42,12 @@ Returns array max value
 
 <a name="MathFunctions.calcSum"></a>
 
-### MathFunctions.calcSum(array, [property]) ⇒ <code>Number</code>
+### MathFunctions.calcSum(array, [property]) ⇒ <code>number</code>
 
 Returns the sum of an array
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Number</code> - Sum of array values
+**Returns**: <code>number</code> - Sum of array values
 
 | Param      | Type                | Default           | Description              |
 | ---------- | ------------------- | ----------------- | ------------------------ |
@@ -56,12 +56,12 @@ Returns the sum of an array
 
 <a name="MathFunctions.calcMin"></a>
 
-### MathFunctions.calcMin(array, [property]) ⇒ <code>Number</code>
+### MathFunctions.calcMin(array, [property]) ⇒ <code>number</code>
 
 Returns min value in array
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Number</code> - Min array value
+**Returns**: <code>number</code> - Min array value
 
 | Param      | Type                | Default           | Description                |
 | ---------- | ------------------- | ----------------- | -------------------------- |
@@ -98,12 +98,12 @@ Returns median value of array
 
 <a name="MathFunctions.calcMean"></a>
 
-### MathFunctions.calcMean(array, [property]) ⇒ <code>Number</code>
+### MathFunctions.calcMean(array, [property]) ⇒ <code>number</code>
 
 Returns mean value of array
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Number</code> - Mean of an array
+**Returns**: <code>number</code> - Mean of an array
 
 | Param      | Type                | Default           | Description              |
 | ---------- | ------------------- | ----------------- | ------------------------ |
@@ -127,17 +127,17 @@ Returns weighted mean of array
 
 <a name="MathFunctions.calcPercent"></a>
 
-### MathFunctions.calcPercent(toCalc, total) ⇒ <code>Number</code>
+### MathFunctions.calcPercent(toCalc, total) ⇒ <code>number</code>
 
 Calculate percentage using rule of three
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Number</code> - Percentage
+**Returns**: <code>number</code> - Percentage
 
 | Param  | Type                | Description               |
 | ------ | ------------------- | ------------------------- |
-| toCalc | <code>Number</code> | Number to find percent of |
-| total  | <code>Number</code> | Total                     |
+| toCalc | <code>number</code> | Number to find percent of |
+| total  | <code>number</code> | Total                     |
 
 <a name="MathFunctions.calcDistribution"></a>
 
