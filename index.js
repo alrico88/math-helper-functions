@@ -2,7 +2,6 @@ const {max, min, mean, median, histogram} = require('d3-array');
 const sum = require('lodash/sum');
 const sumBy = require('lodash/sumBy');
 const get = require('lodash/get');
-const {processNumber} = require('number-helper-functions');
 
 /**
  * MathFunctions class
@@ -135,15 +134,14 @@ class MathFunctions {
    * Gets array distribution
    *
    * @static
-   * @param {number[]|string[]} array Array to find distribution of
+   * @param {number[]} array Array to find distribution of
    * @param {number} [numOfBins] Number of bins to use (optional)
    * @returns {object} Distribution of the array's values
    * @memberof MathFunctions
    */
   static calcDistribution(array, numOfBins) {
-    const numArray = array.map((d) => processNumber(d));
     const hist = numOfBins ? histogram().thresholds(numOfBins) : histogram();
-    const dist = hist(numArray);
+    const dist = hist(array);
     const graphData = {
       labels: [],
       data: [],

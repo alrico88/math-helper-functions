@@ -148,10 +148,10 @@ Gets array distribution
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>object</code> - Distribution of the array's values
 
-| Param       | Type                                                                   | Description                      |
-| ----------- | ---------------------------------------------------------------------- | -------------------------------- |
-| array       | <code>Array.&lt;number&gt;</code> \| <code>Array.&lt;string&gt;</code> | Array to find distribution of    |
-| [numOfBins] | <code>number</code>                                                    | Number of bins to use (optional) |
+| Param       | Type                              | Description                      |
+| ----------- | --------------------------------- | -------------------------------- |
+| array       | <code>Array.&lt;number&gt;</code> | Array to find distribution of    |
+| [numOfBins] | <code>number</code>               | Number of bins to use (optional) |
 
 <a name="MathFunctions.calcQuartiles"></a>
 
