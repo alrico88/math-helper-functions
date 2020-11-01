@@ -1,6 +1,4 @@
-const {max, min, mean, median, histogram} = require('d3-array');
-const sum = require('lodash/sum');
-const sumBy = require('lodash/sumBy');
+const {sum, max, min, mean, median, histogram} = require('d3-array');
 const get = require('lodash/get');
 
 /**
@@ -20,9 +18,8 @@ class MathFunctions {
    * @returns {number} Max array value
    */
   static calcMax(array, property = null) {
-    return max(array, function(d) {
-      return property ? d[property] : d;
-    });
+    const args = property ? [array, (d) => get(d, property)] : [array];
+    return max(...args);
   }
 
   /**
@@ -34,7 +31,8 @@ class MathFunctions {
    * @returns {number} Sum of array values
    */
   static calcSum(array, property = null) {
-    return property ? sumBy(array, (d) => d[property]) : sum(array);
+    const args = property ? [array, (d) => get(d, property)] : [array];
+    return sum(...args);
   }
 
   /**
@@ -45,9 +43,8 @@ class MathFunctions {
    * @returns {number} Min array value
    */
   static calcMin(array, property = null) {
-    return min(array, function(d) {
-      return property ? d[property] : d;
-    });
+    const args = property ? [array, (d) => get(d, property)] : [array];
+    return min(...args);
   }
 
   /**
@@ -59,12 +56,8 @@ class MathFunctions {
    */
   static calcDomain(array, property = null) {
     return [
-      min(array, function(d) {
-        return property ? d[property] : d;
-      }),
-      max(array, function(d) {
-        return property ? d[property] : d;
-      }),
+      MathFunctions.calcMin(array, property),
+      MathFunctions.calcMax(array, property),
     ];
   }
 
@@ -78,9 +71,8 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcMedian(array, property = null) {
-    return median(array, function(d) {
-      return property ? d[property] : d;
-    });
+    const args = property ? [array, (d) => get(d, property)] : [array];
+    return median(...args);
   }
 
   /**
@@ -93,9 +85,8 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcMean(array, property = null) {
-    return mean(array, function(d) {
-      return property ? d[property] : d;
-    });
+    const args = property ? [array, (d) => get(d, property)] : [array];
+    return mean(...args);
   }
 
   /**
@@ -112,9 +103,14 @@ class MathFunctions {
     if (!valueProperty || !weightProperty) {
       throw new Error('Both valueProperty and weightProperty params are required');
     }
-    const totalWeight = MathFunctions.calcSum(array, weightProperty);
-    const weightedValues = array.map((d) => d[valueProperty] * d[weightProperty]);
-    return MathFunctions.calcSum(weightedValues) / totalWeight;
+    const result = array
+      .map((d) => {
+        const weight = get(d, weightProperty, 0);
+        const upper = get(d, valueProperty, 0) * weight;
+        return [upper, weight];
+      })
+      .reduce((acc, d) => [acc[0] + d[0], acc[1] + d[1]], [0, 0]);
+    return result[0] / result[1];
   }
 
   /**
@@ -142,15 +138,17 @@ class MathFunctions {
   static calcDistribution(array, numOfBins) {
     const hist = numOfBins ? histogram().thresholds(numOfBins) : histogram();
     const dist = hist(array);
-    const graphData = {
-      labels: [],
-      data: [],
-    };
-    for (let bin of dist) {
-      graphData.labels.push(`${bin.x0} - ${bin.x1}`);
-      graphData.data.push(bin.length);
-    }
-    return graphData;
+    return dist.reduce(
+      (acc, {x0, x1, length}) => {
+        acc.labels.push(`${x0} - ${x1}`);
+        acc.data.push(length);
+        return acc;
+      },
+      {
+        labels: [],
+        datasets: [],
+      }
+    );
   }
 
   /**
@@ -166,7 +164,7 @@ class MathFunctions {
     const len = array.length;
     const copy = array
       .map(function(d) {
-        return property ? d[property] : d;
+        return property ? get(d, property) : d;
       })
       .sort((a, b) => a - b);
     return [

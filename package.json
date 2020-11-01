@@ -24,7 +24,10 @@
 		"histogram"
 	],
 	"devDependencies": {
-		"eslint": "^5.16.0"
+		"coveralls": "^3.1.0",
+		"eslint": "^5.16.0",
+		"eslint-plugin-jest": "^24.1.0",
+		"jest": "^26.6.1"
 	},
 	"dependencies": {
 		"d3-array": "^2.0.3",
@@ -36,5 +39,10 @@
 		"semi": false,
 		"singleQuote": true,
 		"eslintIntegration": true
+	},
+	"scripts": {
+		"test": "jest",
+		"prepublish": "yarn test",
+		"coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 	}
 }
