@@ -147,6 +147,27 @@ describe('Testing WEIGHTED MEAN methods', () => {
   });
 });
 
+describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
+  const weightedSimpleArray = TEST_ARRAY.map((d) => ({
+    value: d,
+    weight: 1,
+  }));
+  test('The weighted median of elements with the same weight should be the median of the array values', () => {
+    expect(MathFunctions.calcWeightedMedian(weightedSimpleArray, 'value', 'weight')).toStrictEqual(MathFunctions.calcMedian(weightedSimpleArray, 'value'));
+  });
+
+  test('The weighted median of elements with different weight should not be the median of the array values', () => {
+    expect(MathFunctions.calcWeightedMedian(
+        weightedSimpleArray.map((d, index) => ({
+          value: d.value,
+          weight: index + 1,
+        })),
+        'value',
+        'weight'
+      )).not.toEqual(MathFunctions.calcMedian(weightedSimpleArray, 'value'));
+  });
+});
+
 describe('Testing PERCENTAGE methods', () => {
   test('Percentages should work correctly', () => {
     expect(MathFunctions.calcPercent(20, 100)).toStrictEqual((20 * 100) / 100);

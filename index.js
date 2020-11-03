@@ -10,6 +10,20 @@ const get = require('lodash/get');
 class MathFunctions {
 
   /**
+   * Gets args for functions
+   *
+   * @static
+   * @private
+   * @param {Array} array
+   * @param {string} property
+   * @returns {Array}
+   * @memberof MathFunctions
+   */
+  static getArgs(array, property) {
+    return property ? [array, (d) => get(d, property)] : [array];
+  }
+
+  /**
    * Returns array max value
    *
    * @static
@@ -18,7 +32,7 @@ class MathFunctions {
    * @returns {number} Max array value
    */
   static calcMax(array, property = null) {
-    const args = property ? [array, (d) => get(d, property)] : [array];
+    const args = MathFunctions.getArgs(array, property);
     return max(...args);
   }
 
@@ -31,7 +45,7 @@ class MathFunctions {
    * @returns {number} Sum of array values
    */
   static calcSum(array, property = null) {
-    const args = property ? [array, (d) => get(d, property)] : [array];
+    const args = MathFunctions.getArgs(array, property);
     return sum(...args);
   }
 
@@ -43,7 +57,7 @@ class MathFunctions {
    * @returns {number} Min array value
    */
   static calcMin(array, property = null) {
-    const args = property ? [array, (d) => get(d, property)] : [array];
+    const args = MathFunctions.getArgs(array, property);
     return min(...args);
   }
 
@@ -71,8 +85,57 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcMedian(array, property = null) {
-    const args = property ? [array, (d) => get(d, property)] : [array];
+    const args = MathFunctions.getArgs(array, property);
     return median(...args);
+  }
+
+  /**
+   * Returns weighted median of array
+   *
+   * @static
+   * @param {object[]} array Array to find weighted median of
+   * @param {string} valueProperty Property to use for array item value
+   * @param {string} weightProperty Property to use for array item weight
+   * @returns {number} Weighted median
+   * @memberof MathFunctions
+   */
+  static calcWeightedMedian(array, valueProperty, weightProperty) {
+    // Prevent undefined problems
+    if (array.length === 0) {
+      return 0;
+    }
+
+    const {array: arrayToSort, weightSum} = array.reduce(
+      (acc, item) => {
+        acc.array.push({
+          value: item[valueProperty],
+          weight: item[weightProperty],
+        });
+        acc.weightSum += item[weightProperty];
+        return acc;
+      },
+      {
+        array: [],
+        weightSum: 0,
+      }
+    );
+
+    const sortedArray = arrayToSort.sort((a, b) => a.value - b.value);
+    const midpoint = weightSum / 2;
+
+    let index = 0;
+    let weight = 0;
+
+    while (weight < midpoint) {
+      weight += sortedArray[index].weight;
+      index++;
+    }
+
+    if (weight === midpoint) {
+      return (sortedArray[index - 1].value + sortedArray[index].value) / 2;
+    } else {
+      return sortedArray[index - 1].value;
+    }
   }
 
   /**
@@ -85,7 +148,7 @@ class MathFunctions {
    * @memberof MathFunctions
    */
   static calcMean(array, property = null) {
-    const args = property ? [array, (d) => get(d, property)] : [array];
+    const args = MathFunctions.getArgs(array, property);
     return mean(...args);
   }
 

@@ -11,6 +11,7 @@
   - [.calcMin(array, [property])](#MathFunctions.calcMin) ⇒ <code>number</code>
   - [.calcDomain(array, [property])](#MathFunctions.calcDomain) ⇒ <code>Array.&lt;number&gt;</code>
   - [.calcMedian(array, [property])](#MathFunctions.calcMedian) ⇒ <code>number</code>
+  - [.calcWeightedMedian(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMedian) ⇒ <code>number</code>
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>number</code>
   - [.calcWeightedMean(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMean) ⇒ <code>number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>number</code>
@@ -95,6 +96,21 @@ Returns median value of array
 | ---------- | ------------------- | ----------------- | ------------------------ |
 | array      | <code>Array</code>  |                   | Array to find median of  |
 | [property] | <code>string</code> | <code>null</code> | Property name to iterate |
+
+<a name="MathFunctions.calcWeightedMedian"></a>
+
+### MathFunctions.calcWeightedMedian(array, valueProperty, weightProperty) ⇒ <code>number</code>
+
+Returns weighted median of array
+
+**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
+**Returns**: <code>number</code> - Weighted median
+
+| Param          | Type                              | Description                           |
+| -------------- | --------------------------------- | ------------------------------------- |
+| array          | <code>Array.&lt;object&gt;</code> | Array to find weighted median of      |
+| valueProperty  | <code>string</code>               | Property to use for array item value  |
+| weightProperty | <code>string</code>               | Property to use for array item weight |
 
 <a name="MathFunctions.calcMean"></a>
 
