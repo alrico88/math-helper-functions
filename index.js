@@ -101,6 +101,9 @@ class MathFunctions {
    */
   static calcWeightedMedian(array, valueProperty, weightProperty) {
     // Prevent undefined problems
+    if (!valueProperty || !weightProperty) {
+      throw new Error('Both valueProperty and weightProperty params are required');
+    }
     if (array.length === 0) {
       return 0;
     }
@@ -132,9 +135,11 @@ class MathFunctions {
     }
 
     if (weight === midpoint) {
-      return (sortedArray[index - 1].value + sortedArray[index].value) / 2;
+      const prevItem = get(sortedArray[index - 1], 'value', 0);
+      const currItem = get(sortedArray[index], 'value', 0);
+      return (prevItem + currItem) / 2;
     } else {
-      return sortedArray[index - 1].value;
+      return get(sortedArray[index - 1], 'value', 0);
     }
   }
 

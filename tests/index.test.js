@@ -145,6 +145,12 @@ describe('Testing WEIGHTED MEAN methods', () => {
     const arrayWithNulls = [null, ...weightedObjectArray];
     expect(MathFunctions.calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(expectedObjectResult);
   });
+
+  test('If a value prop or weight prop is not provided for calcWeightedMean method, an error should be thrown', () => {
+    expect(() => {
+      MathFunctions.calcWeightedMean([], 'something');
+    }).toThrow();
+  });
 });
 
 describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
@@ -156,6 +162,10 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
     expect(MathFunctions.calcWeightedMedian(weightedSimpleArray, 'value', 'weight')).toStrictEqual(MathFunctions.calcMedian(weightedSimpleArray, 'value'));
   });
 
+  test('The weighted median of an empty array should be 0', () => {
+    expect(MathFunctions.calcWeightedMedian([], 'value', 'weight')).toStrictEqual(0);
+  });
+
   test('The weighted median of elements with different weight should not be the median of the array values', () => {
     expect(MathFunctions.calcWeightedMedian(
         weightedSimpleArray.map((d, index) => ({
@@ -165,6 +175,12 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
         'value',
         'weight'
       )).not.toEqual(MathFunctions.calcMedian(weightedSimpleArray, 'value'));
+  });
+
+  test('If a value prop or weight prop is not provided for calcWeightedMedian method, an error should be thrown', () => {
+    expect(() => {
+      MathFunctions.calcWeightedMedian([], 'something');
+    }).toThrow();
   });
 });
 
