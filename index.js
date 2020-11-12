@@ -200,7 +200,7 @@ class MathFunctions {
    * @static
    * @param {number[]} array Array to find distribution of
    * @param {number} [numOfBins] Number of bins to use (optional)
-   * @returns {object} Distribution of the array's values
+   * @returns {{labels: string[], data: number[]}} Distribution of the array's values
    * @memberof MathFunctions
    */
   static calcDistribution(array, numOfBins) {
@@ -214,7 +214,7 @@ class MathFunctions {
       },
       {
         labels: [],
-        datasets: [],
+        data: [],
       }
     );
   }
