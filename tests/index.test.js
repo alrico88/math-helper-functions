@@ -166,6 +166,14 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
     expect(MathFunctions.calcWeightedMedian([], 'value', 'weight')).toStrictEqual(0);
   });
 
+  test('The weighted median of an array with one element should be that same value', () => {
+    expect(MathFunctions.calcWeightedMedian(
+        weightedSimpleArray.slice(0, 1),
+        'value',
+        'weight'
+      )).toStrictEqual(weightedSimpleArray[0].value);
+  });
+
   test('The weighted median of elements with different weight should not be the median of the array values', () => {
     expect(MathFunctions.calcWeightedMedian(
         weightedSimpleArray.map((d, index) => ({
