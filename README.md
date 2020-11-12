@@ -15,7 +15,7 @@
   - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>number</code>
   - [.calcWeightedMean(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMean) ⇒ <code>number</code>
   - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>number</code>
-  - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>object</code>
+  - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>Object</code>
   - [.calcQuartiles(array, [property])](#MathFunctions.calcQuartiles) ⇒ <code>Array.&lt;number&gt;</code>
   - [.calcHistogram(array, [numberOfBins], [property])](#MathFunctions.calcHistogram) ⇒ <code>Array.&lt;number&gt;</code>
   - [.ruleOfThree(ifThis, isThis, thenThat)](#MathFunctions.ruleOfThree) ⇒ <code>number</code>
@@ -157,12 +157,12 @@ Calculate percentage using rule of three
 
 <a name="MathFunctions.calcDistribution"></a>
 
-### MathFunctions.calcDistribution(array, [numOfBins]) ⇒ <code>object</code>
+### MathFunctions.calcDistribution(array, [numOfBins]) ⇒ <code>Object</code>
 
 Gets array distribution
 
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>object</code> - Distribution of the array's values
+**Returns**: <code>Object</code> - Distribution of the array's values
 
 | Param       | Type                              | Description                      |
 | ----------- | --------------------------------- | -------------------------------- |
