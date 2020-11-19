@@ -1,4 +1,4 @@
-const {sum, max, min, mean, median, histogram} = require('d3-array');
+const {sum, max, min, mean, median, extent, histogram} = require('d3-array');
 const get = require('lodash/get');
 
 /**
@@ -10,17 +10,17 @@ const get = require('lodash/get');
 class MathFunctions {
 
   /**
-   * Gets args for functions
+   * Gets array of values from possibly complex arrays
    *
-   * @static
    * @private
+   * @static
    * @param {Array} array
-   * @param {string} property
-   * @returns {Array}
+   * @param {string} [property]
+   * @return {Array}
    * @memberof MathFunctions
    */
-  static getArgs(array, property) {
-    return property ? [array, (d) => get(d, property)] : [array];
+  static _getSimpleArray(array, property) {
+    return property ? array.map((d) => get(d, property)) : array;
   }
 
   /**
@@ -28,12 +28,11 @@ class MathFunctions {
    *
    * @static
    * @param {Array} array Array to find max value of
-   * @param {string} [property=null] Property name to iterate
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number} Max array value
    */
-  static calcMax(array, property = null) {
-    const args = MathFunctions.getArgs(array, property);
-    return max(...args);
+  static calcMax(array, property) {
+    return max(MathFunctions._getSimpleArray(array, property));
   }
 
   /**
@@ -41,38 +40,34 @@ class MathFunctions {
    *
    * @static
    * @param {Array} array Array to find sum of
-   * @param {string} [property=null] Property name to iterate
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number} Sum of array values
    */
-  static calcSum(array, property = null) {
-    const args = MathFunctions.getArgs(array, property);
-    return sum(...args);
+  static calcSum(array, property) {
+    return sum(MathFunctions._getSimpleArray(array, property));
   }
 
   /**
    * Returns min value in array
    *
    * @param {Array} array Array to find min value of
-   * @param {string} [property=null] Property name to iterate
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number} Min array value
    */
-  static calcMin(array, property = null) {
-    const args = MathFunctions.getArgs(array, property);
-    return min(...args);
+  static calcMin(array, property) {
+    return min(MathFunctions._getSimpleArray(array, property));
   }
 
   /**
    * Returns min and max values in array
    *
-   * @param {string[]|number[]} array Array to calc domain of
-   * @param {string} [property=null] Property name to iterate
+   * @param {Array} array Array to calc domain of
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number[]} Min and max values in array
    */
-  static calcDomain(array, property = null) {
-    return [
-      MathFunctions.calcMin(array, property),
-      MathFunctions.calcMax(array, property),
-    ];
+  static calcDomain(array, property) {
+    const simpleArray = MathFunctions._getSimpleArray(array, property);
+    return extent(simpleArray);
   }
 
   /**
@@ -80,13 +75,12 @@ class MathFunctions {
    *
    * @static
    * @param {Array} array Array to find median of
-   * @param {string} [property=null] Property name to iterate
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number} Median of an array
    * @memberof MathFunctions
    */
-  static calcMedian(array, property = null) {
-    const args = MathFunctions.getArgs(array, property);
-    return median(...args);
+  static calcMedian(array, property) {
+    return median(MathFunctions._getSimpleArray(array, property));
   }
 
   /**
@@ -148,13 +142,12 @@ class MathFunctions {
    *
    * @static
    * @param {Array} array Array to find mean of
-   * @param {string} [property=null] Property name to iterate
+   * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
    * @returns {number} Mean of an array
    * @memberof MathFunctions
    */
-  static calcMean(array, property = null) {
-    const args = MathFunctions.getArgs(array, property);
-    return mean(...args);
+  static calcMean(array, property) {
+    return mean(MathFunctions._getSimpleArray(array, property));
   }
 
   /**
@@ -230,11 +223,8 @@ class MathFunctions {
    */
   static calcQuartiles(array, property) {
     const len = array.length;
-    const copy = array
-      .map(function(d) {
-        return property ? get(d, property) : d;
-      })
-      .sort((a, b) => a - b);
+    const simpleArray = MathFunctions._getSimpleArray(array, property);
+    const copy = simpleArray.sort((a, b) => a - b);
     return [
       copy[Math.round(len / 4) - 1],
       copy[Math.round(len / 2) - 1],

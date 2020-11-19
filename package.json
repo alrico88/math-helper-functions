@@ -34,9 +34,11 @@
 		"lodash": "^4.17.15"
 	},
 	"prettier": {
+		"arrowParens": "always",
+		"bracketSpacing": false,
 		"trailingComma": "es5",
 		"tabWidth": 2,
-		"semi": false,
+		"semi": true,
 		"singleQuote": true,
 		"eslintIntegration": true
 	},

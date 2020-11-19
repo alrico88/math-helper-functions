@@ -36,10 +36,10 @@ Returns array max value
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Max array value
 
-| Param      | Type                | Default           | Description                |
-| ---------- | ------------------- | ----------------- | -------------------------- |
-| array      | <code>Array</code>  |                   | Array to find max value of |
-| [property] | <code>string</code> | <code>null</code> | Property name to iterate   |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to find max value of                                                          |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcSum"></a>
 
@@ -50,10 +50,10 @@ Returns the sum of an array
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Sum of array values
 
-| Param      | Type                | Default           | Description              |
-| ---------- | ------------------- | ----------------- | ------------------------ |
-| array      | <code>Array</code>  |                   | Array to find sum of     |
-| [property] | <code>string</code> | <code>null</code> | Property name to iterate |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to find sum of                                                                |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcMin"></a>
 
@@ -64,10 +64,10 @@ Returns min value in array
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Min array value
 
-| Param      | Type                | Default           | Description                |
-| ---------- | ------------------- | ----------------- | -------------------------- |
-| array      | <code>Array</code>  |                   | Array to find min value of |
-| [property] | <code>string</code> | <code>null</code> | Property name to iterate   |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to find min value of                                                          |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcDomain"></a>
 
@@ -78,10 +78,10 @@ Returns min and max values in array
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>Array.&lt;number&gt;</code> - Min and max values in array
 
-| Param      | Type                                                                   | Default           | Description              |
-| ---------- | ---------------------------------------------------------------------- | ----------------- | ------------------------ |
-| array      | <code>Array.&lt;string&gt;</code> \| <code>Array.&lt;number&gt;</code> |                   | Array to calc domain of  |
-| [property] | <code>string</code>                                                    | <code>null</code> | Property name to iterate |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to calc domain of                                                             |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcMedian"></a>
 
@@ -92,10 +92,10 @@ Returns median value of array
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Median of an array
 
-| Param      | Type                | Default           | Description              |
-| ---------- | ------------------- | ----------------- | ------------------------ |
-| array      | <code>Array</code>  |                   | Array to find median of  |
-| [property] | <code>string</code> | <code>null</code> | Property name to iterate |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to find median of                                                             |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcWeightedMedian"></a>
 
@@ -121,10 +121,10 @@ Returns mean value of array
 **Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
 **Returns**: <code>number</code> - Mean of an array
 
-| Param      | Type                | Default           | Description              |
-| ---------- | ------------------- | ----------------- | ------------------------ |
-| array      | <code>Array</code>  |                   | Array to find mean of    |
-| [property] | <code>string</code> | <code>null</code> | Property name to iterate |
+| Param      | Type                | Description                                                                         |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
+| array      | <code>Array</code>  | Array to find mean of                                                               |
+| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
 
 <a name="MathFunctions.calcWeightedMean"></a>
 
