@@ -229,12 +229,12 @@ class MathFunctions {
   static calcQuartiles(array, property) {
     const len = array.length;
     const simpleArray = [...MathFunctions._getSimpleArray(array, property)];
-    const sorted = simpleArray.sort((a, b) => a - b);
+    simpleArray.sort((a, b) => a - b);
 
     return [
-      sorted[Math.round(len / 4) - 1],
-      sorted[Math.round(len / 2) - 1],
-      sorted[Math.round((len * 3) / 4) - 1],
+      simpleArray[Math.round(len / 4) - 1],
+      simpleArray[Math.round(len / 2) - 1],
+      simpleArray[Math.round((len * 3) / 4) - 1],
     ];
   }
 
