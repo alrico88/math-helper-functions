@@ -132,7 +132,7 @@ declare class MathFunctions {
      * @static
      * @param {any[]} array Array to get histogram from
      * @param {number} [numberOfBins=4] Number of bins to distribute data
-     * @param {string} [property] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
+     * @param {string} [property=undefined] Property to access in object arrays. Supports nested properties (ex: 'propA.propB')
      * @returns {number[]} Distribution data array
      * @memberof MathFunctions
      */
