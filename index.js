@@ -67,6 +67,7 @@ class MathFunctions {
    */
   static calcDomain(array, property) {
     const simpleArray = MathFunctions._getSimpleArray(array, property);
+
     return extent(simpleArray);
   }
 
@@ -109,6 +110,7 @@ class MathFunctions {
           weight: item[weightProperty],
         });
         acc.weightSum += item[weightProperty];
+
         return acc;
       },
       {
@@ -131,6 +133,7 @@ class MathFunctions {
     if (weight === midpoint) {
       const prevItem = get(sortedArray[index - 1], 'value', 0);
       const currItem = get(sortedArray[index], 'value', 0);
+
       return (prevItem + currItem) / 2;
     } else {
       return get(sortedArray[index - 1], 'value', 0);
@@ -171,6 +174,7 @@ class MathFunctions {
         return [upper, weight];
       })
       .reduce((acc, d) => [acc[0] + d[0], acc[1] + d[1]], [0, 0]);
+
     return result[0] / result[1];
   }
 
@@ -199,6 +203,7 @@ class MathFunctions {
   static calcDistribution(array, numOfBins) {
     const hist = numOfBins ? histogram().thresholds(numOfBins) : histogram();
     const dist = hist(array);
+
     return dist.reduce(
       (acc, {x0, x1, length}) => {
         acc.labels.push(`${x0} - ${x1}`);
@@ -223,12 +228,13 @@ class MathFunctions {
    */
   static calcQuartiles(array, property) {
     const len = array.length;
-    const simpleArray = MathFunctions._getSimpleArray(array, property);
-    const copy = simpleArray.sort((a, b) => a - b);
+    const simpleArray = [...MathFunctions._getSimpleArray(array, property)];
+    const sorted = simpleArray.sort((a, b) => a - b);
+
     return [
-      copy[Math.round(len / 4) - 1],
-      copy[Math.round(len / 2) - 1],
-      copy[Math.round((len * 3) / 4) - 1],
+      sorted[Math.round(len / 4) - 1],
+      sorted[Math.round(len / 2) - 1],
+      sorted[Math.round((len * 3) / 4) - 1],
     ];
   }
 
@@ -257,6 +263,7 @@ class MathFunctions {
         )
       ] += 1;
     }
+
     return bins;
   }
 
