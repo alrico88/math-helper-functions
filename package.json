@@ -1,6 +1,6 @@
 {
 	"name": "math-helper-functions",
-	"version": "1.7.2",
+	"version": "1.7.3",
 	"description": "Helper with misc. math functions such as sums, averages, max, min, etc",
 	"main": "index.js",
 	"author": "Alberto Rico",
