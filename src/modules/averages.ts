@@ -1,6 +1,7 @@
 import {mean, median} from 'd3-array';
 import {getSimpleArray} from './arrays';
-import {isEmpty, get} from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 
 /**
  * Gets an array median

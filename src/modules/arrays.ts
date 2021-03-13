@@ -1,4 +1,5 @@
-import {get, isEmpty} from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 
 /**
  * Accesor for arrays
@@ -9,7 +10,7 @@ import {get, isEmpty} from 'lodash';
  * @return {any[]} The resulting array
  */
 export function getSimpleArray(array: any[], property?: string): any[] {
-  if (!isEmpty(property)) {
+  if (isEmpty(property) === false) {
     return array.map((d) => get(d, property as string));
   } else {
     return array;
