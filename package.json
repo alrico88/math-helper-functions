@@ -52,7 +52,8 @@
 	},
 	"dependencies": {
 		"d3-array": "^2.0.3",
-		"lodash": "^4.17.21"
+		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21"
 	},
 	"prettier": {
 		"printWidth": 80,
