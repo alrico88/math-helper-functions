@@ -1,214 +1,354 @@
-<a name="MathFunctions"></a>
+# math-helper-functions
 
-## MathFunctions
+## Installation
 
-**Kind**: global class
+Using npm, `npm i math-helper-functions`.
 
-- [MathFunctions](#MathFunctions)
-  - [new MathFunctions()](#new_MathFunctions_new)
-  - [.calcMax(array, [property])](#MathFunctions.calcMax) ⇒ <code>number</code>
-  - [.calcSum(array, [property])](#MathFunctions.calcSum) ⇒ <code>number</code>
-  - [.calcMin(array, [property])](#MathFunctions.calcMin) ⇒ <code>number</code>
-  - [.calcDomain(array, [property])](#MathFunctions.calcDomain) ⇒ <code>Array.&lt;number&gt;</code>
-  - [.calcMedian(array, [property])](#MathFunctions.calcMedian) ⇒ <code>number</code>
-  - [.calcWeightedMedian(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMedian) ⇒ <code>number</code>
-  - [.calcMean(array, [property])](#MathFunctions.calcMean) ⇒ <code>number</code>
-  - [.calcWeightedMean(array, valueProperty, weightProperty)](#MathFunctions.calcWeightedMean) ⇒ <code>number</code>
-  - [.calcPercent(toCalc, total)](#MathFunctions.calcPercent) ⇒ <code>number</code>
-  - [.calcDistribution(array, [numOfBins])](#MathFunctions.calcDistribution) ⇒ <code>Object</code>
-  - [.calcQuartiles(array, [property])](#MathFunctions.calcQuartiles) ⇒ <code>Array.&lt;number&gt;</code>
-  - [.calcHistogram(array, [numberOfBins], [property])](#MathFunctions.calcHistogram) ⇒ <code>Array.&lt;number&gt;</code>
-  - [.ruleOfThree(ifThis, isThis, thenThat)](#MathFunctions.ruleOfThree) ⇒ <code>number</code>
+Using yarn, `yarn add math-helper-functions`.
 
-<a name="new_MathFunctions_new"></a>
+## Usage
 
-### new MathFunctions()
+Using `import`
 
-MathFunctions class
-Compendium of math-related functions
+```javascript
+import { calcSum } from 'math-helper-functions';
 
-<a name="MathFunctions.calcMax"></a>
+const input = [{ item: 'bookA', count: 3 }, { item: 'bookB', count: 4 }];
 
-### MathFunctions.calcMax(array, [property]) ⇒ <code>number</code>
+const totalBooks = calcSum(input, 'count'); // totalBooks is 7
+```
 
-Returns array max value
+In a CommonJS environment
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Max array value
+```javascript
+const { calcDomain } = require('math-helper-functions');
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to find max value of                                                          |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+const input = [
+  { item: 'bookA', count: 3 },
+  { item: 'bookB', count: 10 },
+  { item: 'bookC', count: 1 },
+];
 
-<a name="MathFunctions.calcSum"></a>
+const domain = calcDomain(input, 'count'); // domain is [1, 10]
+```
 
-### MathFunctions.calcSum(array, [property]) ⇒ <code>number</code>
+## Table of contents
 
-Returns the sum of an array
+### Functions
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Sum of array values
+- [calcDistribution](modules.md#calcdistribution)
+- [calcDomain](modules.md#calcdomain)
+- [calcHistogram](modules.md#calchistogram)
+- [calcMax](modules.md#calcmax)
+- [calcMean](modules.md#calcmean)
+- [calcMedian](modules.md#calcmedian)
+- [calcMin](modules.md#calcmin)
+- [calcPercent](modules.md#calcpercent)
+- [calcQuartiles](modules.md#calcquartiles)
+- [calcSum](modules.md#calcsum)
+- [calcWeightedMean](modules.md#calcweightedmean)
+- [calcWeightedMedian](modules.md#calcweightedmedian)
+- [ruleOfThree](modules.md#ruleofthree)
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to find sum of                                                                |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+## Functions
 
-<a name="MathFunctions.calcMin"></a>
+### calcDistribution
 
-### MathFunctions.calcMin(array, [property]) ⇒ <code>number</code>
+▸ **calcDistribution**(`array`: _any_[], `numOfBins?`: _number_): IDistribution
 
-Returns min value in array
+Calculates the distribution of an arrays values
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Min array value
+**`export`**
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to find min value of                                                          |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+#### Parameters:
 
-<a name="MathFunctions.calcDomain"></a>
+| Name         | Type     | Description |
+| :----------- | :------- | :---------- |
+| `array`      | _any_[]  | Input array |
+| `numOfBins?` | _number_ | -           |
 
-### MathFunctions.calcDomain(array, [property]) ⇒ <code>Array.&lt;number&gt;</code>
+**Returns:** IDistribution
 
-Returns min and max values in array
+The distribution
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Array.&lt;number&gt;</code> - Min and max values in array
+Defined in: [modules/distributions.ts:22](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L22)
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to calc domain of                                                             |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+---
 
-<a name="MathFunctions.calcMedian"></a>
+### calcDomain
 
-### MathFunctions.calcMedian(array, [property]) ⇒ <code>number</code>
+▸ **calcDomain**(`array`: _any_[], `property?`: _string_): [*number*, *number*] \| [*any*, *any*]
 
-Returns median value of array
+Gets the [min, max] value in an array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Median of an array
+**`export`**
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to find median of                                                             |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+#### Parameters:
 
-<a name="MathFunctions.calcWeightedMedian"></a>
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
 
-### MathFunctions.calcWeightedMedian(array, valueProperty, weightProperty) ⇒ <code>number</code>
+**Returns:** [*number*, *number*] \| [*any*, *any*]
 
-Returns weighted median of array
+The domain
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Weighted median
+Defined in: [modules/domain.ts:36](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L36)
 
-| Param          | Type                              | Description                           |
-| -------------- | --------------------------------- | ------------------------------------- |
-| array          | <code>Array.&lt;object&gt;</code> | Array to find weighted median of      |
-| valueProperty  | <code>string</code>               | Property to use for array item value  |
-| weightProperty | <code>string</code>               | Property to use for array item weight |
+---
 
-<a name="MathFunctions.calcMean"></a>
+### calcHistogram
 
-### MathFunctions.calcMean(array, [property]) ⇒ <code>number</code>
+▸ **calcHistogram**(`array`: _any_[], `numberOfBins?`: _number_, `property?`: _string_): _number_[]
 
-Returns mean value of array
+Calculates a histogram from array values
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Mean of an array
+**`export`**
 
-| Param      | Type                | Description                                                                         |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------- |
-| array      | <code>Array</code>  | Array to find mean of                                                               |
-| [property] | <code>string</code> | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+#### Parameters:
 
-<a name="MathFunctions.calcWeightedMean"></a>
+| Name           | Type     | Default value | Description |
+| :------------- | :------- | :------------ | :---------- |
+| `array`        | _any_[]  | -             | Input array |
+| `numberOfBins` | _number_ | 4             | -           |
+| `property?`    | _string_ | -             | -           |
 
-### MathFunctions.calcWeightedMean(array, valueProperty, weightProperty) ⇒ <code>number</code>
+**Returns:** _number_[]
 
-Returns weighted mean of array
+The histogram
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Weighted mean
+Defined in: [modules/distributions.ts:68](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L68)
 
-| Param          | Type                              | Description                           |
-| -------------- | --------------------------------- | ------------------------------------- |
-| array          | <code>Array.&lt;object&gt;</code> | Array to find weighted mean of        |
-| valueProperty  | <code>string</code>               | Property to use for array item value  |
-| weightProperty | <code>string</code>               | Property to use for array item weight |
+---
 
-<a name="MathFunctions.calcPercent"></a>
+### calcMax
 
-### MathFunctions.calcPercent(toCalc, total) ⇒ <code>number</code>
+▸ **calcMax**(`array`: _any_[], `property?`: _string_): _number_
 
-Calculate percentage using rule of three
+Gets the max value in an array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - Percentage
+**`export`**
 
-| Param  | Type                | Description               |
-| ------ | ------------------- | ------------------------- |
-| toCalc | <code>number</code> | Number to find percent of |
-| total  | <code>number</code> | Total                     |
+#### Parameters:
 
-<a name="MathFunctions.calcDistribution"></a>
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
 
-### MathFunctions.calcDistribution(array, [numOfBins]) ⇒ <code>Object</code>
+**Returns:** _number_
 
-Gets array distribution
+The maximum value in the array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Object</code> - Distribution of the array's values
+Defined in: [modules/domain.ts:12](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L12)
 
-| Param       | Type                              | Description                      |
-| ----------- | --------------------------------- | -------------------------------- |
-| array       | <code>Array.&lt;number&gt;</code> | Array to find distribution of    |
-| [numOfBins] | <code>number</code>               | Number of bins to use (optional) |
+---
 
-<a name="MathFunctions.calcQuartiles"></a>
+### calcMean
 
-### MathFunctions.calcQuartiles(array, [property]) ⇒ <code>Array.&lt;number&gt;</code>
+▸ **calcMean**(`array`: _any_[], `property?`: _string_): _number_ \| _undefined_
 
-Calcs quartiles of data array
+Gets the mean value for an array
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Array.&lt;number&gt;</code> - [min, mean, max] quartiles
+**`export`**
 
-| Param      | Type                           | Description                                                                         |
-| ---------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-| array      | <code>Array.&lt;any&gt;</code> | Array to find quartiles of                                                          |
-| [property] | <code>string</code>            | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+#### Parameters:
 
-<a name="MathFunctions.calcHistogram"></a>
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
 
-### MathFunctions.calcHistogram(array, [numberOfBins], [property]) ⇒ <code>Array.&lt;number&gt;</code>
+**Returns:** _number_ \| _undefined_
 
-Calcs histogram from data array
+The mean value
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>Array.&lt;number&gt;</code> - Distribution data array
+Defined in: [modules/averages.ts:93](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L93)
 
-| Param          | Type                           | Default        | Description                                                                         |
-| -------------- | ------------------------------ | -------------- | ----------------------------------------------------------------------------------- |
-| array          | <code>Array.&lt;any&gt;</code> |                | Array to get histogram from                                                         |
-| [numberOfBins] | <code>number</code>            | <code>4</code> | Number of bins to distribute data                                                   |
-| [property]     | <code>string</code>            |                | Property to access in object arrays. Supports nested properties (ex: 'propA.propB') |
+---
 
-<a name="MathFunctions.ruleOfThree"></a>
+### calcMedian
 
-### MathFunctions.ruleOfThree(ifThis, isThis, thenThat) ⇒ <code>number</code>
+▸ **calcMedian**(`array`: _any_[], `property?`: _string_): _number_ \| _undefined_
 
-Performs a rule of three calculation
+Gets an array median
 
-**Kind**: static method of [<code>MathFunctions</code>](#MathFunctions)  
-**Returns**: <code>number</code> - The result of the rule of three
+**`export`**
 
-| Param    | Type                | Description    |
-| -------- | ------------------- | -------------- |
-| ifThis   | <code>number</code> | First premise  |
-| isThis   | <code>number</code> | First result   |
-| thenThat | <code>number</code> | Second premise |
+#### Parameters:
+
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
+
+**Returns:** _number_ \| _undefined_
+
+The resulting median
+
+Defined in: [modules/averages.ts:13](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L13)
+
+---
+
+### calcMin
+
+▸ **calcMin**(`array`: _any_[], `property?`: _string_): _number_
+
+Gets the min value in an array
+
+**`export`**
+
+#### Parameters:
+
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
+
+**Returns:** _number_
+
+The minimum value in the array
+
+Defined in: [modules/domain.ts:24](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L24)
+
+---
+
+### calcPercent
+
+▸ **calcPercent**(`toCalc`: _number_, `total`: _number_): _number_
+
+Calculates the percentage of a value, given a total
+
+**`export`**
+
+#### Parameters:
+
+| Name     | Type     | Description                 |
+| :------- | :------- | :-------------------------- |
+| `toCalc` | _number_ | Number to get percentage of |
+| `total`  | _number_ | Total                       |
+
+**Returns:** _number_
+
+Percentage of the total
+
+Defined in: [modules/percentages.ts:22](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/percentages.ts#L22)
+
+---
+
+### calcQuartiles
+
+▸ **calcQuartiles**(`array`: _any_[], `property`: _string_): [*number*, *number*, *number*]
+
+Gets the quartiles of an array
+
+**`export`**
+
+#### Parameters:
+
+| Name       | Type     | Description        |
+| :--------- | :------- | :----------------- |
+| `array`    | _any_[]  | Input array        |
+| `property` | _string_ | Property to map by |
+
+**Returns:** [*number*, *number*, *number*]
+
+The quartiles
+
+Defined in: [modules/distributions.ts:47](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L47)
+
+---
+
+### calcSum
+
+▸ **calcSum**(`array`: _any_[], `property?`: _string_): _number_
+
+Gets the sum of the values in an array
+
+**`export`**
+
+#### Parameters:
+
+| Name        | Type     | Description |
+| :---------- | :------- | :---------- |
+| `array`     | _any_[]  | Input array |
+| `property?` | _string_ | -           |
+
+**Returns:** _number_
+
+The sum
+
+Defined in: [modules/operations.ts:12](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/operations.ts#L12)
+
+---
+
+### calcWeightedMean
+
+▸ **calcWeightedMean**(`array`: _any_[], `valueProperty`: _string_, `weightProperty`: _string_): _number_
+
+Gets the weighted mean for an array
+
+**`export`**
+
+#### Parameters:
+
+| Name             | Type     | Description                |
+| :--------------- | :------- | :------------------------- |
+| `array`          | _any_[]  | Input array                |
+| `valueProperty`  | _string_ | Property to use for value  |
+| `weightProperty` | _string_ | Property to use for weight |
+
+**Returns:** _number_
+
+The weighted mean
+
+Defined in: [modules/averages.ts:106](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L106)
+
+---
+
+### calcWeightedMedian
+
+▸ **calcWeightedMedian**(`array`: _any_[], `valueProperty`: _string_, `weightProperty`: _string_): _number_
+
+Gets an array weighted median
+
+**`export`**
+
+#### Parameters:
+
+| Name             | Type     | Description                   |
+| :--------------- | :------- | :---------------------------- |
+| `array`          | _any_[]  | Input array                   |
+| `valueProperty`  | _string_ | The property to use as value  |
+| `weightProperty` | _string_ | The property to use as weight |
+
+**Returns:** _number_
+
+The resulting median
+
+Defined in: [modules/averages.ts:41](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L41)
+
+---
+
+### ruleOfThree
+
+▸ **ruleOfThree**(`ifThis`: _number_, `isThis`: _number_, `thenThat`: _number_): _number_
+
+Performs a simple rule of three
+
+**`export`**
+
+#### Parameters:
+
+| Name       | Type     | Description  |
+| :--------- | :------- | :----------- |
+| `ifThis`   | _number_ | First param  |
+| `isThis`   | _number_ | First result |
+| `thenThat` | _number_ | Second param |
+
+**Returns:** _number_
+
+Second result
+
+Defined in: [modules/percentages.ts:10](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/percentages.ts#L10)
