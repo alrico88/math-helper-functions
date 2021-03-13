@@ -1,0 +1,193 @@
+import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree} from '../src';
+
+const testArray = [1, 1, 2, 3, 3];
+
+const testObjArray = testArray.map((d) => ({
+  value: d,
+}));
+
+describe('Testing SUM methods', () => {
+  const expectedResult = 10;
+  test('Simple array sum should return the sum of the values', () => {
+    expect(calcSum(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the sum values', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcSum(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays sum should be equal to the sum of the array\'s item values', () => {
+    expect(calcSum(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays sum with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcSum(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing MAX methods', () => {
+  const expectedResult = 3;
+  test('Simple array\'s max should return the highest number in the series', () => {
+    expect(calcMax(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the highest number', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcMax(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays max should be equal to the max of the array\'s item values', () => {
+    expect(calcMax(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays max with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcMax(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing MIN methods', () => {
+  const expectedResult = 1;
+  test('Simple array\'s min should return the lowest number in the series', () => {
+    expect(calcMin(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the lowest number', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcMin(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays min should be equal to the min of the array\'s item values', () => {
+    expect(calcMin(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays min with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcMin(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing DOMAIN methods', () => {
+  const expectedResult = [1, 3];
+  test('Simple array\'s domain should return the lowest and highest number in the series', () => {
+    expect(calcDomain(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the domain', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcDomain(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays domain should be equal to the domain of the array\'s item values', () => {
+    expect(calcDomain(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays domain with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcDomain(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing MEAN methods', () => {
+  const expectedResult = 2;
+  test('Simple array\'s mean should return the mean of the series', () => {
+    expect(calcMean(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the mean', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcMean(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays mean should be equal to the mean of the array\'s item values', () => {
+    expect(calcMean(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays mean with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcMean(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing WEIGHTED MEAN methods', () => {
+  const weightedSimpleArray = testArray.map((d, index) => ({
+    value: d,
+    weight: index + 1,
+  }));
+  const expectedSimpleResult
+    = calcSum(weightedSimpleArray.map((d) => d.value * d.weight))
+    / calcSum(weightedSimpleArray.map((d) => d.weight));
+
+  const weightedObjectArray = testObjArray.map((d, index) => ({
+    value: d.value,
+    weight: index + 1,
+  }));
+  const expectedObjectResult
+    = calcSum(weightedObjectArray.map((d) => d.value * d.weight))
+    / calcSum(weightedObjectArray.map((d) => d.weight));
+
+  test('Simple array\'s weighted mean should equal dividing the sum of values multiplied by their weight, by the sum of the weights', () => {
+    expect(calcWeightedMean(weightedSimpleArray, 'value', 'weight')).toStrictEqual(expectedSimpleResult);
+  });
+
+  test('Arrays containing empty values should not change the weighted mean', () => {
+    const arrayWithNulls = [null, ...weightedSimpleArray, null];
+    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(expectedSimpleResult);
+  });
+
+  test('Object arrays weighted mean should be equal to the mean of the array\'s item values', () => {
+    expect(calcWeightedMean(weightedObjectArray, 'value', 'weight')).toStrictEqual(expectedObjectResult);
+  });
+
+  test('Object arrays weighted mean with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...weightedObjectArray];
+    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(expectedObjectResult);
+  });
+});
+
+describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
+  const weightedSimpleArray = testArray.map((d) => ({
+    value: d,
+    weight: 1,
+  }));
+  test('The weighted median of elements with the same weight should be the median of the array values', () => {
+    expect(calcWeightedMedian(weightedSimpleArray, 'value', 'weight')).toStrictEqual(calcMedian(weightedSimpleArray, 'value'));
+  });
+
+  test('The weighted median of an empty array should be 0', () => {
+    expect(calcWeightedMedian([], 'value', 'weight')).toStrictEqual(0);
+  });
+
+  test('The weighted median of an array with one element should be that same value', () => {
+    expect(calcWeightedMedian(
+        weightedSimpleArray.slice(0, 1),
+        'value',
+        'weight'
+      )).toStrictEqual(weightedSimpleArray[0].value);
+  });
+
+  test('The weighted median of elements with different weight should not be the median of the array values', () => {
+    expect(calcWeightedMedian(
+        weightedSimpleArray.map((d, index) => ({
+          value: d.value,
+          weight: index + 1,
+        })),
+        'value',
+        'weight'
+      )).not.toEqual(calcMedian(weightedSimpleArray, 'value'));
+  });
+});
+
+describe('Testing PERCENTAGE methods', () => {
+  test('Percentages should work correctly', () => {
+    expect(calcPercent(20, 100)).toStrictEqual(20 * 100 / 100);
+  });
+});
+
+describe('Testing RULE OF THREE methods', () => {
+  test('Calculating according to rule of three should work according to math', () => {
+    expect(ruleOfThree(20, 20, 100)).toStrictEqual(20 * 100 / 20);
+  });
+});
