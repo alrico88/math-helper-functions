@@ -36,19 +36,19 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 
 ### Functions
 
-- [calcDistribution](modules.md#calcdistribution)
-- [calcDomain](modules.md#calcdomain)
-- [calcHistogram](modules.md#calchistogram)
-- [calcMax](modules.md#calcmax)
-- [calcMean](modules.md#calcmean)
-- [calcMedian](modules.md#calcmedian)
-- [calcMin](modules.md#calcmin)
-- [calcPercent](modules.md#calcpercent)
-- [calcQuartiles](modules.md#calcquartiles)
-- [calcSum](modules.md#calcsum)
-- [calcWeightedMean](modules.md#calcweightedmean)
-- [calcWeightedMedian](modules.md#calcweightedmedian)
-- [ruleOfThree](modules.md#ruleofthree)
+- [calcDistribution](#calcdistribution)
+- [calcDomain](#calcdomain)
+- [calcHistogram](#calchistogram)
+- [calcMax](#calcmax)
+- [calcMean](#calcmean)
+- [calcMedian](#calcmedian)
+- [calcMin](#calcmin)
+- [calcPercent](#calcpercent)
+- [calcQuartiles](#calcquartiles)
+- [calcSum](#calcsum)
+- [calcWeightedMean](#calcweightedmean)
+- [calcWeightedMedian](#calcweightedmedian)
+- [ruleOfThree](#ruleofthree)
 
 ## Functions
 
