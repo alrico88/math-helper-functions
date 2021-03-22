@@ -1,10 +1,20 @@
 import {histogram} from 'd3-array';
 import {getSimpleArray} from './arrays';
 import {calcDomain} from './domain';
+import {calcSum} from './operations';
+import {calcPercent} from './percentages';
 
 interface IDistribution {
   labels: string[];
   data: number[];
+}
+
+interface IDistributionArrayItem {
+  label: string;
+  count: number;
+  percentage: number;
+  from: number;
+  to: number;
 }
 
 function isNullOrUndefined(element: any): boolean {
@@ -34,6 +44,46 @@ export function calcDistribution(array: any[], numOfBins?: number): IDistributio
       data: [],
     }
   );
+}
+
+/**
+ * Gets the min and max values for a calcDistribution bucket
+ *
+ * @export
+ * @param  {string} bucketLabel The bucket label
+ * @return {number[]} [min, max]
+ */
+export function getMinMaxFromBucket(bucketLabel: string): number[] {
+  const [min, max] = bucketLabel.split(' - ');
+
+  return [Number(min.trim()), Number(max.trim())];
+}
+
+/**
+ * Calculates the distribution of an arrays values and outputs an array
+ *
+ * @export
+ * @param  {number[]} array Array to calc distribution of
+ * @param  {number} [numOfBins] Number of bins to use
+ * @return {IDistributionArrayItem[]} The distribution as an array of objects
+ */
+export function calcDistributionAsArray(array: number[], numOfBins?: number): IDistributionArrayItem[] {
+  const distribution = calcDistribution(array, numOfBins);
+
+  const total = calcSum(distribution.data);
+
+  return distribution.labels.map((label, index) => {
+    const indexValue = distribution.data[index];
+    const [from, to] = getMinMaxFromBucket(label);
+
+    return {
+      label,
+      count: indexValue,
+      percentage: calcPercent(indexValue, total),
+      from,
+      to,
+    };
+  });
 }
 
 /**

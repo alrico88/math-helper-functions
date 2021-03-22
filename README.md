@@ -71,7 +71,7 @@ Calculates the distribution of an arrays values
 
 The distribution
 
-Defined in: [modules/distributions.ts:22](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L22)
+Defined in: [modules/distributions.ts:32](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L32)
 
 ---
 
@@ -94,7 +94,7 @@ Gets the [min, max] value in an array
 
 The domain
 
-Defined in: [modules/domain.ts:36](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L36)
+Defined in: [modules/domain.ts:36](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L36)
 
 ---
 
@@ -118,7 +118,7 @@ Calculates a histogram from array values
 
 The histogram
 
-Defined in: [modules/distributions.ts:68](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L68)
+Defined in: [modules/distributions.ts:118](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L118)
 
 ---
 
@@ -141,7 +141,7 @@ Gets the max value in an array
 
 The maximum value in the array
 
-Defined in: [modules/domain.ts:12](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L12)
+Defined in: [modules/domain.ts:12](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L12)
 
 ---
 
@@ -164,7 +164,7 @@ Gets the mean value for an array
 
 The mean value
 
-Defined in: [modules/averages.ts:93](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L93)
+Defined in: [modules/averages.ts:94](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L94)
 
 ---
 
@@ -187,7 +187,7 @@ Gets an array median
 
 The resulting median
 
-Defined in: [modules/averages.ts:13](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L13)
+Defined in: [modules/averages.ts:14](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L14)
 
 ---
 
@@ -210,7 +210,7 @@ Gets the min value in an array
 
 The minimum value in the array
 
-Defined in: [modules/domain.ts:24](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/domain.ts#L24)
+Defined in: [modules/domain.ts:24](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L24)
 
 ---
 
@@ -233,7 +233,7 @@ Calculates the percentage of a value, given a total
 
 Percentage of the total
 
-Defined in: [modules/percentages.ts:22](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/percentages.ts#L22)
+Defined in: [modules/percentages.ts:22](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/percentages.ts#L22)
 
 ---
 
@@ -256,7 +256,7 @@ Gets the quartiles of an array
 
 The quartiles
 
-Defined in: [modules/distributions.ts:47](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/distributions.ts#L47)
+Defined in: [modules/distributions.ts:97](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L97)
 
 ---
 
@@ -279,7 +279,7 @@ Gets the sum of the values in an array
 
 The sum
 
-Defined in: [modules/operations.ts:12](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/operations.ts#L12)
+Defined in: [modules/operations.ts:12](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/operations.ts#L12)
 
 ---
 
@@ -303,7 +303,7 @@ Gets the weighted mean for an array
 
 The weighted mean
 
-Defined in: [modules/averages.ts:106](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L106)
+Defined in: [modules/averages.ts:107](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L107)
 
 ---
 
@@ -327,7 +327,7 @@ Gets an array weighted median
 
 The resulting median
 
-Defined in: [modules/averages.ts:41](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/averages.ts#L41)
+Defined in: [modules/averages.ts:42](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L42)
 
 ---
 
@@ -351,4 +351,4 @@ Performs a simple rule of three
 
 Second result
 
-Defined in: [modules/percentages.ts:10](https://github.com/alrico88/math-helper-functions/blob/44aaebf/src/modules/percentages.ts#L10)
+Defined in: [modules/percentages.ts:10](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/percentages.ts#L10)
