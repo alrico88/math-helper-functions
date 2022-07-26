@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import is from '@sindresorhus/is';
+import isEmpty from 'lodash/isEmpty';
 
 /**
  * Accesor for arrays
@@ -11,8 +11,8 @@ import is from '@sindresorhus/is';
  * @return {any[]} The resulting array
  */
 export function getSimpleArray<T>(array: T[], property?: string): any[] {
-  if (!is.nullOrUndefined(property)) {
-    return array.map((d) => get(d, property));
+  if (!isEmpty(property)) {
+    return array.map((d) => get(d, property as string));
   } else {
     return array;
   }
