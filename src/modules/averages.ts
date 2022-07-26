@@ -1,7 +1,7 @@
-import {mean, median} from 'd3-array';
+import {deviation, mean, median, variance} from 'd3-array';
 import {getSimpleArray} from './arrays';
 import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
+import is from '@sindresorhus/is';
 
 /**
  * Gets an array median
@@ -44,7 +44,7 @@ export function calcWeightedMedian(array: any[], valueProperty: string, weightPr
   if (!valueProperty || !weightProperty) {
     throw new Error('Both valueProperty and weightProperty params are required');
   }
-  if (isEmpty(array)) {
+  if (is.emptyArray(array)) {
     return 0;
   }
 
@@ -118,4 +118,30 @@ export function calcWeightedMean(array: any[], valueProperty: string, weightProp
     .reduce((acc: number[], d: number[]) => [acc[0] + d[0], acc[1] + d[1]], [0, 0]);
 
   return result[0] / result[1];
+}
+
+/**
+ * Calculates the variance in an array of numbers
+ *
+ * @export
+ * @template T
+ * @param {T[]} array
+ * @param {string} [property]
+ * @return {(number | undefined)}
+ */
+export function calcVariance<T>(array: T[], property?: string): number | undefined {
+  return variance(getSimpleArray(array, property));
+}
+
+/**
+ * Calculates the standard deviation in an array of numbers
+ *
+ * @export
+ * @template T
+ * @param {T[]} array
+ * @param {string} [property]
+ * @return {(number | undefined)}
+ */
+export function calcStdDeviation<T>(array: T[], property?: string): number | undefined {
+  return deviation(getSimpleArray(array, property));
 }

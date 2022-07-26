@@ -1,4 +1,4 @@
-import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree} from '../src';
+import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree, calcStdDeviation, calcVariance} from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
 
@@ -189,5 +189,17 @@ describe('Testing PERCENTAGE methods', () => {
 describe('Testing RULE OF THREE methods', () => {
   test('Calculating according to rule of three should work according to math', () => {
     expect(ruleOfThree(20, 20, 100)).toStrictEqual(20 * 100 / 20);
+  });
+});
+
+describe('Testing VARIANCE methods', () => {
+  test('Calculating according to variance formula should work according to math', () => {
+    expect(calcVariance([0, 5, 10])).toStrictEqual(25);
+  });
+});
+
+describe('Testing STD DEVIATION methods', () => {
+  test('Calculating according to standard deviation formula should work according to math', () => {
+    expect(calcStdDeviation([0, 5, 10])).toStrictEqual(5);
   });
 });
