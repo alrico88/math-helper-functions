@@ -1,4 +1,4 @@
-import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree, calcStdDeviation, calcVariance} from '../src';
+import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree, calcStdDeviation, calcVariance, calcDiff} from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
 
@@ -66,6 +66,27 @@ describe('Testing MIN methods', () => {
   test('Object arrays min with null values should not cause errors or alter the result', () => {
     const arrayWithNulls = [null, ...testObjArray];
     expect(calcMin(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
+  });
+});
+
+describe('Testing DIFF methods', () => {
+  const expectedResult = 2;
+  test('Simple array\'s diff should return the difference of the domain in the series', () => {
+    expect(calcDiff(testArray)).toStrictEqual(expectedResult);
+  });
+
+  test('Arrays containing empty values should not change the diff', () => {
+    const arrayWithNulls = [null, ...testArray, null];
+    expect(calcDiff(arrayWithNulls)).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays diff should be equal to the diff of the array\'s item values', () => {
+    expect(calcDiff(testObjArray, 'value')).toStrictEqual(expectedResult);
+  });
+
+  test('Object arrays diff with null values should not cause errors or alter the result', () => {
+    const arrayWithNulls = [null, ...testObjArray];
+    expect(calcDiff(arrayWithNulls, 'value')).toStrictEqual(expectedResult);
   });
 });
 

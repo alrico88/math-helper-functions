@@ -36,3 +36,17 @@ export function calcMin(array: any[], property?: string): number {
 export function calcDomain(array: any[], property?: string): [number, number] | [any, any] {
   return extent(getSimpleArray(array, property));
 }
+
+/**
+ * Gets the absolute difference between the max and min value in an array
+ *
+ * @export
+ * @param {any[]} array Input array
+ * @param {string} [property] Property to map by
+ * @return {number} Absolute difference between the max and min of an array
+ */
+export function calcDiff(array: any[], property?: string): number {
+  const [minVal, maxVal] = calcDomain(array, property);
+
+  return Math.abs(maxVal - minVal);
+}
