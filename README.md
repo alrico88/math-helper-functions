@@ -38,6 +38,7 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 
 - [calcDistribution](#calcdistribution)
 - [calcDomain](#calcdomain)
+- [calcDiff](#calcdiff)
 - [calcHistogram](#calchistogram)
 - [calcMax](#calcmax)
 - [calcMean](#calcmean)
@@ -71,8 +72,6 @@ Calculates the distribution of an arrays values
 
 The distribution
 
-Defined in: [modules/distributions.ts:32](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L32)
-
 ---
 
 ### calcDomain
@@ -94,9 +93,28 @@ Gets the [min, max] value in an array
 
 The domain
 
-Defined in: [modules/domain.ts:36](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L36)
-
 ---
+
+### calcDiff
+
+▸ **calcDiff**(`array`: *any*[], `property?`: *string*): *number*
+
+Gets the absolute difference between the max and min value in an array
+
+**`export`** 
+
+#### Parameters:
+
+| Name        | Type     | Description   |
+| :---------- | :------- | :------------ |
+| `array`     | *any*[]  | Input array   |
+| `property?` | *string* | -             |
+
+**Returns:** *number*
+
+Absolute difference between the max and min of an array
+
+___
 
 ### calcHistogram
 
@@ -117,8 +135,6 @@ Calculates a histogram from array values
 **Returns:** _number_[]
 
 The histogram
-
-Defined in: [modules/distributions.ts:118](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L118)
 
 ---
 
@@ -141,8 +157,6 @@ Gets the max value in an array
 
 The maximum value in the array
 
-Defined in: [modules/domain.ts:12](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L12)
-
 ---
 
 ### calcMean
@@ -163,8 +177,6 @@ Gets the mean value for an array
 **Returns:** _number_ \| _undefined_
 
 The mean value
-
-Defined in: [modules/averages.ts:94](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L94)
 
 ---
 
@@ -187,8 +199,6 @@ Gets an array median
 
 The resulting median
 
-Defined in: [modules/averages.ts:14](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L14)
-
 ---
 
 ### calcMin
@@ -209,8 +219,6 @@ Gets the min value in an array
 **Returns:** _number_
 
 The minimum value in the array
-
-Defined in: [modules/domain.ts:24](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/domain.ts#L24)
 
 ---
 
@@ -233,8 +241,6 @@ Calculates the percentage of a value, given a total
 
 Percentage of the total
 
-Defined in: [modules/percentages.ts:22](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/percentages.ts#L22)
-
 ---
 
 ### calcQuartiles
@@ -256,8 +262,6 @@ Gets the quartiles of an array
 
 The quartiles
 
-Defined in: [modules/distributions.ts:97](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/distributions.ts#L97)
-
 ---
 
 ### calcSum
@@ -278,8 +282,6 @@ Gets the sum of the values in an array
 **Returns:** _number_
 
 The sum
-
-Defined in: [modules/operations.ts:12](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/operations.ts#L12)
 
 ---
 
@@ -303,8 +305,6 @@ Gets the weighted mean for an array
 
 The weighted mean
 
-Defined in: [modules/averages.ts:107](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L107)
-
 ---
 
 ### calcWeightedMedian
@@ -327,8 +327,6 @@ Gets an array weighted median
 
 The resulting median
 
-Defined in: [modules/averages.ts:42](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/averages.ts#L42)
-
 ---
 
 ### ruleOfThree
@@ -350,5 +348,3 @@ Performs a simple rule of three
 **Returns:** _number_
 
 Second result
-
-Defined in: [modules/percentages.ts:10](https://github.com/alrico88/math-helper-functions/blob/7ccd58b/src/modules/percentages.ts#L10)
