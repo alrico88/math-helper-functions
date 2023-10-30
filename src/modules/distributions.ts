@@ -127,7 +127,7 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
  *
  * @export
  * @param  {number[]} array Array to calc distribution of
- * @param binsStrict
+ * @param {boolean} [binsStrict=false] Should the buckets contain strictly the domain values or should they include their rounded value
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistributionArrayItem[]} The distribution as an array of objects
  */
