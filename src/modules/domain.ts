@@ -1,5 +1,5 @@
-import {max, min, extent} from 'd3-array';
-import {getSimpleArray} from './arrays';
+import { max, min, extent } from 'd3-array';
+import { getSimpleArray } from './arrays';
 
 /**
  * Gets the max value in an array

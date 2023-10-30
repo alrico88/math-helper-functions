@@ -1,7 +1,9 @@
-import {deviation, mean, median, variance} from 'd3-array';
-import {getSimpleArray} from './arrays';
-import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
+import {
+  deviation, mean, median, variance,
+} from 'd3-array';
+import { get } from 'lodash-es';
+import is from '@sindresorhus/is';
+import { getSimpleArray } from './arrays';
 
 /**
  * Gets an array median
@@ -17,6 +19,7 @@ export function calcMedian(array: any[], property?: string): number | undefined 
 
 class WeightedItem {
   public value: number;
+
   public weight: number;
 
   constructor(value: number, weight: number) {
@@ -39,26 +42,30 @@ interface IWeightReducer {
  * @param  {string} weightProperty The property to use as weight
  * @return {number} The resulting median
  */
-export function calcWeightedMedian(array: any[], valueProperty: string, weightProperty: string): number {
+export function calcWeightedMedian(
+  array: any[],
+  valueProperty: string,
+  weightProperty: string,
+): number {
   // Prevent undefined problems
   if (!valueProperty || !weightProperty) {
     throw new Error('Both valueProperty and weightProperty params are required');
   }
-  if (isEmpty(array)) {
+  if (is.emptyArray(array)) {
     return 0;
   }
 
-  const {array: arrayToSort, weightSum} = array.reduce(
-    (acc: IWeightReducer, item) => {
-      acc.array.push(new WeightedItem(item[valueProperty], item[weightProperty]));
-      acc.weightSum += item[weightProperty];
+  const { array: arrayToSort, weightSum } = array.reduce(
+    (agg: IWeightReducer, item) => {
+      agg.array.push(new WeightedItem(item[valueProperty], item[weightProperty]));
+      agg.weightSum += item[weightProperty];
 
-      return acc;
+      return agg;
     },
     {
       array: [],
       weightSum: 0,
-    }
+    },
   );
 
   const sortedArray = arrayToSort.sort((a, b) => a.value - b.value);
@@ -78,9 +85,8 @@ export function calcWeightedMedian(array: any[], valueProperty: string, weightPr
     const currItem = get(sortedArray[index], 'value', 0);
 
     return (prevItem + currItem) / 2;
-  } else {
-    return get(sortedArray[index - 1], 'value', 0);
   }
+  return get(sortedArray[index - 1], 'value', 0);
 }
 
 /**
@@ -104,8 +110,12 @@ export function calcMean(array: any[], property?: string): number | undefined {
  * @param  {string} weightProperty Property to use for weight
  * @return {number} The weighted mean
  */
-export function calcWeightedMean(array: any[], valueProperty: string, weightProperty: string): number {
-  if (!valueProperty || !weightProperty) {
+export function calcWeightedMean(
+  array: any[],
+  valueProperty: string,
+  weightProperty: string,
+): number {
+  if (!is.nonEmptyString(valueProperty) || !is.nonEmptyString(weightProperty)) {
     throw new Error('Both valueProperty and weightProperty params are required');
   }
 
