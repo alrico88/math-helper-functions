@@ -45,8 +45,8 @@ function getMinMaxValuesForBuckets(diffData: number, index: number, minDom: numb
     const minDiff = diffData * (index - 1);
     const maxDiff = diffData * index;
 
-    const minWithoutRound = index === 1 ? minDom + diffData : minDom + minDiff;
-    const maxWithoutRound = index === 1 ? minDom : minDom + maxDiff;
+    const maxWithoutRound = index === 1 ? minDom + diffData : minDom + maxDiff;
+    const minWithoutRound = index === 1 ? minDom : minDom + minDiff;
 
     const minVal = strictBuckets ? minWithoutRound : Math.floor(minWithoutRound);
 
