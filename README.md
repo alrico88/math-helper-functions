@@ -335,16 +335,16 @@ Percentage of the total
 
 ### calcQuartiles
 
-▸ **calcQuartiles**(`array`, `property`): [`number`, `number`, `number`]
+▸ **calcQuartiles**(`array`, `property?`): [`number`, `number`, `number`]
 
 Gets the quartiles of an array
 
 #### Parameters
 
-| Name       | Type     | Description        |
-| :--------- | :------- | :----------------- |
-| `array`    | `any`[]  | Input array        |
-| `property` | `string` | Property to map by |
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
 #### Returns
 
