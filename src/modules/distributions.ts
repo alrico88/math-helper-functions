@@ -22,6 +22,17 @@ function isNullOrUndefined(element: any): boolean {
 }
 
 /**
+ * Gives an amount of bins following Sturges Rule
+ *
+ * @export
+ * @param {number} valuesCount The length of a data array
+ * @return {number} Number of bins
+ */
+export function suggestBinsAmount(valuesCount: number): number {
+  return Math.max(1, Math.ceil(Math.log(valuesCount) / Math.LN2) + 1);
+}
+
+/**
  * Calculates the distribution of an arrays values
  *
  * @export
@@ -30,7 +41,9 @@ function isNullOrUndefined(element: any): boolean {
  * @return {IDistribution} The distribution
  */
 export function calcDistribution(array: any[], numOfBins?: number): IDistribution {
-  const hist = isNullOrUndefined(numOfBins) ? histogram() : histogram().thresholds(numOfBins as number);
+  const hist = isNullOrUndefined(numOfBins) 
+    ? histogram().thresholds(suggestBinsAmount(array.length)) 
+    : histogram().thresholds(numOfBins as number);
   const dist = hist(array);
 
   return dist.reduce(
