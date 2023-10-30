@@ -72,7 +72,7 @@
 		"coverage": "vitest run --coverage",
 		"lint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.js src",
 		"prepublish": "pnpm run build",
-		"docs": "typedoc src/index.ts --readme",
+		"docs": "typedoc src/index.ts --plugin typedoc-plugin-markdown --out docs --gitRevision master",
 		"coveralls": "vitest run --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 	},
 	"husky": {
