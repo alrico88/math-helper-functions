@@ -1,5 +1,5 @@
 import {thresholdSturges} from 'd3-array';
-import {max, min} from 'lodash'
+import {max as maxnLod, min as minLod} from 'lodash';
 import {getSimpleArray} from './arrays';
 import {calcDomain} from './domain';
 import {calcSum} from './operations';
@@ -24,34 +24,38 @@ interface IBucket {
     to: number;
 }
 
-function isNullOrUndefined(element: any): boolean {
-    return element === null || element === undefined;
-}
-
-function createArrayData(buckets: IBucket[], array: any[]) {
+function createArrayData(buckets: IBucket[], array: number[]): number[] {
     const data = new Array(buckets.length).fill(0);
 
     buckets.forEach((b, currentIndex) => {
         const condition = currentIndex === buckets.length - 1
-            ? (d: number) => d >= b.from && d <= b.to
-            : (d: number) => d >= b.from && d < b.to
+            ? (d: number): boolean => d >= b.from && d <= b.to
+            : (d: number): boolean => d >= b.from && d < b.to;
 
-        data[currentIndex] = array.filter(condition).length;
+        data[currentIndex] = array.filter(condition as () => boolean).length;
     });
 
     return data;
 }
 
-function getMinMaxValuesForBuckets(diffData: number, b: number, minDom: number): {
-    minWithoutRound: number;
-    maxWithoutRound: number;
+function getMinMaxValuesForBuckets(diffData: number, index: number, minDom: number, strictBuckets: boolean, binsNumber: number): {
+    minVal: number;
+    maxVal: number;
 } {
-    const minDiff = diffData * (b - 1);
-    const maxDiff = diffData * b;
+    const minDiff = diffData * (index - 1);
+    const maxDiff = diffData * index;
+
+    const minWithoutRound = index === 1 ? minDom + diffData : minDom + minDiff;
+    const maxWithoutRound = index === 1 ? minDom : minDom + maxDiff;
+
+    const minVal = strictBuckets ? minWithoutRound : Math.floor(minWithoutRound);
+
+    const elseVal = index === binsNumber ? Math.ceil(maxWithoutRound) : Math.floor(maxWithoutRound);
+    const maxVal = strictBuckets ? maxWithoutRound : elseVal;
 
     return {
-        minWithoutRound: b === 1 ? minDom + diffData : minDom + minDiff,
-        maxWithoutRound: b === 1 ? minDom : minDom + maxDiff,
+        minVal,
+        maxVal,
     };
 }
 
@@ -64,18 +68,18 @@ function getMinMaxValuesForBuckets(diffData: number, b: number, minDom: number):
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistribution} The distribution
  */
-export function calcDistribution(array: any[], strict = false, numOfBins?: number): IDistribution {
-    const minDom = min(array) as number;
-    const maxDom = max(array) as number;
+export function calcDistribution(array: number[], strict = false, numOfBins?: number): IDistribution {
+    const minDom = minLod(array) as number;
+    const maxDom = maxnLod(array) as number;
 
     const bins = numOfBins ?? thresholdSturges(array);
 
     let diffData;
 
     if (Math.abs(maxDom) < Math.abs(minDom)) {
-        diffData = (Math.abs(minDom) - Math.abs(maxDom)) / (bins);
+        diffData = (Math.abs(minDom) - Math.abs(maxDom)) / bins;
     } else {
-        diffData = (Math.abs(maxDom) - Math.abs(minDom)) / (bins);
+        diffData = (Math.abs(maxDom) - Math.abs(minDom)) / bins;
     }
 
     const buckets: IBucket[] = [];
@@ -84,14 +88,9 @@ export function calcDistribution(array: any[], strict = false, numOfBins?: numbe
 
     for (let b = 1; b <= bins; b++) {
         const {
-            minWithoutRound,
-            maxWithoutRound,
-        } = getMinMaxValuesForBuckets(diffData, b, minDom);
-
-        const minVal = strict ? minWithoutRound : Math.floor(minWithoutRound);
-        const elseVal = b === bins ? Math.ceil(maxWithoutRound) : Math.floor(maxWithoutRound);
-
-        const maxVal = strict ? maxWithoutRound : elseVal;
+            minVal,
+            maxVal,
+        } = getMinMaxValuesForBuckets(diffData, b, minDom, strict, bins);
 
         const label = `${minVal} - ${maxVal}`;
 
