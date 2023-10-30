@@ -1,5 +1,5 @@
-import {sum} from 'd3-array';
-import {getSimpleArray} from './arrays';
+import { sum } from 'd3-array';
+import { getSimpleArray } from './arrays';
 
 /**
  * Gets the sum of the values in an array

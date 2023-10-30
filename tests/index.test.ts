@@ -1,4 +1,19 @@
-import {calcDomain, calcMax, calcMean, calcMedian, calcMin, calcPercent, calcSum, calcWeightedMean, calcWeightedMedian, ruleOfThree, calcStdDeviation, calcVariance, calcDiff} from '../src';
+import { describe, test, expect } from 'vitest';
+import {
+  calcDomain,
+  calcMax,
+  calcMean,
+  calcMedian,
+  calcMin,
+  calcPercent,
+  calcSum,
+  calcWeightedMean,
+  calcWeightedMedian,
+  ruleOfThree,
+  calcStdDeviation,
+  calcVariance,
+  calcDiff,
+} from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
 
@@ -137,16 +152,14 @@ describe('Testing WEIGHTED MEAN methods', () => {
     value: d,
     weight: index + 1,
   }));
-  const expectedSimpleResult
-    = calcSum(weightedSimpleArray.map((d) => d.value * d.weight))
+  const expectedSimpleResult = calcSum(weightedSimpleArray.map((d) => d.value * d.weight))
     / calcSum(weightedSimpleArray.map((d) => d.weight));
 
   const weightedObjectArray = testObjArray.map((d, index) => ({
     value: d.value,
     weight: index + 1,
   }));
-  const expectedObjectResult
-    = calcSum(weightedObjectArray.map((d) => d.value * d.weight))
+  const expectedObjectResult = calcSum(weightedObjectArray.map((d) => d.value * d.weight))
     / calcSum(weightedObjectArray.map((d) => d.weight));
 
   test('Simple array\'s weighted mean should equal dividing the sum of values multiplied by their weight, by the sum of the weights', () => {
@@ -183,33 +196,33 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
 
   test('The weighted median of an array with one element should be that same value', () => {
     expect(calcWeightedMedian(
-        weightedSimpleArray.slice(0, 1),
-        'value',
-        'weight'
-      )).toStrictEqual(weightedSimpleArray[0].value);
+      weightedSimpleArray.slice(0, 1),
+      'value',
+      'weight',
+    )).toStrictEqual(weightedSimpleArray[0].value);
   });
 
   test('The weighted median of elements with different weight should not be the median of the array values', () => {
     expect(calcWeightedMedian(
-        weightedSimpleArray.map((d, index) => ({
-          value: d.value,
-          weight: index + 1,
-        })),
-        'value',
-        'weight'
-      )).not.toEqual(calcMedian(weightedSimpleArray, 'value'));
+      weightedSimpleArray.map((d, index) => ({
+        value: d.value,
+        weight: index + 1,
+      })),
+      'value',
+      'weight',
+    )).not.toEqual(calcMedian(weightedSimpleArray, 'value'));
   });
 });
 
 describe('Testing PERCENTAGE methods', () => {
   test('Percentages should work correctly', () => {
-    expect(calcPercent(20, 100)).toStrictEqual(20 * 100 / 100);
+    expect(calcPercent(20, 100)).toStrictEqual((20 * 100) / 100);
   });
 });
 
 describe('Testing RULE OF THREE methods', () => {
   test('Calculating according to rule of three should work according to math', () => {
-    expect(ruleOfThree(20, 20, 100)).toStrictEqual(20 * 100 / 20);
+    expect(ruleOfThree(20, 20, 100)).toStrictEqual((20 * 100) / 20);
   });
 });
 
