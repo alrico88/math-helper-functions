@@ -167,18 +167,18 @@ export function calcDistributionAsArray(
  *
  * @export
  * @param  {any[]} array Input array
- * @param  {string} property Property to map by
+ * @param  {string} [property] Property to map by
  * @return {[number, number, number]} The quartiles
  */
-export function calcQuartiles(array: any[], property: string): [number, number, number] {
+export function calcQuartiles(array: any[], property?: string): [number, number, number] {
   const len = array.length;
   const simpleArray = [...getSimpleArray(array, property)];
   simpleArray.sort((a, b) => a - b);
 
   return [
-    simpleArray[Math.round(len / 4) - 1],
-    simpleArray[Math.round(len / 2) - 1],
-    simpleArray[Math.round((len * 3) / 4) - 1],
+    simpleArray[Math.round(len * 0.25) - 1],
+    simpleArray[Math.round(len * 0.5) - 1],
+    simpleArray[Math.round(len * 0.75) - 1],
   ];
 }
 
