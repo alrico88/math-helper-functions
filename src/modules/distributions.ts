@@ -1,4 +1,5 @@
-import {histogram} from 'd3-array';
+import {thresholdSturges} from 'd3-array';
+import {max, min} from 'lodash'
 import {getSimpleArray} from './arrays';
 import {calcDomain} from './domain';
 import {calcSum} from './operations';
@@ -17,33 +18,91 @@ interface IDistributionArrayItem {
   to: number;
 }
 
-function isNullOrUndefined(element: any): boolean {
-  return element === null || element === undefined;
-}
+// function isNullOrUndefined(element: any): boolean {
+//   return element === null || element === undefined;
+// }
 
 /**
  * Calculates the distribution of an arrays values
  *
  * @export
  * @param  {any[]} array Input array
+ * @param {boolean} strict
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistribution} The distribution
  */
-export function calcDistribution(array: any[], numOfBins?: number): IDistribution {
-  const hist = isNullOrUndefined(numOfBins) ? histogram() : histogram().thresholds(numOfBins as number);
-  const dist = hist(array);
+export function calcDistribution(array: any[], strict = false, numOfBins?: number): IDistribution {
+  const minDom = min(array);
+  const maxDom = max(array);
 
-  return dist.reduce(
-    (acc: IDistribution, {x0, x1, length}) => {
-      acc.labels.push(`${x0} - ${x1}`);
-      acc.data.push(length);
-      return acc;
-    },
-    {
-      labels: [],
-      data: [],
+  const bins = numOfBins ?? thresholdSturges(array);
+
+  let diffData;
+
+  if (Math.abs(maxDom) < Math.abs(minDom)) {
+    diffData = (Math.abs(minDom) - Math.abs(maxDom)) / (bins);
+  } else {
+    diffData = (Math.abs(maxDom) - Math.abs(minDom)) / (bins);
+  }
+
+  const buckets: {
+    label: string,
+    from: number,
+    to: number,
+  }[] = [];
+
+  const labels: string[] = []
+
+  for (let b = 1; b <= bins; b++) {
+    let minVal
+    let maxVal
+
+    // @ts-ignore
+    function getMax(maxValue: number):number {
+      return strict ? maxValue : (b === bins ? Math.ceil(maxValue) : Math.floor(maxValue))
     }
-  );
+
+    // @ts-ignore
+    function getMin(minValue: number):number {
+      return strict ? minValue : Math.floor(minValue)
+    }
+
+    const minWithoutRound = b === 1
+        ? minDom + diffData
+        : minDom + (diffData * (b - 1));
+    const maxWithoutRound = b === 1
+        ? minDom
+        : minDom + (diffData * b);
+
+
+    minVal = getMin(minWithoutRound);
+    maxVal = getMax(maxWithoutRound);
+
+    const label = `${minVal} - ${maxVal}`;
+
+    labels.push(label)
+
+    buckets.push({
+      label: label,
+      from: minVal,
+      to: maxVal,
+    });
+  }
+
+  const data = new Array(buckets.length).fill(0);
+
+  buckets.forEach((b, currentIndex) => {
+    const condition = currentIndex === buckets.length - 1
+        ? (d: number) => d >= b.from && d <= b.to
+        : (d: number) => d >= b.from && d < b.to
+
+    data[currentIndex] = array.filter(condition).length;
+  });
+
+  return {
+    labels,
+    data
+  }
 }
 
 /**
@@ -64,11 +123,12 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
  *
  * @export
  * @param  {number[]} array Array to calc distribution of
+ * @param binsStrict
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistributionArrayItem[]} The distribution as an array of objects
  */
-export function calcDistributionAsArray(array: number[], numOfBins?: number): IDistributionArrayItem[] {
-  const distribution = calcDistribution(array, numOfBins);
+export function calcDistributionAsArray(array: number[], binsStrict = false, numOfBins?: number): IDistributionArrayItem[] {
+  const distribution = calcDistribution(array, binsStrict, numOfBins);
 
   const total = calcSum(distribution.data);
 
@@ -124,11 +184,11 @@ export function calcHistogram(array: any[], numberOfBins = 4, property?: string)
   const bins = new Array(numberOfBins).fill(0);
   for (let i = 0; i < len; i++) {
     bins[
-      Math.min(
-        Math.floor((dataArray[i] - first) / binWidth),
-        numberOfBins - 1
-      )
-    ] += 1;
+        Math.min(
+            Math.floor((dataArray[i] - first) / binWidth),
+            numberOfBins - 1
+        )
+        ] += 1;
   }
 
   return bins;
