@@ -18,9 +18,29 @@ interface IDistributionArrayItem {
   to: number;
 }
 
-// function isNullOrUndefined(element: any): boolean {
-//   return element === null || element === undefined;
-// }
+interface IBucket {
+  label: string;
+  from: number;
+  to: number;
+}
+
+function isNullOrUndefined(element: any): boolean {
+  return element === null || element === undefined;
+}
+
+function createArrayData(buckets: IBucket[], array: any[]) {
+  const data = new Array(buckets.length).fill(0);
+
+  buckets.forEach((b, currentIndex) => {
+    const condition = currentIndex === buckets.length - 1
+        ? (d: number) => d >= b.from && d <= b.to
+        : (d: number) => d >= b.from && d < b.to
+
+    data[currentIndex] = array.filter(condition).length;
+  });
+
+  return data;
+}
 
 /**
  * Calculates the distribution of an arrays values
@@ -31,7 +51,7 @@ interface IDistributionArrayItem {
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistribution} The distribution
  */
-export function calcDistribution(array: any[], strict = false, numOfBins?: number): IDistribution {
+export function calcDistribution(array: any[], strict: boolean = false, numOfBins?: number): IDistribution {
   const minDom = min(array);
   const maxDom = max(array);
 
@@ -57,13 +77,13 @@ export function calcDistribution(array: any[], strict = false, numOfBins?: numbe
     let minVal
     let maxVal
 
-    // @ts-ignore
-    function getMax(maxValue: number):number {
-      return strict ? maxValue : (b === bins ? Math.ceil(maxValue) : Math.floor(maxValue))
+    const getMax = (maxValue: number): number => {
+      const elseVal = b === bins ? Math.ceil(maxValue) : Math.floor(maxValue);
+
+      return strict ? maxValue : elseVal
     }
 
-    // @ts-ignore
-    function getMin(minValue: number):number {
+    const getMin = (minValue: number): number => {
       return strict ? minValue : Math.floor(minValue)
     }
 
@@ -89,19 +109,9 @@ export function calcDistribution(array: any[], strict = false, numOfBins?: numbe
     });
   }
 
-  const data = new Array(buckets.length).fill(0);
-
-  buckets.forEach((b, currentIndex) => {
-    const condition = currentIndex === buckets.length - 1
-        ? (d: number) => d >= b.from && d <= b.to
-        : (d: number) => d >= b.from && d < b.to
-
-    data[currentIndex] = array.filter(condition).length;
-  });
-
   return {
     labels,
-    data
+    data: createArrayData(buckets, array)
   }
 }
 
