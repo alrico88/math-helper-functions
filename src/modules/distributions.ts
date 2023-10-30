@@ -32,7 +32,7 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
             ? (d: number): boolean => d >= b.from && d <= b.to
             : (d: number): boolean => d >= b.from && d < b.to;
 
-        data[currentIndex] = array.filter(condition as () => boolean).length;
+        data[currentIndex] = array.filter(condition).length;
     });
 
     return data;
@@ -45,8 +45,8 @@ function getMinMaxValuesForBuckets(diffData: number, index: number, minDom: numb
     const minDiff = diffData * (index - 1);
     const maxDiff = diffData * index;
 
-    const minWithoutRound = index === 1 ? minDom + diffData : minDom + minDiff;
-    const maxWithoutRound = index === 1 ? minDom : minDom + maxDiff;
+    const maxWithoutRound = index === 1 ? minDom + diffData : minDom + maxDiff;
+    const minWithoutRound = index === 1 ? minDom : minDom + minDiff;
 
     const minVal = strictBuckets ? minWithoutRound : Math.floor(minWithoutRound);
 
