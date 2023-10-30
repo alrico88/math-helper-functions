@@ -32,7 +32,7 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
             ? (d: number): boolean => d >= b.from && d <= b.to
             : (d: number): boolean => d >= b.from && d < b.to;
 
-        data[currentIndex] = array.filter(condition).length;
+        data[currentIndex] = array.filter(condition as () => boolean).length;
     });
 
     return data;
