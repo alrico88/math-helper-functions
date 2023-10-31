@@ -1,4 +1,5 @@
 import { thresholdSturges } from 'd3-array';
+import { processNumber } from 'number-helper-functions';
 import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
@@ -21,47 +22,17 @@ interface IBucket {
   label: string;
   from: number;
   to: number;
+  inside: (val: number) => boolean;
 }
 
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
   const data = new Array(buckets.length).fill(0);
 
   buckets.forEach((b, currentIndex) => {
-    const condition = currentIndex === buckets.length - 1
-      ? (d: number): boolean => d >= b.from && d <= b.to
-      : (d: number): boolean => d >= b.from && d < b.to;
-
-    data[currentIndex] = array.filter(condition as () => boolean).length;
+    data[currentIndex] = array.filter((d) => b.inside(d)).length;
   });
 
   return data;
-}
-
-function getMinMaxValuesForBuckets(
-  diffData: number,
-  index: number,
-  minDom: number,
-  strictBuckets: boolean,
-  binsNumber: number,
-): {
-    minVal: number;
-    maxVal: number;
-  } {
-  const minDiff = diffData * (index - 1);
-  const maxDiff = diffData * index;
-
-  const maxWithoutRound = index === 1 ? minDom + diffData : minDom + maxDiff;
-  const minWithoutRound = index === 1 ? minDom : minDom + minDiff;
-
-  const minVal = strictBuckets ? minWithoutRound : Math.floor(minWithoutRound);
-
-  const elseVal = index === binsNumber ? Math.ceil(maxWithoutRound) : Math.floor(maxWithoutRound);
-  const maxVal = strictBuckets ? maxWithoutRound : elseVal;
-
-  return {
-    minVal,
-    maxVal,
-  };
 }
 
 /**
@@ -78,36 +49,38 @@ export function calcDistribution(
   strict = false,
   numOfBins?: number,
 ): IDistribution {
-  const [minDom, maxDom] = calcDomain(array);
+  let [minDom, maxDom] = calcDomain(array);
+
+  if (strict === false) {
+    minDom = Math.floor(minDom);
+    maxDom = Math.ceil(maxDom);
+  }
 
   const bins = numOfBins ?? thresholdSturges(array);
-
-  let diffData;
-
-  if (Math.abs(maxDom) < Math.abs(minDom)) {
-    diffData = (Math.abs(minDom) - Math.abs(maxDom)) / bins;
-  } else {
-    diffData = (Math.abs(maxDom) - Math.abs(minDom)) / bins;
-  }
+  const bucketSize = (maxDom - minDom) / bins;
 
   const buckets: IBucket[] = [];
 
   const labels: string[] = [];
 
-  for (let b = 1; b <= bins; b++) {
-    const {
-      minVal,
-      maxVal,
-    } = getMinMaxValuesForBuckets(diffData, b, minDom, strict, bins);
+  for (let i = 0; i < bins; i++) {
+    const bucketMin = minDom + i * bucketSize;
+    const bucketMax = minDom + (i + 1) * bucketSize;
 
-    const label = `${minVal} - ${maxVal}`;
+    const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
 
     labels.push(label);
 
     buckets.push({
       label,
-      from: minVal,
-      to: maxVal,
+      from: bucketMin,
+      to: bucketMax,
+      inside(val: number) {
+        if (i === bins - 1) {
+          return val >= bucketMin && val <= bucketMax;
+        }
+        return val >= bucketMin && val < bucketMax;
+      },
     });
   }
 
@@ -170,7 +143,10 @@ export function calcDistributionAsArray(
  * @param  {string} [property] Property to map by
  * @return {[number, number, number]} The quartiles
  */
-export function calcQuartiles(array: any[], property?: string): [number, number, number] {
+export function calcQuartiles(
+  array: any[],
+  property?: string,
+): [number, number, number] {
   const len = array.length;
   const simpleArray = [...getSimpleArray(array, property)];
   simpleArray.sort((a, b) => a - b);
@@ -191,7 +167,11 @@ export function calcQuartiles(array: any[], property?: string): [number, number,
  * @param  {string} [property] Property to map by
  * @return {number[]} The histogram
  */
-export function calcHistogram(array: any[], numberOfBins = 4, property?: string): number[] {
+export function calcHistogram(
+  array: any[],
+  numberOfBins = 4,
+  property?: string,
+): number[] {
   const dataArray = getSimpleArray(array, property);
   const [arrayMin, arrayMax] = calcDomain(dataArray);
   const first = arrayMin;

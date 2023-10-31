@@ -11,6 +11,9 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
+  number-helper-functions:
+    specifier: ^4.1.1
+    version: 4.1.1
 
 devDependencies:
   '@types/d3-array':
@@ -2150,6 +2153,11 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /number-helper-functions@4.1.1:
+    resolution: {integrity: sha512-EN2T0B0DFBO7Wm+vjtOKGn6eX7kFRYXPqV2rSGXLbuhhvPK9qIQ7bDM8Z9KvFBPviJGE1x5Px4GiAJeCixfLNQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /oauth-sign@0.9.0:
     resolution: {integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==}
