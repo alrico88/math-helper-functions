@@ -2,8 +2,8 @@ import {
   deviation, mean, median, variance,
 } from 'd3-array';
 import get from 'lodash/get';
-import is from '@sindresorhus/is';
 import { getSimpleArray } from './arrays';
+import { isEmptyArray, isEmptyString } from './checks';
 
 /**
  * Gets an array median
@@ -51,7 +51,7 @@ export function calcWeightedMedian(
   if (!valueProperty || !weightProperty) {
     throw new Error('Both valueProperty and weightProperty params are required');
   }
-  if (is.emptyArray(array)) {
+  if (isEmptyArray(array)) {
     return 0;
   }
 
@@ -115,7 +115,7 @@ export function calcWeightedMean(
   valueProperty: string,
   weightProperty: string,
 ): number {
-  if (!is.nonEmptyString(valueProperty) || !is.nonEmptyString(weightProperty)) {
+  if (isEmptyString(valueProperty) || isEmptyString(weightProperty)) {
     throw new Error('Both valueProperty and weightProperty params are required');
   }
 

@@ -50,7 +50,6 @@
 		"vitest": "^0.34.6"
 	},
 	"dependencies": {
-		"@sindresorhus/is": "^6.1.0",
 		"d3-array": "^2.0.3",
 		"lodash": "^4.17.21"
 	},
