@@ -35,7 +35,7 @@
 	],
 	"devDependencies": {
 		"@types/d3-array": "^2.9.0",
-		"@types/lodash-es": "^4.17.10",
+		"@types/lodash": "^4.14.200",
 		"@typescript-eslint/eslint-plugin": "^6.9.1",
 		"@typescript-eslint/parser": "^6.9.1",
 		"coveralls": "^3.1.1",
@@ -52,7 +52,7 @@
 	"dependencies": {
 		"@sindresorhus/is": "^6.1.0",
 		"d3-array": "^2.0.3",
-		"lodash-es": "^4.17.21"
+		"lodash": "^4.17.21"
 	},
 	"prettier": {
 		"printWidth": 80,
