@@ -1,7 +1,7 @@
 import {
   deviation, mean, median, variance,
 } from 'd3-array';
-import { get } from 'lodash-es';
+import get from 'lodash/get';
 import is from '@sindresorhus/is';
 import { getSimpleArray } from './arrays';
 
