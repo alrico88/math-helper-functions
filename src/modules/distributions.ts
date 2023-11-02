@@ -1,11 +1,10 @@
 import { thresholdSturges } from 'd3-array';
 import { processNumber } from 'number-helper-functions';
-import { countBy } from 'lodash';
+import get from 'lodash/get';
 import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
 import { calcPercent } from './percentages';
-import get from "lodash/get";
 
 interface IDistribution {
   labels: string[];
@@ -134,47 +133,36 @@ export function calcDistributionWithSeries(
   dataGrouped: Record<string, unknown[]>,
   distributionProp: string,
 ): ISerieDistribution {
-  let totalCount = 0;
+  const totalCount = 0;
 
   const data = Object.entries(dataGrouped).map(([key, value]) => {
     let serieCount = 0;
 
     const serieName = key;
-    const dataVal: Record<string, unknown>[] = [];
 
-    value.forEach((v) => {
-      buckets.forEach((d) => {
+    const dataArr = buckets.map((d) => {
+      const bucketObj = {
+        interval: d.label,
+        data: 0,
+      };
+
+      value.forEach((v) => {
         const valueProp = get(v as Record<string, number | string>, distributionProp);
 
         if (d.inside(valueProp as number)) {
-          dataVal.push({
-            data: valueProp,
-            interval: d.label,
-          });
+          bucketObj.data++;
+
+          serieCount++;
         }
       });
 
-      totalCount++;
-    });
-
-    const valuesGrouped = countBy(dataVal, 'interval');
-
-    Object.values(valuesGrouped).forEach((v) => {
-      serieCount += v;
-    });
-
-    const dataArr = new Array(buckets.length).fill(0);
-
-    Object.entries(valuesGrouped).forEach(([keyV, valueV]) => {
-      const idx = buckets.findIndex((l) => l.label === keyV);
-
-      dataArr[idx] = valueV;
+      return bucketObj;
     });
 
     return {
       name: serieName,
-      count: dataArr,
-      percentage_serie: dataArr.map((d) => calcPercent(d * 100, serieCount)),
+      count: dataArr.map((d) => d.data),
+      percentage_serie: dataArr.map((d) => calcPercent(d.data * 100, serieCount)),
     };
   });
 
