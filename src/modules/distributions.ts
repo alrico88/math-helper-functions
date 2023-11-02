@@ -4,7 +4,7 @@ import {getSimpleArray} from './arrays';
 import {calcDomain} from './domain';
 import {calcSum} from './operations';
 import {calcPercent} from './percentages';
-import {countBy} from "lodash";
+import {countBy} from 'lodash';
 
 interface IDistribution {
   labels: string[];
@@ -37,41 +37,41 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
 }
 
 export function calcBuckets(
-    array: number[],
-    strict = false,
-    numOfBins?: number,
+  array: number[],
+  strict = false,
+  numOfBins?: number,
 ): IBucket[] {
-    let [minDom, maxDom] = calcDomain(array);
+  let [minDom, maxDom] = calcDomain(array);
 
-    if (!strict) {
-        minDom = Math.floor(minDom);
-        maxDom = Math.ceil(maxDom);
-    }
+  if (!strict) {
+    minDom = Math.floor(minDom);
+    maxDom = Math.ceil(maxDom);
+  }
 
-    const bins = numOfBins ?? thresholdSturges(array);
-    const bucketSize = (maxDom - minDom) / bins;
+  const bins = numOfBins ?? thresholdSturges(array);
+  const bucketSize = (maxDom - minDom) / bins;
 
-    const buckets: IBucket[] = [];
+  const buckets: IBucket[] = [];
 
-    for (let i = 0; i < bins; i++) {
-        const bucketMin = minDom + i * bucketSize;
-        const bucketMax = minDom + (i + 1) * bucketSize;
+  for (let i = 0; i < bins; i++) {
+    const bucketMin = minDom + i * bucketSize;
+    const bucketMax = minDom + (i + 1) * bucketSize;
 
-        const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
+    const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
 
-        buckets.push({
-            label,
-            from: bucketMin,
-            to: bucketMax,
-            inside(val: number) {
-                return i === bins - 1
-                    ? val >= bucketMin && val <= bucketMax
-                    : val >= bucketMin && val < bucketMax;
-            },
-        });
-    }
+    buckets.push({
+      label,
+      from: bucketMin,
+      to: bucketMax,
+      inside(val: number) {
+        return i === bins - 1
+          ? val >= bucketMin && val <= bucketMax
+          : val >= bucketMin && val < bucketMax;
+      },
+    });
+  }
 
-    return buckets;
+  return buckets;
 }
 
 /**
@@ -84,16 +84,16 @@ export function calcBuckets(
  * @return {IDistribution} The distribution
  */
 export function calcDistribution(
-    array: number[],
-    strict = false,
-    numOfBins?: number,
+  array: number[],
+  strict = false,
+  numOfBins?: number,
 ): IDistribution {
-    const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
+  const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
 
-    return {
-        labels: buckets.map((b) => b.label),
-        data: createArrayData(buckets, array),
-    };
+  return {
+    labels: buckets.map((b) => b.label),
+    data: createArrayData(buckets, array),
+  };
 }
 
 /**
@@ -118,60 +118,60 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
  * @return {IDistributionArrayItem[]} The distribution as an array of objects
  */
 export function calcDistributionWithSeries(
-    buckets: IBucket[],
-    dataGrouped: Record<string, unknown[]>,
+  buckets: IBucket[],
+  dataGrouped: Record<string, unknown[]>,
 ): any {
-    let eventsTotal = 0;
+  let eventsTotal = 0;
 
-    const data = Object.entries(dataGrouped).map(([key, value]) => {
-        let eventsSerie = 0;
+  const data = Object.entries(dataGrouped).map(([key, value]) => {
+    let eventsSerie = 0;
 
-        const serieName = key;
-        const dataVal: Record<string, unknown>[] = [];
+    const serieName = key;
+    const dataVal: Record<string, unknown>[] = [];
 
-        value.forEach((v) => {
-            buckets.forEach((d) => {
-                const valObj = (v as Record<string, number | string>).data as number;
+    value.forEach((v) => {
+      buckets.forEach((d) => {
+        const valObj = (v as Record<string, number | string>).data as number;
 
-                if (d.inside(valObj)) {
-                    dataVal.push({
-                        data: valObj,
-                        interval: d.label,
-                    });
-                }
-            });
+        if (d.inside(valObj)) {
+          dataVal.push({
+            data: valObj,
+            interval: d.label,
+          });
+        }
+      });
 
-            eventsTotal++;
-        });
+      eventsTotal++;
+    });
 
-        const valuesGrouped = countBy(dataVal, 'interval');
+    const valuesGrouped = countBy(dataVal, 'interval');
 
-        Object.values(valuesGrouped).forEach((v) => {
-            eventsSerie += v;
-        });
+    Object.values(valuesGrouped).forEach((v) => {
+      eventsSerie += v;
+    });
 
-        const dataArr = new Array(buckets.length).fill(0);
+    const dataArr = new Array(buckets.length).fill(0);
 
-        Object.entries(valuesGrouped).forEach(([keyV, valueV]) => {
-            const idx = buckets.findIndex((l) => l.label === keyV);
+    Object.entries(valuesGrouped).forEach(([keyV, valueV]) => {
+      const idx = buckets.findIndex((l) => l.label === keyV);
 
-            dataArr[idx] = valueV;
-        });
-
-        return {
-            name: serieName,
-            count: dataArr,
-            percentage_serie: dataArr.map((i) => i * 100 / eventsSerie, 2),
-        };
+      dataArr[idx] = valueV;
     });
 
     return {
-        labels: buckets.map((b) => b.label),
-        data: data.map((i) => ({
-            ...i,
-            percentage_total: i.count.map((d) => d * 100 / eventsTotal),
-        })),
+      name: serieName,
+      count: dataArr,
+      percentage_serie: dataArr.map((i) => i * 100 / eventsSerie, 2),
     };
+  });
+
+  return {
+    labels: buckets.map((b) => b.label),
+    data: data.map((i) => ({
+      ...i,
+      percentage_total: i.count.map((d) => d * 100 / eventsTotal),
+    })),
+  };
 }
 
 /**
@@ -184,11 +184,11 @@ export function calcDistributionWithSeries(
  * @return {IDistributionArrayItem[]} The distribution as an array of objects
  */
 export function calcDistributionAsArray(
-    array: number[],
-    binsStrict = false,
-    numOfBins?: number,
+  array: number[],
+  binsStrict = false,
+  numOfBins?: number,
 ): IDistributionArrayItem[] {
-    const distribution = calcDistribution(array, binsStrict, numOfBins);
+  const distribution = calcDistribution(array, binsStrict, numOfBins);
 
   const total = calcSum(distribution.data);
 
