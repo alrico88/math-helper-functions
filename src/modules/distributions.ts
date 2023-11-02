@@ -35,6 +35,7 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
 
     return data;
 }
+
 export function calcBuckets(
     array: number[],
     strict = false,
@@ -90,7 +91,7 @@ export function calcDistribution(
     const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
 
     return {
-        labels: buckets.map((b)=> b.label),
+        labels: buckets.map((b) => b.label),
         data: createArrayData(buckets, array),
     };
 }
@@ -120,16 +121,16 @@ export function calcDistributionWithSeries(
     buckets: IBucket[],
     dataGrouped: Record<string, unknown[]>,
 ): any {
-    let eventsTotal = 0
+    let eventsTotal = 0;
 
-    const data =  Object.entries(dataGrouped).map(([key, value]) => {
+    const data = Object.entries(dataGrouped).map(([key, value]) => {
         let eventsSerie = 0;
 
         const serieName = key;
-        const dataVal: Record<string, unknown>[] = []
+        const dataVal: Record<string, unknown>[] = [];
 
         value.forEach((v) => {
-            buckets.forEach((d, indexDist) => {
+            buckets.forEach((d) => {
                 const valObj = (v as Record<string, number | string>).data as number;
 
                 if (d.inside(valObj)) {
@@ -140,12 +141,11 @@ export function calcDistributionWithSeries(
                 }
             });
 
-            eventsTotal++
-        })
+            eventsTotal++;
+        });
 
         const valuesGrouped = countBy(dataVal, 'interval');
 
-        console.log(valuesGrouped)
         Object.values(valuesGrouped).forEach((v) => {
             eventsSerie += v;
         });
@@ -157,19 +157,21 @@ export function calcDistributionWithSeries(
 
             dataArr[idx] = valueV;
         });
+
         return {
             name: serieName,
             count: dataArr,
             percentage_serie: dataArr.map((i) => i * 100 / eventsSerie, 2),
-        }
-
+        };
     });
 
-    return data.map((i)=> ({
-        ...i,
-        percentage_total: i.count.map((d)=> d * 100 / eventsTotal)
-    }))
-
+    return {
+        labels: buckets.map((b) => b.label),
+        data: data.map((i) => ({
+            ...i,
+            percentage_total: i.count.map((d) => d * 100 / eventsTotal),
+        })),
+    };
 }
 
 /**
