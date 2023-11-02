@@ -1,5 +1,6 @@
 import { thresholdSturges } from 'd3-array';
 import { processNumber } from 'number-helper-functions';
+import get from 'lodash/get';
 import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
@@ -25,6 +26,16 @@ interface IBucket {
   inside: (val: number) => boolean;
 }
 
+interface ISerieDistribution {
+  labels: string[];
+  data: {
+    name: string;
+    count:number[];
+    percentage_serie: number[];
+    percentage_total: number[];
+  }[]
+}
+
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
   const data = new Array(buckets.length).fill(0);
 
@@ -33,6 +44,53 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
   });
 
   return data;
+}
+
+/**
+ * Calculate the buckets given a data array and an amount
+ *
+ * @export
+ * @param {number[]} array The data array
+ * @param {boolean} [strict=false] Whether to use real or pretty domain
+ * @param {number} [numOfBins] Amount of desired buckets
+ * @return {IBucket[]} The buckets
+ */
+export function calcBuckets(
+  array: number[],
+  strict = false,
+  numOfBins?: number,
+): IBucket[] {
+  let [minDom, maxDom] = calcDomain(array);
+
+  if (!strict) {
+    minDom = Math.floor(minDom);
+    maxDom = Math.ceil(maxDom);
+  }
+
+  const bins = numOfBins ?? thresholdSturges(array);
+  const bucketSize = (maxDom - minDom) / bins;
+
+  const buckets: IBucket[] = [];
+
+  for (let i = 0; i < bins; i++) {
+    const bucketMin = minDom + i * bucketSize;
+    const bucketMax = minDom + (i + 1) * bucketSize;
+
+    const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
+
+    buckets.push({
+      label,
+      from: bucketMin,
+      to: bucketMax,
+      inside(val: number) {
+        return i === bins - 1
+          ? val >= bucketMin && val <= bucketMax
+          : val >= bucketMin && val < bucketMax;
+      },
+    });
+  }
+
+  return buckets;
 }
 
 /**
@@ -49,43 +107,10 @@ export function calcDistribution(
   strict = false,
   numOfBins?: number,
 ): IDistribution {
-  let [minDom, maxDom] = calcDomain(array);
-
-  if (strict === false) {
-    minDom = Math.floor(minDom);
-    maxDom = Math.ceil(maxDom);
-  }
-
-  const bins = numOfBins ?? thresholdSturges(array);
-  const bucketSize = (maxDom - minDom) / bins;
-
-  const buckets: IBucket[] = [];
-
-  const labels: string[] = [];
-
-  for (let i = 0; i < bins; i++) {
-    const bucketMin = minDom + i * bucketSize;
-    const bucketMax = minDom + (i + 1) * bucketSize;
-
-    const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
-
-    labels.push(label);
-
-    buckets.push({
-      label,
-      from: bucketMin,
-      to: bucketMax,
-      inside(val: number) {
-        if (i === bins - 1) {
-          return val >= bucketMin && val <= bucketMax;
-        }
-        return val >= bucketMin && val < bucketMax;
-      },
-    });
-  }
+  const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
 
   return {
-    labels,
+    labels: buckets.map((b) => b.label),
     data: createArrayData(buckets, array),
   };
 }
@@ -101,6 +126,62 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
   const [min, max] = bucketLabel.split(' - ');
 
   return [Number(min.trim()), Number(max.trim())];
+}
+
+/**
+ * Calculates the distribution of an array of grouped objects
+ *
+ * @export
+ * @param {IBucket[]} buckets
+ * @param {Record<string, unknown[]>} dataGrouped
+ * @param {string} distributionProp
+ * @return {ISerieDistribution} The distribution with labels and data
+ */
+export function calcDistributionWithSeries(
+  buckets: IBucket[],
+  dataGrouped: Record<string, unknown[]>,
+  distributionProp: string,
+): ISerieDistribution {
+  const totalCount = 0;
+
+  const data = Object.entries(dataGrouped).map(([key, value]) => {
+    let serieCount = 0;
+
+    const serieName = key;
+
+    const dataArr = buckets.map((d) => {
+      const bucketObj = {
+        interval: d.label,
+        data: 0,
+      };
+
+      value.forEach((v) => {
+        const valueProp = get(v as Record<string, number | string>, distributionProp);
+
+        if (d.inside(valueProp as number)) {
+          bucketObj.data++;
+
+          serieCount++;
+        }
+      });
+
+      return bucketObj;
+    });
+
+    return {
+      name: serieName,
+      count: dataArr.map((d) => d.data),
+      percentage_serie: dataArr.map((d) => calcPercent(d.data * 100, serieCount)),
+    };
+  });
+
+  return {
+    labels: buckets.map((b) => b.label),
+    data: data.map((i) => ({
+      ...i,
+      percentage_total: i.count.map((d) => calcPercent(d * 100, totalCount)),
+    })),
+  };
 }
 
 /**

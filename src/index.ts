@@ -2,7 +2,13 @@ export {
   calcMean, calcWeightedMean, calcMedian, calcWeightedMedian, calcStdDeviation, calcVariance,
 } from './modules/averages';
 export {
-  calcDistribution, calcDistributionAsArray, calcHistogram, calcQuartiles, getMinMaxFromBucket,
+  calcDistribution,
+  calcDistributionAsArray,
+  calcDistributionWithSeries,
+  calcHistogram,
+  calcQuartiles,
+  getMinMaxFromBucket,
+  calcBuckets,
 } from './modules/distributions';
 export {
   calcDomain, calcMax, calcMin, calcDiff,
