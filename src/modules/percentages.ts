@@ -8,7 +8,7 @@
  * @return {number} Second result
  */
 export function ruleOfThree(ifThis: number, isThis: number, thenThat: number): number {
-  return isThis * thenThat / ifThis;
+  return (isThis * thenThat) / ifThis;
 }
 
 /**

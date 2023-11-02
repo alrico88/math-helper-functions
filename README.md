@@ -13,7 +13,10 @@ Using `import`
 ```javascript
 import { calcSum } from 'math-helper-functions';
 
-const input = [{ item: 'bookA', count: 3 }, { item: 'bookB', count: 4 }];
+const input = [
+  { item: 'bookA', count: 3 },
+  { item: 'bookB', count: 4 },
+];
 
 const totalBooks = calcSum(input, 'count'); // totalBooks is 7
 ```
@@ -36,315 +39,520 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 
 ### Functions
 
-- [calcDistribution](#calcdistribution)
-- [calcDomain](#calcdomain)
-- [calcDiff](#calcdiff)
-- [calcHistogram](#calchistogram)
-- [calcMax](#calcmax)
-- [calcMean](#calcmean)
-- [calcMedian](#calcmedian)
-- [calcMin](#calcmin)
-- [calcPercent](#calcpercent)
-- [calcQuartiles](#calcquartiles)
-- [calcSum](#calcsum)
-- [calcWeightedMean](#calcweightedmean)
-- [calcWeightedMedian](#calcweightedmedian)
-- [ruleOfThree](#ruleofthree)
+- [calcDiff](modules.md#calcdiff)
+- [calcDistribution](modules.md#calcdistribution)
+- [calcDistributionAsArray](modules.md#calcdistributionasarray)
+- [calcDomain](modules.md#calcdomain)
+- [calcHistogram](modules.md#calchistogram)
+- [calcMax](modules.md#calcmax)
+- [calcMean](modules.md#calcmean)
+- [calcMedian](modules.md#calcmedian)
+- [calcMin](modules.md#calcmin)
+- [calcPercent](modules.md#calcpercent)
+- [calcQuartiles](modules.md#calcquartiles)
+- [calcStdDeviation](modules.md#calcstddeviation)
+- [calcSum](modules.md#calcsum)
+- [calcVariance](modules.md#calcvariance)
+- [calcWeightedMean](modules.md#calcweightedmean)
+- [calcWeightedMedian](modules.md#calcweightedmedian)
+- [getMinMaxFromBucket](modules.md#getminmaxfrombucket)
+- [ruleOfThree](modules.md#ruleofthree)
 
 ## Functions
 
+### calcDiff
+
+▸ **calcDiff**(`array`, `property?`): `number`
+
+Gets the absolute difference between the max and min value in an array
+
+#### Parameters
+
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
+
+#### Returns
+
+`number`
+
+Absolute difference between the max and min of an array
+
+**`Export`**
+
+#### Defined in
+
+[modules/domain.ts:48](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/domain.ts#L48)
+
+---
+
 ### calcDistribution
 
-▸ **calcDistribution**(`array`: _any_[], `numOfBins?`: _number_): IDistribution
+▸ **calcDistribution**(`array`, `strict?`, `numOfBins?`): `IDistribution`
 
 Calculates the distribution of an arrays values
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name         | Type       | Default value | Description           |
+| :----------- | :--------- | :------------ | :-------------------- |
+| `array`      | `number`[] | `undefined`   | Input array           |
+| `strict`     | `boolean`  | `false`       |                       |
+| `numOfBins?` | `number`   | `undefined`   | Number of bins to use |
 
-| Name         | Type     | Description |
-| :----------- | :------- | :---------- |
-| `array`      | _any_[]  | Input array |
-| `numOfBins?` | _number_ | -           |
+#### Returns
 
-**Returns:** IDistribution
+`IDistribution`
 
 The distribution
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:76](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L76)
+
+---
+
+### calcDistributionAsArray
+
+▸ **calcDistributionAsArray**(`array`, `binsStrict?`, `numOfBins?`): `IDistributionArrayItem`[]
+
+Calculates the distribution of an arrays values and outputs an array
+
+#### Parameters
+
+| Name          | Type       | Default value | Description                                    |
+| :------------ | :--------- | :------------ | :--------------------------------------------- |
+| `array`       | `number`[] | `undefined`   | Array to calc distribution of                  |
+| `binsStrict?` | `boolean`  | `false`       | If false, buckets may be rounded [floor, ceil] |
+| `numOfBins?`  | `number`   | `undefined`   | Number of bins to use                          |
+
+#### Returns
+
+`IDistributionArrayItem`[]
+
+The distribution as an array of objects
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:142](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L142)
 
 ---
 
 ### calcDomain
 
-▸ **calcDomain**(`array`: _any_[], `property?`: _string_): [*number*, *number*] \| [*any*, *any*]
+▸ **calcDomain**(`array`, `property?`): [`number`, `number`] \| [`any`, `any`]
 
 Gets the [min, max] value in an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** [*number*, *number*] \| [*any*, *any*]
+[`number`, `number`] \| [`any`, `any`]
 
 The domain
 
+**`Export`**
+
+#### Defined in
+
+[modules/domain.ts:36](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/domain.ts#L36)
+
 ---
-
-### calcDiff
-
-▸ **calcDiff**(`array`: *any*[], `property?`: *string*): *number*
-
-Gets the absolute difference between the max and min value in an array
-
-**`export`** 
-
-#### Parameters:
-
-| Name        | Type     | Description   |
-| :---------- | :------- | :------------ |
-| `array`     | *any*[]  | Input array   |
-| `property?` | *string* | -             |
-
-**Returns:** *number*
-
-Absolute difference between the max and min of an array
-
-___
 
 ### calcHistogram
 
-▸ **calcHistogram**(`array`: _any_[], `numberOfBins?`: _number_, `property?`: _string_): _number_[]
+▸ **calcHistogram**(`array`, `numberOfBins?`, `property?`): `number`[]
 
 Calculates a histogram from array values
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name            | Type     | Default value | Description           |
+| :-------------- | :------- | :------------ | :-------------------- |
+| `array`         | `any`[]  | `undefined`   | Input array           |
+| `numberOfBins?` | `number` | `4`           | Number of bins to use |
+| `property?`     | `string` | `undefined`   | Property to map by    |
 
-| Name           | Type     | Default value | Description |
-| :------------- | :------- | :------------ | :---------- |
-| `array`        | _any_[]  | -             | Input array |
-| `numberOfBins` | _number_ | 4             | -           |
-| `property?`    | _string_ | -             | -           |
+#### Returns
 
-**Returns:** _number_[]
+`number`[]
 
 The histogram
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:194](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L194)
 
 ---
 
 ### calcMax
 
-▸ **calcMax**(`array`: _any_[], `property?`: _string_): _number_
+▸ **calcMax**(`array`, `property?`): `number`
 
 Gets the max value in an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** _number_
+`number`
 
 The maximum value in the array
+
+**`Export`**
+
+#### Defined in
+
+[modules/domain.ts:12](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/domain.ts#L12)
 
 ---
 
 ### calcMean
 
-▸ **calcMean**(`array`: _any_[], `property?`: _string_): _number_ \| _undefined_
+▸ **calcMean**(`array`, `property?`): `number` \| `undefined`
 
 Gets the mean value for an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** _number_ \| _undefined_
+`number` \| `undefined`
 
 The mean value
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:100](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L100)
 
 ---
 
 ### calcMedian
 
-▸ **calcMedian**(`array`: _any_[], `property?`: _string_): _number_ \| _undefined_
+▸ **calcMedian**(`array`, `property?`): `number` \| `undefined`
 
 Gets an array median
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description            |
+| :---------- | :------- | :--------------------- |
+| `array`     | `any`[]  | Input array            |
+| `property?` | `string` | The property to map by |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** _number_ \| _undefined_
+`number` \| `undefined`
 
 The resulting median
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:16](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L16)
 
 ---
 
 ### calcMin
 
-▸ **calcMin**(`array`: _any_[], `property?`: _string_): _number_
+▸ **calcMin**(`array`, `property?`): `number`
 
 Gets the min value in an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description     |
+| :---------- | :------- | :-------------- |
+| `array`     | `any`[]  | Input array     |
+| `property?` | `string` | Property to map |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** _number_
+`number`
 
 The minimum value in the array
+
+**`Export`**
+
+#### Defined in
+
+[modules/domain.ts:24](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/domain.ts#L24)
 
 ---
 
 ### calcPercent
 
-▸ **calcPercent**(`toCalc`: _number_, `total`: _number_): _number_
+▸ **calcPercent**(`toCalc`, `total`): `number`
 
 Calculates the percentage of a value, given a total
 
-**`export`**
-
-#### Parameters:
+#### Parameters
 
 | Name     | Type     | Description                 |
 | :------- | :------- | :-------------------------- |
-| `toCalc` | _number_ | Number to get percentage of |
-| `total`  | _number_ | Total                       |
+| `toCalc` | `number` | Number to get percentage of |
+| `total`  | `number` | Total                       |
 
-**Returns:** _number_
+#### Returns
+
+`number`
 
 Percentage of the total
+
+**`Export`**
+
+#### Defined in
+
+[modules/percentages.ts:22](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/percentages.ts#L22)
 
 ---
 
 ### calcQuartiles
 
-▸ **calcQuartiles**(`array`: _any_[], `property`: _string_): [*number*, *number*, *number*]
+▸ **calcQuartiles**(`array`, `property?`): [`number`, `number`, `number`]
 
 Gets the quartiles of an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
-| Name       | Type     | Description        |
-| :--------- | :------- | :----------------- |
-| `array`    | _any_[]  | Input array        |
-| `property` | _string_ | Property to map by |
+#### Returns
 
-**Returns:** [*number*, *number*, *number*]
+[`number`, `number`, `number`]
 
 The quartiles
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:173](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L173)
+
+---
+
+### calcStdDeviation
+
+▸ **calcStdDeviation**<`T`\>(`array`, `property?`): `number` \| `undefined`
+
+Calculates the standard deviation in an array of numbers
+
+#### Type parameters
+
+| Name |
+| :--- |
+| `T`  |
+
+#### Parameters
+
+| Name        | Type     |
+| :---------- | :------- |
+| `array`     | `T`[]    |
+| `property?` | `string` |
+
+#### Returns
+
+`number` \| `undefined`
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:155](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L155)
 
 ---
 
 ### calcSum
 
-▸ **calcSum**(`array`: _any_[], `property?`: _string_): _number_
+▸ **calcSum**(`array`, `property?`): `number`
 
 Gets the sum of the values in an array
 
-**`export`**
+#### Parameters
 
-#### Parameters:
+| Name        | Type     | Description        |
+| :---------- | :------- | :----------------- |
+| `array`     | `any`[]  | Input array        |
+| `property?` | `string` | Property to map by |
 
-| Name        | Type     | Description |
-| :---------- | :------- | :---------- |
-| `array`     | _any_[]  | Input array |
-| `property?` | _string_ | -           |
+#### Returns
 
-**Returns:** _number_
+`number`
 
 The sum
+
+**`Export`**
+
+#### Defined in
+
+[modules/operations.ts:12](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/operations.ts#L12)
+
+---
+
+### calcVariance
+
+▸ **calcVariance**<`T`\>(`array`, `property?`): `number` \| `undefined`
+
+Calculates the variance in an array of numbers
+
+#### Type parameters
+
+| Name |
+| :--- |
+| `T`  |
+
+#### Parameters
+
+| Name        | Type     |
+| :---------- | :------- |
+| `array`     | `T`[]    |
+| `property?` | `string` |
+
+#### Returns
+
+`number` \| `undefined`
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:142](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L142)
 
 ---
 
 ### calcWeightedMean
 
-▸ **calcWeightedMean**(`array`: _any_[], `valueProperty`: _string_, `weightProperty`: _string_): _number_
+▸ **calcWeightedMean**(`array`, `valueProperty`, `weightProperty`): `number`
 
 Gets the weighted mean for an array
 
-**`export`**
-
-#### Parameters:
+#### Parameters
 
 | Name             | Type     | Description                |
 | :--------------- | :------- | :------------------------- |
-| `array`          | _any_[]  | Input array                |
-| `valueProperty`  | _string_ | Property to use for value  |
-| `weightProperty` | _string_ | Property to use for weight |
+| `array`          | `any`[]  | Input array                |
+| `valueProperty`  | `string` | Property to use for value  |
+| `weightProperty` | `string` | Property to use for weight |
 
-**Returns:** _number_
+#### Returns
+
+`number`
 
 The weighted mean
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:113](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L113)
 
 ---
 
 ### calcWeightedMedian
 
-▸ **calcWeightedMedian**(`array`: _any_[], `valueProperty`: _string_, `weightProperty`: _string_): _number_
+▸ **calcWeightedMedian**(`array`, `valueProperty`, `weightProperty`): `number`
 
 Gets an array weighted median
 
-**`export`**
-
-#### Parameters:
+#### Parameters
 
 | Name             | Type     | Description                   |
 | :--------------- | :------- | :---------------------------- |
-| `array`          | _any_[]  | Input array                   |
-| `valueProperty`  | _string_ | The property to use as value  |
-| `weightProperty` | _string_ | The property to use as weight |
+| `array`          | `any`[]  | Input array                   |
+| `valueProperty`  | `string` | The property to use as value  |
+| `weightProperty` | `string` | The property to use as weight |
 
-**Returns:** _number_
+#### Returns
+
+`number`
 
 The resulting median
+
+**`Export`**
+
+#### Defined in
+
+[modules/averages.ts:45](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/averages.ts#L45)
+
+---
+
+### getMinMaxFromBucket
+
+▸ **getMinMaxFromBucket**(`bucketLabel`): `number`[]
+
+Gets the min and max values for a calcDistribution bucket
+
+#### Parameters
+
+| Name          | Type     | Description      |
+| :------------ | :------- | :--------------- |
+| `bucketLabel` | `string` | The bucket label |
+
+#### Returns
+
+`number`[]
+
+[min, max]
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:127](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L127)
 
 ---
 
 ### ruleOfThree
 
-▸ **ruleOfThree**(`ifThis`: _number_, `isThis`: _number_, `thenThat`: _number_): _number_
+▸ **ruleOfThree**(`ifThis`, `isThis`, `thenThat`): `number`
 
 Performs a simple rule of three
 
-**`export`**
-
-#### Parameters:
+#### Parameters
 
 | Name       | Type     | Description  |
 | :--------- | :------- | :----------- |
-| `ifThis`   | _number_ | First param  |
-| `isThis`   | _number_ | First result |
-| `thenThat` | _number_ | Second param |
+| `ifThis`   | `number` | First param  |
+| `isThis`   | `number` | First result |
+| `thenThat` | `number` | Second param |
 
-**Returns:** _number_
+#### Returns
+
+`number`
 
 Second result
+
+**`Export`**
+
+#### Defined in
+
+[modules/percentages.ts:10](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/percentages.ts#L10)

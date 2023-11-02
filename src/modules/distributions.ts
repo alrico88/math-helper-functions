@@ -7,33 +7,33 @@ import {calcPercent} from './percentages';
 import {countBy} from "lodash";
 
 interface IDistribution {
-    labels: string[];
-    data: number[];
+  labels: string[];
+  data: number[];
 }
 
 interface IDistributionArrayItem {
-    label: string;
-    count: number;
-    percentage: number;
-    from: number;
-    to: number;
+  label: string;
+  count: number;
+  percentage: number;
+  from: number;
+  to: number;
 }
 
 interface IBucket {
-    label: string;
-    from: number;
-    to: number;
-    inside: (val: number) => boolean;
+  label: string;
+  from: number;
+  to: number;
+  inside: (val: number) => boolean;
 }
 
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
-    const data = new Array(buckets.length).fill(0);
+  const data = new Array(buckets.length).fill(0);
 
-    buckets.forEach((b, currentIndex) => {
-        data[currentIndex] = array.filter((d) => b.inside(d)).length;
-    });
+  buckets.forEach((b, currentIndex) => {
+    data[currentIndex] = array.filter((d) => b.inside(d)).length;
+  });
 
-    return data;
+  return data;
 }
 
 export function calcBuckets(
@@ -104,9 +104,9 @@ export function calcDistribution(
  * @return {number[]} [min, max]
  */
 export function getMinMaxFromBucket(bucketLabel: string): number[] {
-    const [min, max] = bucketLabel.split(' - ');
+  const [min, max] = bucketLabel.split(' - ');
 
-    return [Number(min.trim()), Number(max.trim())];
+  return [Number(min.trim()), Number(max.trim())];
 }
 
 /**
@@ -190,20 +190,20 @@ export function calcDistributionAsArray(
 ): IDistributionArrayItem[] {
     const distribution = calcDistribution(array, binsStrict, numOfBins);
 
-    const total = calcSum(distribution.data);
+  const total = calcSum(distribution.data);
 
-    return distribution.labels.map((label, index) => {
-        const indexValue = distribution.data[index];
-        const [from, to] = getMinMaxFromBucket(label);
+  return distribution.labels.map((label, index) => {
+    const indexValue = distribution.data[index];
+    const [from, to] = getMinMaxFromBucket(label);
 
-        return {
-            label,
-            count: indexValue,
-            percentage: calcPercent(indexValue, total),
-            from,
-            to,
-        };
-    });
+    return {
+      label,
+      count: indexValue,
+      percentage: calcPercent(indexValue, total),
+      from,
+      to,
+    };
+  });
 }
 
 /**
@@ -215,18 +215,18 @@ export function calcDistributionAsArray(
  * @return {[number, number, number]} The quartiles
  */
 export function calcQuartiles(
-    array: any[],
-    property?: string,
+  array: any[],
+  property?: string,
 ): [number, number, number] {
-    const len = array.length;
-    const simpleArray = [...getSimpleArray(array, property)];
-    simpleArray.sort((a, b) => a - b);
+  const len = array.length;
+  const simpleArray = [...getSimpleArray(array, property)];
+  simpleArray.sort((a, b) => a - b);
 
-    return [
-        simpleArray[Math.round(len * 0.25) - 1],
-        simpleArray[Math.round(len * 0.5) - 1],
-        simpleArray[Math.round(len * 0.75) - 1],
-    ];
+  return [
+    simpleArray[Math.round(len * 0.25) - 1],
+    simpleArray[Math.round(len * 0.5) - 1],
+    simpleArray[Math.round(len * 0.75) - 1],
+  ];
 }
 
 /**
@@ -239,24 +239,24 @@ export function calcQuartiles(
  * @return {number[]} The histogram
  */
 export function calcHistogram(
-    array: any[],
-    numberOfBins = 4,
-    property?: string,
+  array: any[],
+  numberOfBins = 4,
+  property?: string,
 ): number[] {
-    const dataArray = getSimpleArray(array, property);
-    const [arrayMin, arrayMax] = calcDomain(dataArray);
-    const first = arrayMin;
-    const binWidth = (arrayMax - first) / numberOfBins;
-    const len = dataArray.length;
-    const bins = new Array(numberOfBins).fill(0);
-    for (let i = 0; i < len; i++) {
-        bins[
-            Math.min(
-                Math.floor((dataArray[i] - first) / binWidth),
-                numberOfBins - 1,
-            )
-            ] += 1;
-    }
+  const dataArray = getSimpleArray(array, property);
+  const [arrayMin, arrayMax] = calcDomain(dataArray);
+  const first = arrayMin;
+  const binWidth = (arrayMax - first) / numberOfBins;
+  const len = dataArray.length;
+  const bins = new Array(numberOfBins).fill(0);
+  for (let i = 0; i < len; i++) {
+    bins[
+      Math.min(
+        Math.floor((dataArray[i] - first) / binWidth),
+        numberOfBins - 1,
+      )
+    ] += 1;
+  }
 
-    return bins;
+  return bins;
 }
