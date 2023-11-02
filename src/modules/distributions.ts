@@ -131,10 +131,10 @@ export function calcDistributionWithSeries(
   buckets: IBucket[],
   dataGrouped: Record<string, unknown[]>,
 ): ISerieDistribution {
-  let eventsTotal = 0;
+  let totalCount = 0;
 
   const data = Object.entries(dataGrouped).map(([key, value]) => {
-    let eventsSerie = 0;
+    let serieCount = 0;
 
     const serieName = key;
     const dataVal: Record<string, unknown>[] = [];
@@ -151,13 +151,13 @@ export function calcDistributionWithSeries(
         }
       });
 
-      eventsTotal++;
+      totalCount++;
     });
 
     const valuesGrouped = countBy(dataVal, 'interval');
 
     Object.values(valuesGrouped).forEach((v) => {
-      eventsSerie += v;
+      serieCount += v;
     });
 
     const dataArr = new Array(buckets.length).fill(0);
@@ -171,7 +171,7 @@ export function calcDistributionWithSeries(
     return {
       name: serieName,
       count: dataArr,
-      percentage_serie: dataArr.map((d) => (d * 100) / eventsSerie, 2),
+      percentage_serie: dataArr.map((d) => (d * 100) / serieCount, 2),
     };
   });
 
@@ -179,7 +179,7 @@ export function calcDistributionWithSeries(
     labels: buckets.map((b) => b.label),
     data: data.map((i) => ({
       ...i,
-      percentage_total: i.count.map((d) => (d * 100) / eventsTotal),
+      percentage_total: i.count.map((d) => (d * 100) / totalCount),
     })),
   };
 }
