@@ -46,6 +46,15 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
   return data;
 }
 
+/**
+ * Calculate the buckets given a data array and an amount
+ *
+ * @export
+ * @param {number[]} array The data array
+ * @param {boolean} [strict=false] Whether to use real or pretty domain
+ * @param {number} [numOfBins] Amount of desired buckets
+ * @return {IBucket[]} The buckets
+ */
 export function calcBuckets(
   array: number[],
   strict = false,
@@ -120,7 +129,7 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
 }
 
 /**
- * Calculates the distribution of an array of objects grouped
+ * Calculates the distribution of an array of grouped objects
  *
  * @export
  * @param {IBucket[]} buckets
