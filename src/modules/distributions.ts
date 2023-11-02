@@ -1,10 +1,10 @@
-import {thresholdSturges} from 'd3-array';
-import {processNumber} from 'number-helper-functions';
-import {getSimpleArray} from './arrays';
-import {calcDomain} from './domain';
-import {calcSum} from './operations';
-import {calcPercent} from './percentages';
-import {countBy} from 'lodash';
+import { thresholdSturges } from 'd3-array';
+import { processNumber } from 'number-helper-functions';
+import { countBy } from 'lodash';
+import { getSimpleArray } from './arrays';
+import { calcDomain } from './domain';
+import { calcSum } from './operations';
+import { calcPercent } from './percentages';
 
 interface IDistribution {
   labels: string[];
@@ -24,6 +24,16 @@ interface IBucket {
   from: number;
   to: number;
   inside: (val: number) => boolean;
+}
+
+interface ISerieDistribution {
+  labels: string[];
+  data: {
+    name: string;
+    count:number[];
+    percentage_serie: number[];
+    percentage_total: number[];
+  }[]
 }
 
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
@@ -110,17 +120,17 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
 }
 
 /**
- * Calculates the distribution of an arrays values and outputs an array
+ * Calculates the distribution of an array of objects grouped
  *
  * @export
- * @param buckets
- * @param dataGrouped
- * @return {IDistributionArrayItem[]} The distribution as an array of objects
+ * @param {IBucket[]} buckets
+ * @param {Record<string, unknown[]>} dataGrouped
+ * @return {ISerieDistribution} The distribution with labels and data
  */
 export function calcDistributionWithSeries(
   buckets: IBucket[],
   dataGrouped: Record<string, unknown[]>,
-): any {
+): ISerieDistribution {
   let eventsTotal = 0;
 
   const data = Object.entries(dataGrouped).map(([key, value]) => {
@@ -161,7 +171,7 @@ export function calcDistributionWithSeries(
     return {
       name: serieName,
       count: dataArr,
-      percentage_serie: dataArr.map((i) => i * 100 / eventsSerie, 2),
+      percentage_serie: dataArr.map((d) => (d * 100) / eventsSerie, 2),
     };
   });
 
@@ -169,7 +179,7 @@ export function calcDistributionWithSeries(
     labels: buckets.map((b) => b.label),
     data: data.map((i) => ({
       ...i,
-      percentage_total: i.count.map((d) => d * 100 / eventsTotal),
+      percentage_total: i.count.map((d) => (d * 100) / eventsTotal),
     })),
   };
 }
