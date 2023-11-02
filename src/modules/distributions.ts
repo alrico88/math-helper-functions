@@ -1,9 +1,10 @@
 import {thresholdSturges} from 'd3-array';
-import {max as maxnLod, min as minLod} from 'lodash';
+import {processNumber} from 'number-helper-functions';
 import {getSimpleArray} from './arrays';
 import {calcDomain} from './domain';
 import {calcSum} from './operations';
 import {calcPercent} from './percentages';
+import {countBy} from "lodash";
 
 interface IDistribution {
     labels: string[];
@@ -22,41 +23,54 @@ interface IBucket {
     label: string;
     from: number;
     to: number;
+    inside: (val: number) => boolean;
 }
 
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
     const data = new Array(buckets.length).fill(0);
 
     buckets.forEach((b, currentIndex) => {
-        const condition = currentIndex === buckets.length - 1
-            ? (d: number): boolean => d >= b.from && d <= b.to
-            : (d: number): boolean => d >= b.from && d < b.to;
-
-        data[currentIndex] = array.filter(condition as () => boolean).length;
+        data[currentIndex] = array.filter((d) => b.inside(d)).length;
     });
 
     return data;
 }
+export function calcBuckets(
+    array: number[],
+    strict = false,
+    numOfBins?: number,
+): IBucket[] {
+    let [minDom, maxDom] = calcDomain(array);
 
-function getMinMaxValuesForBuckets(diffData: number, index: number, minDom: number, strictBuckets: boolean, binsNumber: number): {
-    minVal: number;
-    maxVal: number;
-} {
-    const minDiff = diffData * (index - 1);
-    const maxDiff = diffData * index;
+    if (!strict) {
+        minDom = Math.floor(minDom);
+        maxDom = Math.ceil(maxDom);
+    }
 
-    const maxWithoutRound = index === 1 ? minDom + diffData : minDom + maxDiff;
-    const minWithoutRound = index === 1 ? minDom : minDom + minDiff;
+    const bins = numOfBins ?? thresholdSturges(array);
+    const bucketSize = (maxDom - minDom) / bins;
 
-    const minVal = strictBuckets ? minWithoutRound : Math.floor(minWithoutRound);
+    const buckets: IBucket[] = [];
 
-    const elseVal = index === binsNumber ? Math.ceil(maxWithoutRound) : Math.floor(maxWithoutRound);
-    const maxVal = strictBuckets ? maxWithoutRound : elseVal;
+    for (let i = 0; i < bins; i++) {
+        const bucketMin = minDom + i * bucketSize;
+        const bucketMax = minDom + (i + 1) * bucketSize;
 
-    return {
-        minVal,
-        maxVal,
-    };
+        const label = `${processNumber(bucketMin)} - ${processNumber(bucketMax)}`;
+
+        buckets.push({
+            label,
+            from: bucketMin,
+            to: bucketMax,
+            inside(val: number) {
+                return i === bins - 1
+                    ? val >= bucketMin && val <= bucketMax
+                    : val >= bucketMin && val < bucketMax;
+            },
+        });
+    }
+
+    return buckets;
 }
 
 /**
@@ -68,43 +82,15 @@ function getMinMaxValuesForBuckets(diffData: number, index: number, minDom: numb
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistribution} The distribution
  */
-export function calcDistribution(array: number[], strict = false, numOfBins?: number): IDistribution {
-    const minDom = minLod(array) as number;
-    const maxDom = maxnLod(array) as number;
-
-    const bins = numOfBins ?? thresholdSturges(array);
-
-    let diffData;
-
-    if (Math.abs(maxDom) < Math.abs(minDom)) {
-        diffData = (Math.abs(minDom) - Math.abs(maxDom)) / bins;
-    } else {
-        diffData = (Math.abs(maxDom) - Math.abs(minDom)) / bins;
-    }
-
-    const buckets: IBucket[] = [];
-
-    const labels: string[] = [];
-
-    for (let b = 1; b <= bins; b++) {
-        const {
-            minVal,
-            maxVal,
-        } = getMinMaxValuesForBuckets(diffData, b, minDom, strict, bins);
-
-        const label = `${minVal} - ${maxVal}`;
-
-        labels.push(label);
-
-        buckets.push({
-            label: label,
-            from: minVal,
-            to: maxVal,
-        });
-    }
+export function calcDistribution(
+    array: number[],
+    strict = false,
+    numOfBins?: number,
+): IDistribution {
+    const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
 
     return {
-        labels,
+        labels: buckets.map((b)=> b.label),
         data: createArrayData(buckets, array),
     };
 }
@@ -126,12 +112,80 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
  * Calculates the distribution of an arrays values and outputs an array
  *
  * @export
+ * @param buckets
+ * @param dataGrouped
+ * @return {IDistributionArrayItem[]} The distribution as an array of objects
+ */
+export function calcDistributionWithSeries(
+    buckets: IBucket[],
+    dataGrouped: Record<string, unknown[]>,
+): any {
+    let eventsTotal = 0
+
+    const data =  Object.entries(dataGrouped).map(([key, value]) => {
+        let eventsSerie = 0;
+
+        const serieName = key;
+        const dataVal: Record<string, unknown>[] = []
+
+        value.forEach((v) => {
+            buckets.forEach((d, indexDist) => {
+                const valObj = (v as Record<string, number | string>).data as number;
+
+                if (d.inside(valObj)) {
+                    dataVal.push({
+                        data: valObj,
+                        interval: d.label,
+                    });
+                }
+            });
+
+            eventsTotal++
+        })
+
+        const valuesGrouped = countBy(dataVal, 'interval');
+
+        console.log(valuesGrouped)
+        Object.values(valuesGrouped).forEach((v) => {
+            eventsSerie += v;
+        });
+
+        const dataArr = new Array(buckets.length).fill(0);
+
+        Object.entries(valuesGrouped).forEach(([keyV, valueV]) => {
+            const idx = buckets.findIndex((l) => l.label === keyV);
+
+            dataArr[idx] = valueV;
+        });
+        return {
+            name: serieName,
+            count: dataArr,
+            percentage_serie: dataArr.map((i) => i * 100 / eventsSerie, 2),
+        }
+
+    });
+
+    return data.map((i)=> ({
+        ...i,
+        percentage_total: i.count.map((d)=> d * 100 / eventsTotal)
+    }))
+
+}
+
+/**
+ * Calculates the distribution of an arrays values and outputs an array
+ *
+ * @export
  * @param  {number[]} array Array to calc distribution of
- * @param {boolean} [binsStrict=false] Should the buckets contain strictly the domain values or should they include their rounded value
+ * @param {boolean} [binsStrict=false] If false, buckets may be rounded [floor, ceil]
  * @param  {number} [numOfBins] Number of bins to use
  * @return {IDistributionArrayItem[]} The distribution as an array of objects
  */
-export function calcDistributionAsArray(array: number[], binsStrict = false, numOfBins?: number): IDistributionArrayItem[] {
+export function calcDistributionAsArray(
+    array: number[],
+    binsStrict = false,
+    numOfBins?: number,
+): IDistributionArrayItem[] {
     const distribution = calcDistribution(array, binsStrict, numOfBins);
 
     const total = calcSum(distribution.data);
@@ -155,18 +209,21 @@ export function calcDistributionAsArray(array: number[], binsStrict = false, num
  *
  * @export
  * @param  {any[]} array Input array
- * @param  {string} property Property to map by
+ * @param  {string} [property] Property to map by
  * @return {[number, number, number]} The quartiles
  */
-export function calcQuartiles(array: any[], property: string): [number, number, number] {
+export function calcQuartiles(
+    array: any[],
+    property?: string,
+): [number, number, number] {
     const len = array.length;
     const simpleArray = [...getSimpleArray(array, property)];
     simpleArray.sort((a, b) => a - b);
 
     return [
-        simpleArray[Math.round(len / 4) - 1],
-        simpleArray[Math.round(len / 2) - 1],
-        simpleArray[Math.round(len * 3 / 4) - 1],
+        simpleArray[Math.round(len * 0.25) - 1],
+        simpleArray[Math.round(len * 0.5) - 1],
+        simpleArray[Math.round(len * 0.75) - 1],
     ];
 }
 
@@ -179,7 +236,11 @@ export function calcQuartiles(array: any[], property: string): [number, number, 
  * @param  {string} [property] Property to map by
  * @return {number[]} The histogram
  */
-export function calcHistogram(array: any[], numberOfBins = 4, property?: string): number[] {
+export function calcHistogram(
+    array: any[],
+    numberOfBins = 4,
+    property?: string,
+): number[] {
     const dataArray = getSimpleArray(array, property);
     const [arrayMin, arrayMax] = calcDomain(dataArray);
     const first = arrayMin;
@@ -190,7 +251,7 @@ export function calcHistogram(array: any[], numberOfBins = 4, property?: string)
         bins[
             Math.min(
                 Math.floor((dataArray[i] - first) / binWidth),
-                numberOfBins - 1
+                numberOfBins - 1,
             )
             ] += 1;
     }
