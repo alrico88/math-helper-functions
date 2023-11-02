@@ -125,11 +125,13 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
  * @export
  * @param {IBucket[]} buckets
  * @param {Record<string, unknown[]>} dataGrouped
+ * @param {string} distributionProp
  * @return {ISerieDistribution} The distribution with labels and data
  */
 export function calcDistributionWithSeries(
   buckets: IBucket[],
   dataGrouped: Record<string, unknown[]>,
+  distributionProp: string,
 ): ISerieDistribution {
   let totalCount = 0;
 
@@ -141,9 +143,9 @@ export function calcDistributionWithSeries(
 
     value.forEach((v) => {
       buckets.forEach((d) => {
-        const valObj = (v as Record<string, number | string>).data as number;
+        const valObj = Reflect.get(v as Record<string, number | string>, distributionProp);
 
-        if (d.inside(valObj)) {
+        if (d.inside(valObj as number)) {
           dataVal.push({
             data: valObj,
             interval: d.label,
@@ -171,7 +173,7 @@ export function calcDistributionWithSeries(
     return {
       name: serieName,
       count: dataArr,
-      percentage_serie: dataArr.map((d) => (d * 100) / serieCount, 2),
+      percentage_serie: dataArr.map((d) => calcPercent(d * 100, serieCount)),
     };
   });
 
@@ -179,7 +181,7 @@ export function calcDistributionWithSeries(
     labels: buckets.map((b) => b.label),
     data: data.map((i) => ({
       ...i,
-      percentage_total: i.count.map((d) => (d * 100) / totalCount),
+      percentage_total: i.count.map((d) => calcPercent(d * 100, totalCount)),
     })),
   };
 }
