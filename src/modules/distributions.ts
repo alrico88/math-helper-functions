@@ -5,6 +5,7 @@ import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
 import { calcPercent } from './percentages';
+import get from "lodash/get";
 
 interface IDistribution {
   labels: string[];
@@ -143,11 +144,11 @@ export function calcDistributionWithSeries(
 
     value.forEach((v) => {
       buckets.forEach((d) => {
-        const valObj = Reflect.get(v as Record<string, number | string>, distributionProp);
+        const valueProp = get(v as Record<string, number | string>, distributionProp);
 
-        if (d.inside(valObj as number)) {
+        if (d.inside(valueProp as number)) {
           dataVal.push({
-            data: valObj,
+            data: valueProp,
             interval: d.label,
           });
         }
