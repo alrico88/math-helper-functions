@@ -13,6 +13,7 @@ import {
   calcStdDeviation,
   calcVariance,
   calcDiff,
+  calcDistribution,
 } from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
@@ -235,5 +236,15 @@ describe('Testing VARIANCE methods', () => {
 describe('Testing STD DEVIATION methods', () => {
   test('Calculating according to standard deviation formula should work according to math', () => {
     expect(calcStdDeviation([0, 5, 10])).toStrictEqual(5);
+  });
+});
+
+describe('Testing DISTRIBUTION methods', () => {
+  test('It should output the desired number of buckets', () => {
+    expect(calcDistribution([0, 5, 10], true, 2).data.length).toStrictEqual(2);
+  });
+
+  test('If using the non-strict version, it should output integer domains', () => {
+    expect(calcDistribution([0.2, 5, 10.3], false, 2).labels[0].split(' - ')[0]).toStrictEqual('0');
   });
 });
