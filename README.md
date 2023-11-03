@@ -39,9 +39,11 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 
 ### Functions
 
+- [calcBuckets](modules.md#calcbuckets)
 - [calcDiff](modules.md#calcdiff)
 - [calcDistribution](modules.md#calcdistribution)
 - [calcDistributionAsArray](modules.md#calcdistributionasarray)
+- [calcDistributionWithSeries](modules.md#calcdistributionwithseries)
 - [calcDomain](modules.md#calcdomain)
 - [calcHistogram](modules.md#calchistogram)
 - [calcMax](modules.md#calcmax)
@@ -59,6 +61,34 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 - [ruleOfThree](modules.md#ruleofthree)
 
 ## Functions
+
+### calcBuckets
+
+▸ **calcBuckets**(`array`, `strict?`, `numOfBins?`): `IBucket`[]
+
+Calculate the buckets given a data array and an amount
+
+#### Parameters
+
+| Name         | Type       | Default value | Description                          |
+| :----------- | :--------- | :------------ | :----------------------------------- |
+| `array`      | `number`[] | `undefined`   | The data array                       |
+| `strict?`    | `boolean`  | `false`       | Whether to use real or pretty domain |
+| `numOfBins?` | `number`   | `undefined`   | Amount of desired buckets            |
+
+#### Returns
+
+`IBucket`[]
+
+The buckets
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:58](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L58)
+
+---
 
 ### calcDiff
 
@@ -111,7 +141,7 @@ The distribution
 
 #### Defined in
 
-[modules/distributions.ts:76](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L76)
+[modules/distributions.ts:105](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L105)
 
 ---
 
@@ -139,7 +169,35 @@ The distribution as an array of objects
 
 #### Defined in
 
-[modules/distributions.ts:142](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L142)
+[modules/distributions.ts:196](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L196)
+
+---
+
+### calcDistributionWithSeries
+
+▸ **calcDistributionWithSeries**(`buckets`, `dataGrouped`, `distributionProp`): `ISerieDistribution`
+
+Calculates the distribution of an array of grouped objects
+
+#### Parameters
+
+| Name               | Type                             |
+| :----------------- | :------------------------------- |
+| `buckets`          | `IBucket`[]                      |
+| `dataGrouped`      | `Record`<`string`, `unknown`[]\> |
+| `distributionProp` | `string`                         |
+
+#### Returns
+
+`ISerieDistribution`
+
+The distribution with labels and data
+
+**`Export`**
+
+#### Defined in
+
+[modules/distributions.ts:140](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L140)
 
 ---
 
@@ -194,7 +252,7 @@ The histogram
 
 #### Defined in
 
-[modules/distributions.ts:194](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L194)
+[modules/distributions.ts:251](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L251)
 
 ---
 
@@ -356,7 +414,7 @@ The quartiles
 
 #### Defined in
 
-[modules/distributions.ts:173](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L173)
+[modules/distributions.ts:227](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L227)
 
 ---
 
@@ -527,7 +585,7 @@ Gets the min and max values for a calcDistribution bucket
 
 #### Defined in
 
-[modules/distributions.ts:127](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L127)
+[modules/distributions.ts:125](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L125)
 
 ---
 

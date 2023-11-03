@@ -46,6 +46,15 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
   return data;
 }
 
+/**
+ * Calculate the buckets given a data array and an amount
+ *
+ * @export
+ * @param {number[]} array The data array
+ * @param {boolean} [strict=false] Whether to use real or pretty domain
+ * @param {number} [numOfBins] Amount of desired buckets
+ * @return {IBucket[]} The buckets
+ */
 export function calcBuckets(
   array: number[],
   strict = false,
@@ -120,7 +129,7 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
 }
 
 /**
- * Calculates the distribution of an array of objects grouped
+ * Calculates the distribution of an array of grouped objects
  *
  * @export
  * @param {IBucket[]} buckets
@@ -162,7 +171,7 @@ export function calcDistributionWithSeries(
     return {
       name: serieName,
       count: dataArr.map((d) => d.data),
-      percentage_serie: dataArr.map((d) => calcPercent(d.data, serieCount)),
+      percentage_serie: dataArr.map((d) => calcPercent(d.data * 100, serieCount)),
     };
   });
 
@@ -170,7 +179,7 @@ export function calcDistributionWithSeries(
     labels: buckets.map((b) => b.label),
     data: data.map((i) => ({
       ...i,
-      percentage_total: i.count.map((d) => calcPercent(d, totalCount)),
+      percentage_total: i.count.map((d) => calcPercent(d * 100, totalCount)),
     })),
   };
 }
