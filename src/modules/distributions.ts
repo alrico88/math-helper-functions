@@ -162,7 +162,7 @@ export function calcDistributionWithSeries(
     return {
       name: serieName,
       count: dataArr.map((d) => d.data),
-      percentage_serie: dataArr.map((d) => calcPercent(d.data * 100, serieCount)),
+      percentage_serie: dataArr.map((d) => calcPercent(d.data, serieCount)),
     };
   });
 
@@ -170,7 +170,7 @@ export function calcDistributionWithSeries(
     labels: buckets.map((b) => b.label),
     data: data.map((i) => ({
       ...i,
-      percentage_total: i.count.map((d) => calcPercent(d * 100, totalCount)),
+      percentage_total: i.count.map((d) => calcPercent(d, totalCount)),
     })),
   };
 }
