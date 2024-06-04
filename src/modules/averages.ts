@@ -1,7 +1,7 @@
 import {
   deviation, mean, median, variance,
 } from 'd3-array';
-import get from 'lodash/get';
+import dlv from 'dlv';
 import { getSimpleArray } from './arrays';
 import { isEmptyArray, isEmptyString } from './checks';
 
@@ -81,12 +81,12 @@ export function calcWeightedMedian(
   }
 
   if (weight === midpoint) {
-    const prevItem = get(sortedArray[index - 1], 'value', 0);
-    const currItem = get(sortedArray[index], 'value', 0);
+    const prevItem = dlv(sortedArray[index - 1], 'value', 0);
+    const currItem = dlv(sortedArray[index], 'value', 0);
 
     return (prevItem + currItem) / 2;
   }
-  return get(sortedArray[index - 1], 'value', 0);
+  return dlv(sortedArray[index - 1], 'value', 0);
 }
 
 /**
@@ -121,8 +121,8 @@ export function calcWeightedMean(
 
   const result = array
     .map((d) => {
-      const weight = get(d, weightProperty, 0);
-      const upper = get(d, valueProperty, 0) * weight;
+      const weight = dlv(d, weightProperty, 0);
+      const upper = dlv(d, valueProperty, 0) * weight;
       return [upper, weight];
     })
     .reduce((acc: number[], d: number[]) => [acc[0] + d[0], acc[1] + d[1]], [0, 0]);

@@ -1,6 +1,6 @@
 import { thresholdSturges } from 'd3-array';
 import { processNumber } from 'number-helper-functions';
-import get from 'lodash/get';
+import dlv from 'dlv';
 import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
@@ -156,7 +156,7 @@ export function calcDistributionWithSeries(
       };
 
       value.forEach((v) => {
-        const valueProp = get(v as Record<string, number | string>, distributionProp);
+        const valueProp = dlv(v as Record<string, number | string>, distributionProp);
 
         if (d.inside(valueProp as number)) {
           bucketObj.data++;
