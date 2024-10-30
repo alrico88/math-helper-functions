@@ -12,7 +12,7 @@ import { isNonEmptyString } from './checks';
  */
 export function getSimpleArray<T>(array: T[], property?: string): any[] {
   if (isNonEmptyString(property)) {
-    return array.map((d) => dlv(d, property));
+    return array.map((d) => dlv(d as object, property));
   }
   return array;
 }
