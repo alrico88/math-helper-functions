@@ -15,3 +15,4 @@ export {
 } from './modules/domain';
 export { calcSum } from './modules/operations';
 export { ruleOfThree, calcPercent } from './modules/percentages';
+export { getPercentile } from './modules/percentiles';

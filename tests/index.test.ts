@@ -14,6 +14,7 @@ import {
   calcVariance,
   calcDiff,
   calcDistribution,
+  getPercentile,
 } from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
@@ -246,5 +247,59 @@ describe('Testing DISTRIBUTION methods', () => {
 
   test('If using the non-strict version, it should output integer domains', () => {
     expect(calcDistribution([0.2, 5, 10.3], false, 2).labels[0].split(' - ')[0]).toStrictEqual('0');
+  });
+});
+
+describe('Test PERCENTILE methods', () => {
+  test('Calculates the 50th percentile (median) of a simple array', () => {
+    const array = [1, 2, 3, 4, 5];
+    const result = getPercentile(array, 0.5);
+    expect(result).toBe(3);
+  });
+
+  test('Calculates the 0th percentile (minimum) of a simple array', () => {
+    const array = [1, 2, 3, 4, 5];
+    const result = getPercentile(array, 0);
+    expect(result).toBe(1);
+  });
+
+  test('Calculates the 100th percentile (maximum) of a simple array', () => {
+    const array = [1, 2, 3, 4, 5];
+    const result = getPercentile(array, 1);
+    expect(result).toBe(5);
+  });
+
+  test('Returns undefined for an empty array', () => {
+    const array: number[] = [];
+    const result = getPercentile(array, 0.5);
+    expect(result).toBeUndefined();
+  });
+
+  test('Returns undefined for an array with only null values', () => {
+    const array = [null, null, null];
+    const result = getPercentile(array, 0.5);
+    expect(result).toBeUndefined();
+  });
+
+  test('Ignores null values in a mixed array', () => {
+    const array = [1, null, 2, null, 3, 4, 5];
+    const result = getPercentile(array, 0.5);
+    expect(result).toBe(3);
+  });
+
+  test('Throws an error for percentile below 0', () => {
+    const array = [1, 2, 3, 4, 5];
+    expect(() => getPercentile(array, -0.1)).toThrowError('percentile must be a number between 0 and 1');
+  });
+
+  test('Throws an error for percentile above 1', () => {
+    const array = [1, 2, 3, 4, 5];
+    expect(() => getPercentile(array, 1.1)).toThrowError('percentile must be a number between 0 and 1');
+  });
+
+  test('Calculates percentile with floating point values correctly', () => {
+    const array = [1.2, 3.5, 5.1, 7.8, 9.3];
+    const result = getPercentile(array, 0.75);
+    expect(result).toBeCloseTo(7.8, 1);
   });
 });

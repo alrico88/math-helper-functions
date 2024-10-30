@@ -58,6 +58,7 @@ const domain = calcDomain(input, 'count'); // domain is [1, 10]
 - [calcWeightedMean](modules.md#calcweightedmean)
 - [calcWeightedMedian](modules.md#calcweightedmedian)
 - [getMinMaxFromBucket](modules.md#getminmaxfrombucket)
+- [getPercentile](modules.md#getpercentile)
 - [ruleOfThree](modules.md#ruleofthree)
 
 ## Functions
@@ -586,6 +587,31 @@ Gets the min and max values for a calcDistribution bucket
 #### Defined in
 
 [modules/distributions.ts:125](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/distributions.ts#L125)
+
+---
+
+### getPercentile
+
+▸ **getPercentile**(`array`, `percentile`): `number` \| `undefined`
+
+Gets the percentile of an array of values
+
+#### Parameters
+
+| Name         | Type                   | Description                 |
+| :----------- | :--------------------- | :-------------------------- |
+| `array`      | (`null` \| `number`)[] | Array to find percentile of |
+| `percentile` | `number`               | Amount between 0 and 1      |
+
+#### Returns
+
+`number` \| `undefined`
+
+Percentile
+
+#### Defined in
+
+[modules/percentiles.ts:11](https://github.com/alrico88/math-helper-functions/blob/master/src/modules/percentiles.ts#L11)
 
 ---
 
