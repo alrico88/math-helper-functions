@@ -1,20 +1,20 @@
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import {
+  calcDiff,
+  calcDistribution,
   calcDomain,
   calcMax,
   calcMean,
   calcMedian,
   calcMin,
   calcPercent,
+  calcStdDeviation,
   calcSum,
+  calcVariance,
   calcWeightedMean,
   calcWeightedMedian,
-  ruleOfThree,
-  calcStdDeviation,
-  calcVariance,
-  calcDiff,
-  calcDistribution,
   getPercentile,
+  ruleOfThree,
 } from '../src';
 
 const testArray = [1, 1, 2, 3, 3];
@@ -34,7 +34,7 @@ describe('Testing SUM methods', () => {
     expect(calcSum(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays sum should be equal to the sum of the array\'s item values', () => {
+  test("Object arrays sum should be equal to the sum of the array's item values", () => {
     expect(calcSum(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -46,7 +46,7 @@ describe('Testing SUM methods', () => {
 
 describe('Testing MAX methods', () => {
   const expectedResult = 3;
-  test('Simple array\'s max should return the highest number in the series', () => {
+  test("Simple array's max should return the highest number in the series", () => {
     expect(calcMax(testArray)).toStrictEqual(expectedResult);
   });
 
@@ -55,7 +55,7 @@ describe('Testing MAX methods', () => {
     expect(calcMax(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays max should be equal to the max of the array\'s item values', () => {
+  test("Object arrays max should be equal to the max of the array's item values", () => {
     expect(calcMax(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -67,7 +67,7 @@ describe('Testing MAX methods', () => {
 
 describe('Testing MIN methods', () => {
   const expectedResult = 1;
-  test('Simple array\'s min should return the lowest number in the series', () => {
+  test("Simple array's min should return the lowest number in the series", () => {
     expect(calcMin(testArray)).toStrictEqual(expectedResult);
   });
 
@@ -76,7 +76,7 @@ describe('Testing MIN methods', () => {
     expect(calcMin(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays min should be equal to the min of the array\'s item values', () => {
+  test("Object arrays min should be equal to the min of the array's item values", () => {
     expect(calcMin(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -88,7 +88,7 @@ describe('Testing MIN methods', () => {
 
 describe('Testing DIFF methods', () => {
   const expectedResult = 2;
-  test('Simple array\'s diff should return the difference of the domain in the series', () => {
+  test("Simple array's diff should return the difference of the domain in the series", () => {
     expect(calcDiff(testArray)).toStrictEqual(expectedResult);
   });
 
@@ -97,7 +97,7 @@ describe('Testing DIFF methods', () => {
     expect(calcDiff(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays diff should be equal to the diff of the array\'s item values', () => {
+  test("Object arrays diff should be equal to the diff of the array's item values", () => {
     expect(calcDiff(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -109,7 +109,7 @@ describe('Testing DIFF methods', () => {
 
 describe('Testing DOMAIN methods', () => {
   const expectedResult = [1, 3];
-  test('Simple array\'s domain should return the lowest and highest number in the series', () => {
+  test("Simple array's domain should return the lowest and highest number in the series", () => {
     expect(calcDomain(testArray)).toStrictEqual(expectedResult);
   });
 
@@ -118,7 +118,7 @@ describe('Testing DOMAIN methods', () => {
     expect(calcDomain(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays domain should be equal to the domain of the array\'s item values', () => {
+  test("Object arrays domain should be equal to the domain of the array's item values", () => {
     expect(calcDomain(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -130,7 +130,7 @@ describe('Testing DOMAIN methods', () => {
 
 describe('Testing MEAN methods', () => {
   const expectedResult = 2;
-  test('Simple array\'s mean should return the mean of the series', () => {
+  test("Simple array's mean should return the mean of the series", () => {
     expect(calcMean(testArray)).toStrictEqual(expectedResult);
   });
 
@@ -139,7 +139,7 @@ describe('Testing MEAN methods', () => {
     expect(calcMean(arrayWithNulls)).toStrictEqual(expectedResult);
   });
 
-  test('Object arrays mean should be equal to the mean of the array\'s item values', () => {
+  test("Object arrays mean should be equal to the mean of the array's item values", () => {
     expect(calcMean(testObjArray, 'value')).toStrictEqual(expectedResult);
   });
 
@@ -154,32 +154,42 @@ describe('Testing WEIGHTED MEAN methods', () => {
     value: d,
     weight: index + 1,
   }));
-  const expectedSimpleResult = calcSum(weightedSimpleArray.map((d) => d.value * d.weight))
-    / calcSum(weightedSimpleArray.map((d) => d.weight));
+  const expectedSimpleResult =
+    calcSum(weightedSimpleArray.map((d) => d.value * d.weight)) /
+    calcSum(weightedSimpleArray.map((d) => d.weight));
 
   const weightedObjectArray = testObjArray.map((d, index) => ({
     value: d.value,
     weight: index + 1,
   }));
-  const expectedObjectResult = calcSum(weightedObjectArray.map((d) => d.value * d.weight))
-    / calcSum(weightedObjectArray.map((d) => d.weight));
+  const expectedObjectResult =
+    calcSum(weightedObjectArray.map((d) => d.value * d.weight)) /
+    calcSum(weightedObjectArray.map((d) => d.weight));
 
-  test('Simple array\'s weighted mean should equal dividing the sum of values multiplied by their weight, by the sum of the weights', () => {
-    expect(calcWeightedMean(weightedSimpleArray, 'value', 'weight')).toStrictEqual(expectedSimpleResult);
+  test("Simple array's weighted mean should equal dividing the sum of values multiplied by their weight, by the sum of the weights", () => {
+    expect(
+      calcWeightedMean(weightedSimpleArray, 'value', 'weight')
+    ).toStrictEqual(expectedSimpleResult);
   });
 
   test('Arrays containing empty values should not change the weighted mean', () => {
     const arrayWithNulls = [null, ...weightedSimpleArray, null];
-    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(expectedSimpleResult);
+    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(
+      expectedSimpleResult
+    );
   });
 
-  test('Object arrays weighted mean should be equal to the mean of the array\'s item values', () => {
-    expect(calcWeightedMean(weightedObjectArray, 'value', 'weight')).toStrictEqual(expectedObjectResult);
+  test("Object arrays weighted mean should be equal to the mean of the array's item values", () => {
+    expect(
+      calcWeightedMean(weightedObjectArray, 'value', 'weight')
+    ).toStrictEqual(expectedObjectResult);
   });
 
   test('Object arrays weighted mean with null values should not cause errors or alter the result', () => {
     const arrayWithNulls = [null, ...weightedObjectArray];
-    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(expectedObjectResult);
+    expect(calcWeightedMean(arrayWithNulls, 'value', 'weight')).toStrictEqual(
+      expectedObjectResult
+    );
   });
 });
 
@@ -189,7 +199,9 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
     weight: 1,
   }));
   test('The weighted median of elements with the same weight should be the median of the array values', () => {
-    expect(calcWeightedMedian(weightedSimpleArray, 'value', 'weight')).toStrictEqual(calcMedian(weightedSimpleArray, 'value'));
+    expect(
+      calcWeightedMedian(weightedSimpleArray, 'value', 'weight')
+    ).toStrictEqual(calcMedian(weightedSimpleArray, 'value'));
   });
 
   test('The weighted median of an empty array should be 0', () => {
@@ -197,22 +209,22 @@ describe('Testing WEIGHTED MEDIAN and MEDIAN methods', () => {
   });
 
   test('The weighted median of an array with one element should be that same value', () => {
-    expect(calcWeightedMedian(
-      weightedSimpleArray.slice(0, 1),
-      'value',
-      'weight',
-    )).toStrictEqual(weightedSimpleArray[0].value);
+    expect(
+      calcWeightedMedian(weightedSimpleArray.slice(0, 1), 'value', 'weight')
+    ).toStrictEqual(weightedSimpleArray[0].value);
   });
 
   test('The weighted median of elements with different weight should not be the median of the array values', () => {
-    expect(calcWeightedMedian(
-      weightedSimpleArray.map((d, index) => ({
-        value: d.value,
-        weight: index + 1,
-      })),
-      'value',
-      'weight',
-    )).not.toEqual(calcMedian(weightedSimpleArray, 'value'));
+    expect(
+      calcWeightedMedian(
+        weightedSimpleArray.map((d, index) => ({
+          value: d.value,
+          weight: index + 1,
+        })),
+        'value',
+        'weight'
+      )
+    ).not.toEqual(calcMedian(weightedSimpleArray, 'value'));
   });
 });
 
@@ -246,7 +258,9 @@ describe('Testing DISTRIBUTION methods', () => {
   });
 
   test('If using the non-strict version, it should output integer domains', () => {
-    expect(calcDistribution([0.2, 5, 10.3], false, 2).labels[0].split(' - ')[0]).toStrictEqual('0');
+    expect(
+      calcDistribution([0.2, 5, 10.3], false, 2).labels[0].split(' - ')[0]
+    ).toStrictEqual('0');
   });
 });
 
@@ -289,12 +303,16 @@ describe('Test PERCENTILE methods', () => {
 
   test('Throws an error for percentile below 0', () => {
     const array = [1, 2, 3, 4, 5];
-    expect(() => getPercentile(array, -0.1)).toThrowError('percentile must be a number between 0 and 1');
+    expect(() => getPercentile(array, -0.1)).toThrowError(
+      'percentile must be a number between 0 and 1'
+    );
   });
 
   test('Throws an error for percentile above 1', () => {
     const array = [1, 2, 3, 4, 5];
-    expect(() => getPercentile(array, 1.1)).toThrowError('percentile must be a number between 0 and 1');
+    expect(() => getPercentile(array, 1.1)).toThrowError(
+      'percentile must be a number between 0 and 1'
+    );
   });
 
   test('Calculates percentile with floating point values correctly', () => {

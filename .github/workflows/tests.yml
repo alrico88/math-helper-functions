@@ -1,36 +1,23 @@
-name: Tests
-on:
-  pull_request
-
+name: CI
+on: [push]
 jobs:
-  unit_test:
-    name: Unit tests
+  build:
+    name: Build, lint, and test on Node ${{ matrix.node }}
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version:
-          - 20.x
-          - 18.x
-          - 16.x
+        node: ["22.x", "24.x"]
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v4.1.0
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          version: 8
+          node-version: 22
+          cache: "pnpm"
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
-
-      - name: install dependencies
-        run: pnpm install --frozen-lockfile
-        env:
-          CI: true
-
-      - name: test
-        run: pnpm test
+      - run: pnpm install
+      - run: pnpm test
+      - run: pnpm build

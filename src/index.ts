@@ -1,18 +1,21 @@
 export {
-  calcMean, calcWeightedMean, calcMedian, calcWeightedMedian, calcStdDeviation, calcVariance,
+  calcMean,
+  calcMedian,
+  calcStdDeviation,
+  calcVariance,
+  calcWeightedMean,
+  calcWeightedMedian,
 } from './modules/averages';
 export {
+  calcBuckets,
   calcDistribution,
   calcDistributionAsArray,
   calcDistributionWithSeries,
   calcHistogram,
   calcQuartiles,
   getMinMaxFromBucket,
-  calcBuckets,
 } from './modules/distributions';
-export {
-  calcDomain, calcMax, calcMin, calcDiff,
-} from './modules/domain';
+export { calcDiff, calcDomain, calcMax, calcMin } from './modules/domain';
 export { calcSum } from './modules/operations';
-export { ruleOfThree, calcPercent } from './modules/percentages';
+export { calcPercent, ruleOfThree } from './modules/percentages';
 export { getPercentile } from './modules/percentiles';
