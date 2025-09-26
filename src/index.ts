@@ -1,4 +1,8 @@
 export {
+  getUntilPercentageThreshold,
+  getUntilValueThreshold,
+} from './modules/arrays';
+export {
   calcMean,
   calcMedian,
   calcStdDeviation,
@@ -14,6 +18,10 @@ export {
   calcHistogram,
   calcQuartiles,
   getMinMaxFromBucket,
+  type IBucket,
+  type IDistribution,
+  type IDistributionArrayItem,
+  type ISerieDistribution,
 } from './modules/distributions';
 export { calcDiff, calcDomain, calcMax, calcMin } from './modules/domain';
 export { calcSum } from './modules/operations';
