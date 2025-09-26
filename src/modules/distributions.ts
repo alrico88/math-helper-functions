@@ -1,6 +1,6 @@
 import { thresholdSturges } from 'd3-array';
-import { processNumber } from 'number-helper-functions';
 import dlv from 'dlv';
+import { processNumber } from 'number-helper-functions';
 import { getSimpleArray } from './arrays';
 import { calcDomain } from './domain';
 import { calcSum } from './operations';
@@ -30,10 +30,10 @@ interface ISerieDistribution {
   labels: string[];
   data: {
     name: string;
-    count:number[];
+    count: number[];
     percentage_serie: number[];
     percentage_total: number[];
-  }[]
+  }[];
 }
 
 function createArrayData(buckets: IBucket[], array: number[]): number[] {
@@ -58,7 +58,7 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
 export function calcBuckets(
   array: number[],
   strict = false,
-  numOfBins?: number,
+  numOfBins?: number
 ): IBucket[] {
   let [minDom, maxDom] = calcDomain(array);
 
@@ -105,7 +105,7 @@ export function calcBuckets(
 export function calcDistribution(
   array: number[],
   strict = false,
-  numOfBins?: number,
+  numOfBins?: number
 ): IDistribution {
   const buckets: IBucket[] = calcBuckets(array, strict, numOfBins);
 
@@ -140,7 +140,7 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
 export function calcDistributionWithSeries(
   buckets: IBucket[],
   dataGrouped: Record<string, unknown[]>,
-  distributionProp: string,
+  distributionProp: string
 ): ISerieDistribution {
   const totalCount = 0;
 
@@ -156,7 +156,10 @@ export function calcDistributionWithSeries(
       };
 
       value.forEach((v) => {
-        const valueProp = dlv(v as Record<string, number | string>, distributionProp);
+        const valueProp = dlv(
+          v as Record<string, number | string>,
+          distributionProp
+        );
 
         if (d.inside(valueProp as number)) {
           bucketObj.data++;
@@ -196,7 +199,7 @@ export function calcDistributionWithSeries(
 export function calcDistributionAsArray(
   array: number[],
   binsStrict = false,
-  numOfBins?: number,
+  numOfBins?: number
 ): IDistributionArrayItem[] {
   const distribution = calcDistribution(array, binsStrict, numOfBins);
 
@@ -226,7 +229,7 @@ export function calcDistributionAsArray(
  */
 export function calcQuartiles(
   array: any[],
-  property?: string,
+  property?: string
 ): [number, number, number] {
   const len = array.length;
   const simpleArray = [...getSimpleArray(array, property)];
@@ -251,7 +254,7 @@ export function calcQuartiles(
 export function calcHistogram(
   array: any[],
   numberOfBins = 4,
-  property?: string,
+  property?: string
 ): number[] {
   const dataArray = getSimpleArray(array, property);
   const [arrayMin, arrayMax] = calcDomain(dataArray);
@@ -261,10 +264,7 @@ export function calcHistogram(
   const bins = new Array(numberOfBins).fill(0);
   for (let i = 0; i < len; i++) {
     bins[
-      Math.min(
-        Math.floor((dataArray[i] - first) / binWidth),
-        numberOfBins - 1,
-      )
+      Math.min(Math.floor((dataArray[i] - first) / binWidth), numberOfBins - 1)
     ] += 1;
   }
 

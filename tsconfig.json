@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "esnext",
+    "lib": ["ES2021", "DOM"],
+    "module": "ESNext",
+    "noEmit": true,
     "strict": true,
-    "lib": ["DOM", "ES2020"],
-    "esModuleInterop": true,
-    "moduleResolution": "node",
     "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": true,
-    "allowJs": true,
-    "resolveJsonModule": true
-  }
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "target": "es2021"
+  },
+  "include": ["src"]
 }

@@ -7,7 +7,11 @@
  * @param  {number} thenThat Second param
  * @return {number} Second result
  */
-export function ruleOfThree(ifThis: number, isThis: number, thenThat: number): number {
+export function ruleOfThree(
+  ifThis: number,
+  isThis: number,
+  thenThat: number
+): number {
   return (isThis * thenThat) / ifThis;
 }
 

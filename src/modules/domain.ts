@@ -1,4 +1,4 @@
-import { max, min, extent } from 'd3-array';
+import { extent, max, min } from 'd3-array';
 import { getSimpleArray } from './arrays';
 
 /**
@@ -33,7 +33,10 @@ export function calcMin(array: any[], property?: string): number {
  * @param  {string} [property] Property to map by
  * @return {([number, number] | [any, any])} The domain
  */
-export function calcDomain(array: any[], property?: string): [number, number] | [any, any] {
+export function calcDomain(
+  array: any[],
+  property?: string
+): [number, number] | [any, any] {
   return extent(getSimpleArray(array, property));
 }
 

@@ -8,7 +8,10 @@ import { quantile } from 'd3-array';
  *
  * @returns {number|undefined} Percentile
  */
-export function getPercentile(array:(number | null)[], percentile: number): number | undefined {
+export function getPercentile(
+  array: (number | null)[],
+  percentile: number
+): number | undefined {
   if (percentile > 1 || percentile < 0) {
     throw new Error('percentile must be a number between 0 and 1');
   }
