@@ -6,12 +6,12 @@ import { calcDomain } from './domain';
 import { calcSum } from './operations';
 import { calcPercent } from './percentages';
 
-interface IDistribution {
+export interface IDistribution {
   labels: string[];
   data: number[];
 }
 
-interface IDistributionArrayItem {
+export interface IDistributionArrayItem {
   label: string;
   count: number;
   percentage: number;
@@ -19,14 +19,14 @@ interface IDistributionArrayItem {
   to: number;
 }
 
-interface IBucket {
+export interface IBucket {
   label: string;
   from: number;
   to: number;
   inside: (val: number) => boolean;
 }
 
-interface ISerieDistribution {
+export interface ISerieDistribution {
   labels: string[];
   data: {
     name: string;
@@ -49,11 +49,10 @@ function createArrayData(buckets: IBucket[], array: number[]): number[] {
 /**
  * Calculate the buckets given a data array and an amount
  *
- * @export
- * @param {number[]} array The data array
- * @param {boolean} [strict=false] Whether to use real or pretty domain
- * @param {number} [numOfBins] Amount of desired buckets
- * @return {IBucket[]} The buckets
+ * @param array The data array
+ * @param [strict=false] Whether to use real or pretty domain
+ * @param [numOfBins] Amount of desired buckets
+ * @return The buckets
  */
 export function calcBuckets(
   array: number[],
@@ -96,11 +95,10 @@ export function calcBuckets(
 /**
  * Calculates the distribution of an arrays values
  *
- * @export
- * @param  {any[]} array Input array
- * @param {boolean} strict
- * @param  {number} [numOfBins] Number of bins to use
- * @return {IDistribution} The distribution
+ * @param array Input array
+ * @param strict
+ * @param [numOfBins] Number of bins to use
+ * @return The distribution
  */
 export function calcDistribution(
   array: number[],
@@ -118,9 +116,8 @@ export function calcDistribution(
 /**
  * Gets the min and max values for a calcDistribution bucket
  *
- * @export
- * @param  {string} bucketLabel The bucket label
- * @return {number[]} [min, max]
+ * @param bucketLabel The bucket label
+ * @return [min, max]
  */
 export function getMinMaxFromBucket(bucketLabel: string): number[] {
   const [min, max] = bucketLabel.split(' - ');
@@ -131,11 +128,10 @@ export function getMinMaxFromBucket(bucketLabel: string): number[] {
 /**
  * Calculates the distribution of an array of grouped objects
  *
- * @export
- * @param {IBucket[]} buckets
- * @param {Record<string, unknown[]>} dataGrouped
- * @param {string} distributionProp
- * @return {ISerieDistribution} The distribution with labels and data
+ * @param buckets
+ * @param dataGrouped
+ * @param distributionProp
+ * @return The distribution with labels and data
  */
 export function calcDistributionWithSeries(
   buckets: IBucket[],
@@ -190,11 +186,10 @@ export function calcDistributionWithSeries(
 /**
  * Calculates the distribution of an arrays values and outputs an array
  *
- * @export
- * @param  {number[]} array Array to calc distribution of
- * @param {boolean} [binsStrict=false] If false, buckets may be rounded [floor, ceil]
- * @param  {number} [numOfBins] Number of bins to use
- * @return {IDistributionArrayItem[]} The distribution as an array of objects
+ * @param array Array to calc distribution of
+ * @param [binsStrict=false] If false, buckets may be rounded [floor, ceil]
+ * @param [numOfBins] Number of bins to use
+ * @return The distribution as an array of objects
  */
 export function calcDistributionAsArray(
   array: number[],
@@ -222,10 +217,9 @@ export function calcDistributionAsArray(
 /**
  * Gets the quartiles of an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] Property to map by
- * @return {[number, number, number]} The quartiles
+ * @param array Input array
+ * @param [property] Property to map by
+ * @return The quartiles
  */
 export function calcQuartiles(
   array: any[],
@@ -245,11 +239,10 @@ export function calcQuartiles(
 /**
  * Calculates a histogram from array values
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {number} [numberOfBins=4] Number of bins to use
- * @param  {string} [property] Property to map by
- * @return {number[]} The histogram
+ * @param array Input array
+ * @param [numberOfBins=4] Number of bins to use
+ * @param [property] Property to map by
+ * @return The histogram
  */
 export function calcHistogram(
   array: any[],

@@ -58,7 +58,7 @@
 		"format": "biome format --write",
 		"test": "vitest run",
 		"coverage": "vitest run --coverage",
-		"docs": "typedoc src/index.ts --readme none --gitRevision master --plugin typedoc-plugin-markdown",
+		"docs": "typedoc src/index.ts",
 		"prepublish": "pnpm run build"
 	},
 	"husky": {

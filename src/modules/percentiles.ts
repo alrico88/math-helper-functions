@@ -3,10 +3,9 @@ import { quantile } from 'd3-array';
 /**
  * Gets the percentile of an array of values
  *
- * @param {(number|null)[]} array Array to find percentile of
- * @param {number} percentile Amount between 0 and 1
- *
- * @returns {number|undefined} Percentile
+ * @param array Array to find percentile of
+ * @param percentile Amount between 0 and 1
+ * @returns Percentile
  */
 export function getPercentile(
   array: (number | null)[],

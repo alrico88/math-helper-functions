@@ -6,10 +6,9 @@ import { isEmptyArray, isEmptyString } from './checks';
 /**
  * Gets an array median
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] The property to map by
- * @return {(number | undefined)} The resulting median
+ * @param array Input array
+ * @param [property] The property to map by
+ * @return The resulting median
  */
 export function calcMedian(
   array: any[],
@@ -37,11 +36,10 @@ interface IWeightReducer {
 /**
  * Gets an array weighted median
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} valueProperty The property to use as value
- * @param  {string} weightProperty The property to use as weight
- * @return {number} The resulting median
+ * @param array Input array
+ * @param valueProperty The property to use as value
+ * @param weightProperty The property to use as weight
+ * @return The resulting median
  */
 export function calcWeightedMedian(
   array: any[],
@@ -97,10 +95,9 @@ export function calcWeightedMedian(
 /**
  * Gets the mean value for an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] Property to map by
- * @return {(number | undefined)} The mean value
+ * @param array Input array
+ * @param [property] Property to map by
+ * @return The mean value
  */
 export function calcMean(array: any[], property?: string): number | undefined {
   return mean(getSimpleArray(array, property));
@@ -109,11 +106,10 @@ export function calcMean(array: any[], property?: string): number | undefined {
 /**
  * Gets the weighted mean for an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} valueProperty Property to use for value
- * @param  {string} weightProperty Property to use for weight
- * @return {number} The weighted mean
+ * @param array Input array
+ * @param valueProperty Property to use for value
+ * @param weightProperty Property to use for weight
+ * @return The weighted mean
  */
 export function calcWeightedMean(
   array: any[],
@@ -143,11 +139,10 @@ export function calcWeightedMean(
 /**
  * Calculates the variance in an array of numbers
  *
- * @export
  * @template T
- * @param {T[]} array
- * @param {string} [property]
- * @return {(number | undefined)}
+ * @param array Input array
+ * @param [property] Property to use for value
+ * @return The variance
  */
 export function calcVariance<T>(
   array: T[],
@@ -159,11 +154,10 @@ export function calcVariance<T>(
 /**
  * Calculates the standard deviation in an array of numbers
  *
- * @export
  * @template T
- * @param {T[]} array
- * @param {string} [property]
- * @return {(number | undefined)}
+ * @param array Input array
+ * @param [property]  Property to use for value
+ * @return The standard deviation
  */
 export function calcStdDeviation<T>(
   array: T[],

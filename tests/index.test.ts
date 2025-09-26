@@ -14,6 +14,8 @@ import {
   calcWeightedMean,
   calcWeightedMedian,
   getPercentile,
+  getUntilPercentageThreshold,
+  getUntilValueThreshold,
   ruleOfThree,
 } from '../src';
 
@@ -319,5 +321,52 @@ describe('Test PERCENTILE methods', () => {
     const array = [1.2, 3.5, 5.1, 7.8, 9.3];
     const result = getPercentile(array, 0.75);
     expect(result).toBeCloseTo(7.8, 1);
+  });
+});
+
+describe('getUntilValueThreshold', () => {
+  const items = [
+    { id: 1, value: 10 },
+    { id: 2, value: 20 },
+    { id: 3, value: 30 },
+    { id: 4, value: 40 },
+  ];
+
+  const accessor = (d: (typeof items)[number]) => d.value;
+
+  test('returns items until cumulative value reaches the threshold', () => {
+    const result = getUntilValueThreshold(items, accessor, 50);
+    expect(result.map((d) => d.id)).toEqual([4, 3]);
+  });
+
+  test('returns all items if threshold is larger than total sum', () => {
+    const result = getUntilValueThreshold(items, accessor, 200);
+    expect(result.map((d) => d.id)).toEqual([4, 3, 2, 1]);
+  });
+
+  test('with threshold 0 it still returns the first item', () => {
+    const result = getUntilValueThreshold(items, accessor, 0);
+    expect(result.map((d) => d.id)).toEqual([4]);
+  });
+});
+
+describe('getUntilPercentageThreshold', () => {
+  const items = [
+    { id: 1, value: 10 },
+    { id: 2, value: 20 },
+    { id: 3, value: 30 },
+    { id: 4, value: 40 },
+  ];
+  const accessor = (d: (typeof items)[number]) => d.value;
+
+  test('computes the threshold based on percentage', () => {
+    const result = getUntilPercentageThreshold(items, accessor, 50);
+    expect(result.map((d) => d.id)).toEqual([4, 3]);
+  });
+
+  test('returns [] if total sum is 0', () => {
+    const empty = [{ id: 1, value: 0 }];
+    const result = getUntilPercentageThreshold(empty, (d) => d.value, 50);
+    expect(result).toEqual([]);
   });
 });

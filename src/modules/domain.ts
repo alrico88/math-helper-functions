@@ -4,10 +4,9 @@ import { getSimpleArray } from './arrays';
 /**
  * Gets the max value in an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] Property to map by
- * @return {number} The maximum value in the array
+ * @param array Input array
+ * @param [property] Property to map by
+ * @return The maximum value in the array
  */
 export function calcMax(array: any[], property?: string): number {
   return max(getSimpleArray(array, property));
@@ -16,10 +15,9 @@ export function calcMax(array: any[], property?: string): number {
 /**
  * Gets the min value in an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] Property to map
- * @return {number} The minimum value in the array
+ * @param array Input array
+ * @param [property] Property to map
+ * @return The minimum value in the array
  */
 export function calcMin(array: any[], property?: string): number {
   return min(getSimpleArray(array, property));
@@ -28,10 +26,9 @@ export function calcMin(array: any[], property?: string): number {
 /**
  * Gets the [min, max] value in an array
  *
- * @export
- * @param  {any[]} array Input array
- * @param  {string} [property] Property to map by
- * @return {([number, number] | [any, any])} The domain
+ * @param array Input array
+ * @param [property] Property to map by
+ * @return The domain
  */
 export function calcDomain(
   array: any[],
@@ -43,10 +40,9 @@ export function calcDomain(
 /**
  * Gets the absolute difference between the max and min value in an array
  *
- * @export
- * @param {any[]} array Input array
- * @param {string} [property] Property to map by
- * @return {number} Absolute difference between the max and min of an array
+ * @param array Input array
+ * @param [property] Property to map by
+ * @return Absolute difference between the max and min of an array
  */
 export function calcDiff(array: any[], property?: string): number {
   const [minVal, maxVal] = calcDomain(array, property);

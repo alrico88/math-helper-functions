@@ -1,11 +1,10 @@
 /**
  * Performs a simple rule of three
  *
- * @export
- * @param  {number} ifThis First param
- * @param  {number} isThis First result
- * @param  {number} thenThat Second param
- * @return {number} Second result
+ * @param ifThis First param
+ * @param isThis First result
+ * @param thenThat Second param
+ * @return Second result
  */
 export function ruleOfThree(
   ifThis: number,
@@ -18,10 +17,9 @@ export function ruleOfThree(
 /**
  * Calculates the percentage of a value, given a total
  *
- * @export
- * @param  {number} toCalc Number to get percentage of
- * @param  {number} total Total
- * @return {number} Percentage of the total
+ * @param toCalc Number to get percentage of
+ * @param total Total
+ * @return Percentage of the total
  */
 export function calcPercent(toCalc: number, total: number): number {
   return ruleOfThree(total, 100, toCalc);
